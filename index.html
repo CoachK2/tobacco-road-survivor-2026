@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tobacco Road | Survivor War Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080a0f;--s1:#0e1117;--s2:#161b24;--s3:#1e2430;
+  --b1:#252d3a;--b2:#2e3848;
+  --orange:#f97316;--orange-dim:rgba(249,115,22,0.12);--orange-glow:rgba(249,115,22,0.25);
+  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,0.12);
+  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);
+  --gold:#f59e0b;--gold-dim:rgba(245,158,11,0.12);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);
+  --t1:#f1f5f9;--t2:#94a3b8;--t3:#475569;--t4:#2d3748;
+  --kerry:var(--orange);--whopper:var(--blue);--dustin:var(--green);--george:var(--purple);
+}
+body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 70% 40% at 15% -10%,rgba(249,115,22,0.08) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 30% at 85% 110%,rgba(59,130,246,0.06) 0%,transparent 60%);
+  pointer-events:none;z-index:0}
+.app{position:relative;z-index:1}
+
+/* ── HEADER ── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 28px;border-bottom:1px solid var(--b1);
+  background:rgba(8,10,15,0.92);backdrop-filter:blur(16px);
+  position:sticky;top:0;z-index:200}
+.hdr-left{display:flex;flex-direction:column;gap:2px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.logo-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:3px;text-transform:uppercase}
+.hdr-center{text-align:center}
+.pool-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:5px;color:var(--t1)}
+.pool-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:1px;margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:12px}
+.hdr-btns{display:flex;gap:6px;flex-direction:column;align-items:flex-end}
+.hdr-btn-row{display:flex;gap:6px}
+.hbtn{padding:4px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);background:transparent;
+  color:var(--t3);transition:all 0.15s}
+.hbtn:hover{border-color:var(--t2);color:var(--t2)}
+.hbtn.alert-on{border-color:var(--green);color:var(--green)}
+.hbtn.alert-blocked{border-color:var(--red);color:var(--red)}
+.hbtn.checklist-btn{border-color:var(--blue);color:var(--blue)}
+.countdown-wrap{text-align:right}
+.cd-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase}
+.cd-time{font-family:'Bebas Neue',sans-serif;font-size:28px;
+  background:linear-gradient(135deg,var(--orange),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.cd-next{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gold)}
+
+/* ── NAV ── */
+nav{display:flex;gap:1px;padding:0 28px;background:var(--s1);border-bottom:1px solid var(--b1)}
+.tab{padding:12px 18px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--t3);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
+.tab:hover{color:var(--t2)}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+
+/* ── CONTENT ── */
+.content{padding:22px 28px}
+.panel{display:none}.panel.active{display:block}
+
+/* ── ALERT BAR ── */
+.alert-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:var(--orange-dim);border:1px solid rgba(249,115,22,0.3);
+  border-radius:6px;margin-bottom:18px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--orange)}
+.alert-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);
+  animation:blink 1.4s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* ── STAT CARDS ── */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
+.stat{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:14px;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange)}
+.stat.blue::after{background:var(--blue)}
+.stat.green::after{background:var(--green)}
+.stat.gold::after{background:var(--gold)}
+.stat.purple::after{background:var(--purple)}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--t1);line-height:1}
+.stat-sub{font-size:10px;color:var(--t3);margin-top:2px}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--t1)}
+.sec-badge{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--orange);
+  border:1px solid rgba(249,115,22,0.4);padding:2px 7px;border-radius:2px;letter-spacing:1px}
+
+/* ── FUNNEL ── */
+.funnel{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:20px;margin-bottom:20px}
+.funnel-title{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+.funnel-stages{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;align-items:flex-end;height:130px}
+.f-stage{text-align:center;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.f-bar-wrap{flex:1;display:flex;align-items:flex-end;justify-content:center;padding:0 3px}
+.f-bar{width:100%;border-radius:3px 3px 0 0;transition:height 0.8s ease;position:relative;min-height:4px}
+.f-num{font-family:'Bebas Neue',sans-serif;font-size:16px;display:block;margin-top:6px}
+.f-day{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:1px}
+.f-round{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t4);margin-top:1px}
+
+/* ── DEADLINE STRIP ── */
+.dl-strip{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin-bottom:20px}
+.dl-card{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:10px 8px;
+  text-align:center;position:relative;transition:border-color 0.2s}
+.dl-card.current{border-color:var(--orange);background:var(--orange-dim)}
+.dl-card.past{opacity:0.35}
+.dl-badge{position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  background:var(--orange);color:white;font-family:'JetBrains Mono',monospace;
+  font-size:7px;padding:1px 6px;border-radius:8px;letter-spacing:1px;white-space:nowrap}
+.dl-badge.double{background:var(--blue)}
+.dl-day{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;line-height:1}
+.dl-round{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:1px;margin:3px 0}
+.dl-date{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t2)}
+.dl-time{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-top:1px}
+
+/* ── COMMANDER CARDS ── */
+.cmd-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.cmd-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:16px;position:relative;overflow:hidden}
+.cmd-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
+.cmd-card.kerry::before{background:var(--orange)}
+.cmd-card.whopper::before{background:var(--blue)}
+.cmd-card.dustin::before{background:var(--green)}
+.cmd-card.george::before{background:var(--purple)}
+.cmd-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;margin-bottom:2px}
+.cmd-name.kerry{color:var(--orange)}.cmd-name.whopper{color:var(--blue)}
+.cmd-name.dustin{color:var(--green)}.cmd-name.george{color:var(--purple)}
+.cmd-email{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:10px}
+.cmd-entries{display:flex;gap:4px;flex-wrap:wrap}
+.cmd-entry-chip{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 7px;
+  border-radius:3px;border:1px solid var(--b2);color:var(--t2)}
+.cmd-entry-chip.alive{border-color:rgba(34,197,94,0.4);color:var(--green);background:var(--green-dim)}
+.cmd-entry-chip.dead{border-color:rgba(239,68,68,0.3);color:var(--red);opacity:0.6;text-decoration:line-through}
+
+/* ── CMD FILTER ── */
+.cmd-filter{display:flex;gap:6px;margin-bottom:16px}
+.cf-btn{padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  border:1px solid var(--b1);background:transparent;color:var(--t3);cursor:pointer;border-radius:4px;transition:all 0.15s}
+.cf-btn:hover{border-color:var(--t3);color:var(--t2)}
+.cf-btn.active.all{border-color:var(--t2);color:var(--t2);background:rgba(148,163,184,0.08)}
+.cf-btn.active.kerry{border-color:var(--orange);color:var(--orange);background:var(--orange-dim)}
+.cf-btn.active.whopper{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
+.cf-btn.active.dustin{border-color:var(--green);color:var(--green);background:var(--green-dim)}
+.cf-btn.active.george{border-color:var(--purple);color:var(--purple);background:var(--purple-dim)}
+
+/* ── ENTRY GRID ── */
+.entry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.entry-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;overflow:hidden;transition:all 0.2s}
+.entry-card:hover{border-color:var(--b2);transform:translateY(-1px)}
+.entry-card.dead{opacity:0.4}
+.entry-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--s2);border-bottom:1px solid var(--b1)}
+.entry-num{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px}
+.entry-num.kerry{color:var(--orange)}.entry-num.whopper{color:var(--blue)}
+.entry-num.dustin{color:var(--green)}.entry-num.george{color:var(--purple)}
+.entry-tag{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 7px;border-radius:2px}
+.tag-kerry{background:var(--orange-dim);color:var(--orange)}
+.tag-whopper{background:var(--blue-dim);color:var(--blue)}
+.tag-dustin{background:var(--green-dim);color:var(--green)}
+.tag-george{background:var(--purple-dim);color:var(--purple)}
+.entry-lane{padding:6px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px}
+.lane-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.lane-txt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t2)}
+.picks-wrap{padding:8px 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.pick-slot .pd{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t4);text-align:center;margin-bottom:2px}
+.pick-slot .pt{font-family:'JetBrains Mono',monospace;font-size:8px;padding:3px 2px;border-radius:2px;
+  background:var(--s3);border:1px solid var(--b1);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt.win{background:var(--green-dim);border-color:rgba(34,197,94,0.3);color:var(--green)}
+.pt.next{background:var(--orange-dim);border-color:var(--orange);color:var(--orange);animation:blink 2s infinite}
+.pt.loss{background:var(--red-dim);border-color:rgba(239,68,68,0.3);color:var(--red);text-decoration:line-through}
+.pt.dp{background:var(--purple-dim);border-color:rgba(167,139,250,0.3);color:var(--purple)}
+.entry-ftr{padding:7px 12px;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
+.tb-num{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--blue)}
+.e-status{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px}
+.alive-s{color:var(--green)}.dead-s{color:var(--red)}.pending-s{color:var(--gold)}
+
+/* ── BOARD TABLE ── */
+.board-wrap{overflow-x:auto}
+.board{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:10px}
+.board th{padding:9px 10px;text-align:left;border-bottom:1px solid var(--b1);
+  color:var(--t3);font-size:8px;letter-spacing:2px;text-transform:uppercase;background:var(--s2);white-space:nowrap}
+.board td{padding:8px 10px;border-bottom:1px solid rgba(37,45,58,0.5);vertical-align:middle;white-space:nowrap}
+.board tr:hover td{background:var(--s2)}
+.board tr.dead-row td{opacity:0.4}
+.b-enum{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px}
+.pill{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:500;white-space:nowrap;cursor:pointer;transition:all 0.15s}
+.pill:hover{filter:brightness(1.2)}
+.pill.used{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
+.pill.next-p{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange);animation:blink 2s infinite}
+.pill.future{background:var(--s3);color:var(--t3);border:1px solid var(--b1)}
+.pill.dead-p{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,0.2);text-decoration:line-through}
+.pill.dp-pill{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(167,139,250,0.3)}
+
+/* ── SCENARIO CARDS ── */
+.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.sc-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
+.sc-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;margin-bottom:4px}
+.sc-desc{font-size:11px;color:var(--t3);margin-bottom:14px;line-height:1.5}
+.sc-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
+.sc-table th{padding:5px 7px;border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;text-transform:uppercase;text-align:left}
+.sc-table td{padding:5px 7px;border-bottom:1px solid rgba(37,45,58,0.4)}
+.prob-wrap{display:flex;align-items:center;gap:6px}
+.prob-bar-bg{flex:1;height:3px;background:var(--s3);border-radius:2px}
+.prob-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--green))}
+.prob-pct{color:var(--green);font-size:9px}
+
+/* ── SIM TABLE ── */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sim-region{background:var(--s1);border:1px solid var(--b1);border-radius:8px;overflow:hidden}
+.sim-region-hdr{padding:8px 14px;background:var(--s2);border-bottom:1px solid var(--b1);
+  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2)}
+.sim-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
+.sim-table th{padding:7px 10px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;text-transform:uppercase}
+.sim-table td{padding:7px 10px;border-bottom:1px solid rgba(37,45,58,0.4)}
+
+/* ── TIEBREAKER LADDER ── */
+.tb-container{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
+.tb-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(37,45,58,0.4)}
+.tb-rank{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--t4);width:22px;text-align:center}
+.tb-who{font-family:'JetBrains Mono',monospace;font-size:10px;width:100px}
+.tb-lane{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);width:70px}
+.tb-bar-bg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
+.tb-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--orange))}
+.tb-val{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);width:30px;text-align:right}
+
+/* ── SCHEDULE PANEL ── */
+.schedule-wrap{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+.rules-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
+.rule-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;
+  border-bottom:1px solid rgba(37,45,58,0.4);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);line-height:1.5}
+.rule-icon{color:var(--orange);flex-shrink:0}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;
+  align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:22px;width:380px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:4px}
+.modal-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-bottom:14px}
+.modal select{width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);
+  padding:9px 11px;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:11px;margin-bottom:10px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+.mbtn{padding:7px 16px;border-radius:4px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);
+  background:transparent;color:var(--t2);transition:all 0.15s}
+.mbtn.primary{background:var(--orange);border-color:var(--orange);color:white}
+.mbtn:hover{opacity:0.8}
+
+/* ── LANE DOTS ── */
+.ld-mich{background:#FFCB05}.ld-ariz{background:#CC0033}.ld-duke{background:#4B9CD3}
+.ld-flor{background:#0021A5}.ld-purd{background:#CEB888}.ld-conn{background:#6B7280}
+.ld-iowa{background:#C8102E}.ld-hous{background:#C8102E;filter:brightness(1.3)}
+
+/* ── NUDGE MODAL ── */
+.nudge-modal{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:22px;width:500px}
+.nudge-msg{background:var(--s3);border:1px solid var(--b1);border-radius:6px;padding:12px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2);line-height:1.6;
+  margin-bottom:12px;white-space:pre-wrap}
+.nudge-actions{display:flex;gap:8px;flex-wrap:wrap}
+.nudge-btn{padding:8px 14px;border-radius:4px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);
+  background:var(--s2);color:var(--t2);text-decoration:none;transition:all 0.15s;display:inline-block}
+.nudge-btn:hover{border-color:var(--orange);color:var(--orange)}
+
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .entry-grid{grid-template-columns:repeat(2,1fr)}
+  .dl-strip{grid-template-columns:repeat(5,1fr)}
+  .cmd-cards{grid-template-columns:repeat(2,1fr)}
+  .scenario-grid{grid-template-columns:1fr}
+  .sim-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-left">
+    <div class="logo">TOBACCO ROAD</div>
+    <div class="logo-sub">Survivor War Room · 2026</div>
+  </div>
+  <div class="hdr-center">
+    <div class="pool-title">Raleigh March Madness Survivor</div>
+    <div class="pool-meta">Splash Sports &nbsp;·&nbsp; 796 Entries &nbsp;·&nbsp; $39,800 Prize &nbsp;·&nbsp; 4 Commanders &nbsp;·&nbsp; 20 Entries</div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-btns">
+      <div class="hdr-btn-row">
+        <button class="hbtn checklist-btn" onclick="showChecklist()">📋 Checklist</button>
+        <button class="hbtn" id="notif-btn" onclick="enableAlerts()">🔔 Enable Alerts</button>
+        <button class="hbtn" style="border-color:var(--orange);color:var(--orange)" onclick="showNudge()">📣 Nudge Group</button>
+      </div>
+    </div>
+    <div class="countdown-wrap">
+      <div class="cd-label">Next Lock</div>
+      <div class="cd-time" id="cd-time">--:--:--</div>
+      <div class="cd-next" id="cd-next">Loading...</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="tab active" onclick="show('overview',this)">Overview</div>
+  <div class="tab" onclick="show('board',this)">Full Board</div>
+  <div class="tab" onclick="show('commanders',this)">Commanders</div>
+  <div class="tab" onclick="show('scenarios',this)">Scenarios</div>
+  <div class="tab" onclick="show('tiebreaker',this)">Tiebreaker</div>
+  <div class="tab" onclick="show('schedule',this)">Schedule</div>
+</nav>
+
+<div class="content">
+
+<!-- ══ OVERVIEW ══ -->
+<div class="panel active" id="panel-overview">
+  <div class="alert-bar" id="main-alert">
+    <div class="alert-dot"></div>
+    <span id="alert-txt">🏀 DAY 1 PICKS DUE Thu 3/19 at 12:15 PM · All 20 entries must be submitted · Check Board tab for your assignments</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Live Entries</div><div class="stat-val" id="s-live">20</div><div class="stat-sub">of 20 total</div></div>
+    <div class="stat blue"><div class="stat-label">Current Day</div><div class="stat-val">PRE</div><div class="stat-sub">D1 locks Thu 3/19</div></div>
+    <div class="stat green"><div class="stat-label">Win Probability</div><div class="stat-val">6.3%</div><div class="stat-sub">1 in 16 · skill-adjusted</div></div>
+    <div class="stat gold"><div class="stat-label">Your Prize</div><div class="stat-val">$9,950</div><div class="stat-sub">4-way split if we win</div></div>
+    <div class="stat"><div class="stat-label">Invested</div><div class="stat-val">$1,000</div><div class="stat-sub">$250 × 4 commanders</div></div>
+    <div class="stat purple"><div class="stat-label">Pool Field</div><div class="stat-val">796</div><div class="stat-sub">total entries</div></div>
+  </div>
+
+  <!-- Commander cards -->
+  <div class="sec-hdr"><div class="sec-title">THE FOUR COMMANDERS</div></div>
+  <div class="cmd-cards" id="cmd-cards"></div>
+
+  <!-- Funnel -->
+  <div class="funnel">
+    <div class="funnel-title">STAGED PORTFOLIO · SURVIVAL TARGET BY ROUND</div>
+    <div class="funnel-stages" id="funnel"></div>
+  </div>
+
+  <!-- Deadlines -->
+  <div class="sec-hdr"><div class="sec-title">PICK DEADLINES</div></div>
+  <div class="dl-strip" id="dl-strip"></div>
+</div>
+
+<!-- ══ BOARD ══ -->
+<div class="panel" id="panel-board">
+  <div class="sec-hdr">
+    <div class="sec-title">20-ENTRY PICK BOARD</div>
+    <div class="sec-badge">CLICK ANY PICK TO UPDATE</div>
+  </div>
+  <div class="board-wrap">
+    <table class="board" id="board-tbl">
+      <thead><tr>
+        <th>ENTRY</th><th>CMD</th><th>LANE</th>
+        <th>D1<br><span style="font-weight:300;color:var(--t4)">3/19 Thu</span></th>
+        <th>D2<br><span style="font-weight:300;color:var(--t4)">3/20 Fri</span></th>
+        <th>D3<br><span style="font-weight:300;color:var(--t4)">3/21 Sat</span></th>
+        <th>D4<br><span style="font-weight:300;color:var(--t4)">3/22 Sun</span></th>
+        <th>D5<br><span style="font-weight:300;color:var(--t4)">3/26 Thu</span></th>
+        <th>D6<br><span style="font-weight:300;color:var(--t4)">3/27 Fri</span></th>
+        <th>D7+8 ×2<br><span style="font-weight:300;color:var(--t4)">3/28-29</span></th>
+        <th>D9<br><span style="font-weight:300;color:var(--t4)">4/4 Sat</span></th>
+        <th>D10<br><span style="font-weight:300;color:var(--t4)">4/6 Mon</span></th>
+        <th>TB</th><th>STATUS</th>
+      </tr></thead>
+      <tbody id="board-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══ COMMANDERS ══ -->
+<div class="panel" id="panel-commanders">
+  <div class="cmd-filter" id="cmd-filter">
+    <button class="cf-btn active all" onclick="filterCmd('all',this)">ALL 20</button>
+    <button class="cf-btn" onclick="filterCmd('Kerry',this)">Kerry · E1-E5</button>
+    <button class="cf-btn" onclick="filterCmd('Whopper',this)">Whopper · E6-E10</button>
+    <button class="cf-btn" onclick="filterCmd('Dustin',this)">Dustin · E11-E15</button>
+    <button class="cf-btn" onclick="filterCmd('George',this)">George · E16-E20</button>
+  </div>
+  <div class="entry-grid" id="entry-grid"></div>
+</div>
+
+<!-- ══ SCENARIOS ══ -->
+<div class="panel" id="panel-scenarios">
+  <div class="sec-hdr"><div class="sec-title">SCENARIO PLANNING</div><div class="sec-badge">EVANMIYA SIM</div></div>
+  <div class="scenario-grid">
+    <div class="sc-card">
+      <div class="sc-title">CHALK RUNS DEEP</div>
+      <div class="sc-desc">All 1/2-seeds reach Elite Eight. Pool thins slowly. Tiebreaker battle among survivors decides winner.</div>
+      <table class="sc-table">
+        <tr><th>STAGE</th><th>TARGET ALIVE</th><th>OUR POSITION</th></tr>
+        <tr><td>D1-D2</td><td>17-18</td><td style="color:var(--green)">Strong</td></tr>
+        <tr><td>D3-D4</td><td>13-15</td><td style="color:var(--green)">Strong</td></tr>
+        <tr><td>Sweet 16</td><td>10-12</td><td style="color:var(--gold)">Good</td></tr>
+        <tr><td>Elite Eight</td><td>7-8</td><td style="color:var(--gold)">Good</td></tr>
+        <tr><td>Final Four</td><td>3-4</td><td style="color:var(--orange)">Competing</td></tr>
+        <tr><td>Champ</td><td>1-2</td><td><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:52%"></div></div><span class="prob-pct">~8%</span></div></td></tr>
+      </table>
+    </div>
+    <div class="sc-card">
+      <div class="sc-title">EARLY UPSET WAVE</div>
+      <div class="sc-desc">Multiple 2-seeds fall D1/D2. Pool collapses early. Our preserved ammo becomes the tiebreaker advantage.</div>
+      <table class="sc-table">
+        <tr><th>STAGE</th><th>TARGET ALIVE</th><th>OUR POSITION</th></tr>
+        <tr><td>D1-D2</td><td>12-14</td><td style="color:var(--gold)">Managed</td></tr>
+        <tr><td>D3-D4</td><td>8-10</td><td style="color:var(--green)">TB edge</td></tr>
+        <tr><td>Sweet 16</td><td>5-7</td><td style="color:var(--green)">TB advantage</td></tr>
+        <tr><td>Elite Eight</td><td>3-5</td><td style="color:var(--green)">Favored</td></tr>
+        <tr><td>Final Four</td><td>2-3</td><td style="color:var(--orange)">Strong</td></tr>
+        <tr><td>Champ</td><td>1-2</td><td><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:72%"></div></div><span class="prob-pct">~12%</span></div></td></tr>
+      </table>
+    </div>
+    <div class="sc-card">
+      <div class="sc-title">MICHIGAN RUNS THE TABLE</div>
+      <div class="sc-desc">Michigan (31.4% title prob) anchors D10. Lanes E1-E3 are built for this. Best case for the syndicate.</div>
+      <table class="sc-table">
+        <tr><th>LANE</th><th>ENTRIES</th><th>D10 ANCHOR</th></tr>
+        <tr><td style="color:#FFCB05">Michigan 1</td><td>E1, E2, E3</td><td style="color:var(--green)">Michigan</td></tr>
+        <tr><td style="color:#4B9CD3">Duke 1</td><td>E7, E8, E9</td><td>Duke</td></tr>
+        <tr><td style="color:#CC0033">Arizona 1</td><td>E4, E5, E6</td><td>Arizona</td></tr>
+        <tr><td style="color:#0021A5">Florida 1</td><td>E10, E11</td><td>Florida</td></tr>
+        <tr><td colspan="3" style="color:var(--t4);font-size:8px;padding-top:8px">TB edge: D1 3/4-seed picks = higher seed sum vs pure chalk</td></tr>
+      </table>
+    </div>
+    <div class="sc-card">
+      <div class="sc-title">2-SEED GOES ALL THE WAY</div>
+      <div class="sc-desc">Purdue (8.8%), Houston (3.5%), UConn (1.6%), or Iowa St (0.8%) wins it. Lanes E12-E20 built for this.</div>
+      <table class="sc-table">
+        <tr><th>LANE</th><th>ENTRIES</th><th>TITLE PROB</th></tr>
+        <tr><td style="color:var(--gold)">Purdue 2</td><td>E12, E13</td><td style="color:var(--gold)">8.8%</td></tr>
+        <tr><td style="color:#C8102E">Houston 2</td><td>E14, E15</td><td>3.5%</td></tr>
+        <tr><td style="color:var(--t3)">UConn 2</td><td>E18, E19, E20</td><td>1.6%</td></tr>
+        <tr><td style="color:#C8102E">Iowa St 2</td><td>E16, E17</td><td>0.8%</td></tr>
+        <tr><td colspan="3" style="color:var(--t4);font-size:8px;padding-top:8px">2-seed lanes have tiebreak equity from early round 3/4-seed usage</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="sec-hdr"><div class="sec-title">EVANMIYA SIM PROBABILITIES</div><div class="sec-badge">10,000 SIMULATIONS</div></div>
+  <div class="sim-grid" id="sim-grid"></div>
+</div>
+
+<!-- ══ TIEBREAKER ══ -->
+<div class="panel" id="panel-tiebreaker">
+  <div class="sec-hdr"><div class="sec-title">TIEBREAKER LADDER</div><div class="sec-badge">HIGHEST SEED SUM WINS</div></div>
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:14px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);line-height:1.8">
+    <span style="color:var(--t2)">Rule:</span> Tiebreaker = sum of all seeds picked including final losing pick &nbsp;·&nbsp;
+    <span style="color:var(--orange)">Target range:</span> 18-26 pts with 1/2/3-seed strategy &nbsp;·&nbsp;
+    Entries using 4-seeds (Nebraska, Arkansas) on D1 push to 22-26
+  </div>
+  <div class="tb-container" id="tb-ladder"></div>
+</div>
+
+<!-- ══ SCHEDULE ══ -->
+<div class="panel" id="panel-schedule">
+  <div class="sec-hdr"><div class="sec-title">FULL SCHEDULE + RULES</div></div>
+  <div class="schedule-wrap">
+    <div class="dl-strip" id="sched-dl" style="grid-template-columns:repeat(3,1fr)"></div>
+    <div class="rules-card">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;margin-bottom:12px;color:var(--t2)">POOL RULES</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>1 pick per day · 2 picks on D7+8 (Elite Eight)</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Each team used once per entry — no repeats</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Miss a pick = auto-pick fires · set auto-pick to CHALK</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Run out of teams = eliminated</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Loss or missed pick = eliminated immediately</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Tiebreaker: highest cumulative seed sum wins</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Tiebreaker includes your final losing pick</div>
+      <div class="rule-item"><span class="rule-icon">✓</span>Winner takes $39,800 — 4-way split = ~$9,950 each</div>
+      <div style="margin-top:12px;padding:10px;background:var(--orange-dim);border:1px solid rgba(249,115,22,0.3);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--orange);line-height:1.8">
+        ⚡ Configure auto-pick to CHALK before Thu 3/19<br>
+        ⚡ D7+8 requires 2 picks — don't forget<br>
+        ⚡ Check War Room before every lock
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- PICK EDIT MODAL -->
+<div class="modal-bg" id="pick-modal">
+  <div class="modal">
+    <div class="modal-title">UPDATE PICK</div>
+    <div class="modal-sub" id="modal-ctx"></div>
+    <select id="modal-team"></select>
+    <select id="modal-result">
+      <option value="pending">⏳ Pending</option>
+      <option value="win">✓ Win — Survived</option>
+      <option value="loss">✗ Loss — Eliminated</option>
+    </select>
+    <div class="modal-actions">
+      <button class="mbtn" onclick="closeModal()">Cancel</button>
+      <button class="mbtn primary" onclick="savePick()">Save Pick</button>
+    </div>
+  </div>
+</div>
+
+<!-- NUDGE MODAL -->
+<div class="modal-bg" id="nudge-modal">
+  <div class="nudge-modal">
+    <div class="modal-title" style="margin-bottom:8px">📣 NUDGE THE GROUP</div>
+    <div id="nudge-msg" class="nudge-msg"></div>
+    <div class="nudge-actions">
+      <a id="nudge-sms" class="nudge-btn" href="#">📱 Open iMessage</a>
+      <a id="nudge-email" class="nudge-btn" href="#">✉️ Open Email</a>
+      <button class="nudge-btn" onclick="copyNudge()">📋 Copy Text</button>
+      <button class="nudge-btn" onclick="document.getElementById('nudge-modal').classList.remove('open')" style="margin-left:auto">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// CORE DATA
+// ═══════════════════════════════════════
+
+const COMMANDERS = [
+  { name:'Kerry',   color:'var(--orange)', cls:'kerry',   email:'kerrykeating3@gmail.com',   entries:[0,1,2,3,4]   },
+  { name:'Whopper', color:'var(--blue)',   cls:'whopper', email:'whopperj@mac.com',           entries:[5,6,7,8,9]   },
+  { name:'Dustin',  color:'var(--green)',  cls:'dustin',  email:'dustinsnavely@yahoo.com',    entries:[10,11,12,13,14] },
+  { name:'George',  color:'var(--purple)', cls:'george',  email:'georgebaker0823@gmail.com',  entries:[15,16,17,18,19] },
+];
+
+const DEADLINES = [
+  {day:'D1',  round:'R64', date:'Thu 3/19', time:'12:15 PM', iso:'2026-03-19T12:15:00', games:16},
+  {day:'D2',  round:'R64', date:'Fri 3/20', time:'12:15 PM', iso:'2026-03-20T12:15:00', games:16},
+  {day:'D3',  round:'R32', date:'Sat 3/21', time:'1:45 PM',  iso:'2026-03-21T13:45:00', games:8},
+  {day:'D4',  round:'R32', date:'Sun 3/22', time:'1:10 PM',  iso:'2026-03-22T13:10:00', games:8},
+  {day:'D5',  round:'S16', date:'Thu 3/26', time:'8:09 PM',  iso:'2026-03-26T20:09:00', games:4},
+  {day:'D6',  round:'S16', date:'Fri 3/27', time:'8:09 PM',  iso:'2026-03-27T20:09:00', games:4},
+  {day:'D7+8',round:'E8',  date:'Sat-Sun 3/28-29',time:'7:09 PM',iso:'2026-03-28T19:09:00',games:4,double:true},
+  {day:'D9',  round:'F4',  date:'Sat 4/4',  time:'7:09 PM',  iso:'2026-04-04T19:09:00', games:2},
+  {day:'D10', round:'🏆',  date:'Mon 4/6',  time:'9:30 PM',  iso:'2026-04-06T21:30:00', games:1},
+];
+
+const FUNNEL = [20,20,17,14,11,9,7,4,2];
+const FUNNEL_COLORS = ['#f97316','#f97316','#fb923c','#fbbf24','#34d399','#10b981','#3b82f6','#6366f1','#a78bfa'];
+
+const TEAMS = {
+  'Duke':    {seed:1,region:'East',   r32:99.7,title:18.8},
+  'UConn':   {seed:2,region:'East',   r32:97.2,title:1.6},
+  'MichSt':  {seed:3,region:'East',   r32:94.2,title:1.8},
+  'Kansas':  {seed:4,region:'East',   r32:92.9,title:0.2},
+  'Arizona': {seed:1,region:'West',   r32:99.5,title:17.4},
+  'Purdue':  {seed:2,region:'West',   r32:99.8,title:8.8},
+  'Gonzaga': {seed:3,region:'West',   r32:95.3,title:1.2},
+  'Arkansas':{seed:4,region:'West',   r32:87.0,title:0.5},
+  'Florida': {seed:1,region:'South',  r32:99.8,title:10.6},
+  'Houston': {seed:2,region:'South',  r32:96.2,title:3.5},
+  'Illinois':{seed:3,region:'South',  r32:98.6,title:2.2},
+  'Nebraska':{seed:4,region:'South',  r32:86.7,title:1.2},
+  'Michigan':{seed:1,region:'Midwest',r32:99.7,title:31.4},
+  'IowasSt': {seed:2,region:'Midwest',r32:89.5,title:0.8},
+  'Virginia':{seed:3,region:'Midwest',r32:95.5,title:0.4},
+  'Alabama': {seed:4,region:'Midwest',r32:87.1,title:0.8},
+  'Wisconsin':{seed:5,region:'West',  r32:73.6,title:0.0},
+};
+
+const LANE_INFO = [
+  {name:'Michigan', dot:'ld-mich',seed:1},{name:'Michigan',dot:'ld-mich',seed:1},{name:'Michigan',dot:'ld-mich',seed:1},
+  {name:'Arizona',  dot:'ld-ariz',seed:1},{name:'Arizona', dot:'ld-ariz',seed:1},{name:'Arizona', dot:'ld-ariz',seed:1},
+  {name:'Duke',     dot:'ld-duke',seed:1},{name:'Duke',    dot:'ld-duke',seed:1},{name:'Duke',    dot:'ld-duke',seed:1},
+  {name:'Florida',  dot:'ld-flor',seed:1},{name:'Florida', dot:'ld-flor',seed:1},
+  {name:'Purdue',   dot:'ld-purd',seed:2},{name:'Purdue',  dot:'ld-purd',seed:2},
+  {name:'Houston',  dot:'ld-hous',seed:2},{name:'Houston', dot:'ld-hous',seed:2},
+  {name:'IowaSt',   dot:'ld-iowa',seed:2},{name:'IowaSt',  dot:'ld-iowa',seed:2},
+  {name:'UConn',    dot:'ld-conn',seed:2},{name:'UConn',   dot:'ld-conn',seed:2},{name:'UConn',dot:'ld-conn',seed:2},
+];
+
+// picks[i] = [D1,D2,D3,D4,D5,D6,D7a,D7b,D9,D10]
+const DEFAULT_PICKS = [
+  ['MichSt','Virginia','Duke','UConn','Arizona','Purdue','IowasSt','Houston','Arizona','Michigan'],
+  ['MichSt','Alabama','UConn','Purdue','Duke','Florida','IowasSt','Houston','Duke','Michigan'],
+  ['MichSt','Kansas','Purdue','Houston','UConn','Duke','IowasSt','Florida','Arizona','Michigan'],
+  ['Illinois','Virginia','Michigan','Duke','Purdue','UConn','IowasSt','Houston','Duke','Arizona'],
+  ['Illinois','Alabama','Michigan','UConn','Duke','Purdue','IowasSt','Florida','Michigan','Arizona'],
+  ['Illinois','Kansas','Michigan','Purdue','UConn','Florida','IowasSt','Houston','Duke','Arizona'],
+  ['Gonzaga','Virginia','Michigan','Arizona','Florida','Purdue','UConn','IowasSt','Michigan','Duke'],
+  ['Gonzaga','Alabama','Arizona','Michigan','Florida','UConn','Purdue','IowasSt','Arizona','Duke'],
+  ['Gonzaga','Kansas','Michigan','Arizona','UConn','Florida','Purdue','IowasSt','Michigan','Duke'],
+  ['Nebraska','Virginia','Michigan','Arizona','Duke','UConn','Purdue','IowasSt','Michigan','Florida'],
+  ['Nebraska','Alabama','Duke','Arizona','Michigan','UConn','Purdue','IowasSt','Duke','Florida'],
+  ['Nebraska','Kansas','Duke','Michigan','Arizona','UConn','IowasSt','Florida','Michigan','Purdue'],
+  ['Arkansas','Virginia','Duke','Arizona','Michigan','UConn','IowasSt','Florida','Duke','Purdue'],
+  ['Arkansas','Alabama','Arizona','Duke','Michigan','UConn','IowasSt','Florida','Michigan','Houston'],
+  ['Arkansas','Kansas','Michigan','Duke','Arizona','UConn','IowasSt','Florida','Duke','Houston'],
+  ['Wisconsin','Virginia','Duke','Arizona','Michigan','Purdue','UConn','Florida','Michigan','IowasSt'],
+  ['Duke','Alabama','Arizona','Michigan','Purdue','UConn','IowasSt','Florida','Arizona','IowasSt'],
+  ['Duke','Kansas','Michigan','Arizona','Purdue','Florida','IowasSt','Houston','Michigan','UConn'],
+  ['Michigan','Virginia','Duke','Arizona','Purdue','Florida','IowasSt','Houston','Duke','UConn'],
+  ['Michigan','Alabama','Arizona','Duke','Purdue','Florida','IowasSt','Houston','Arizona','UConn'],
+];
+
+const CMD_MAP = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
+const SIM_DATA = {
+  'East':    [['Duke',1,99.7,88.5,71.4,55.9,18.8],['UConn',2,97.2,73.5,41.6,18.5,1.6],['MichSt',3,94.2,63.7,26.8,12.7,1.8],['Kansas',4,92.9,40.3,7.8,3.0,0.2]],
+  'West':    [['Arizona',1,99.5,90.8,77.1,58.5,17.4],['Purdue',2,99.8,88.6,57.4,44.5,8.8],['Gonzaga',3,95.3,65.7,32.4,14.5,1.2],['Arkansas',4,87.0,29.0,5.1,1.5,0.0]],
+  'South':   [['Florida',1,99.8,86.4,65.6,39.9,10.6],['Houston',2,96.2,54.2,31.0,15.8,3.5],['Illinois',3,98.6,66.5,38.0,17.0,2.2],['Nebraska',4,86.7,43.6,11.0,4.6,1.2]],
+  'Midwest': [['Michigan',1,99.7,93.7,86.3,68.7,31.4],['IowasSt',2,89.5,69.9,39.2,14.4,0.8],['Virginia',3,95.5,52.6,23.4,6.0,0.4],['Alabama',4,87.1,49.2,18.2,2.3,0.8]],
+};
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+function loadState() {
+  try { const s=localStorage.getItem('tr-state-2026'); if(s) return JSON.parse(s); } catch(e){}
+  return {
+    picks: DEFAULT_PICKS.map(p=>[...p]),
+    results: Array(20).fill(null).map(()=>Array(10).fill('pending')),
+    eliminated: Array(20).fill(false),
+    currentDay: 0,
+  };
+}
+function saveState(){ localStorage.setItem('tr-state-2026', JSON.stringify(S)); }
+const S = loadState();
+
+function cmdCls(i){ return ['kerry','whopper','dustin','george'][CMD_MAP[i]]; }
+function cmdName(i){ return COMMANDERS[CMD_MAP[i]].name; }
+function getTB(i){ return S.picks[i].reduce((a,t)=>a+(TEAMS[t]?TEAMS[t].seed:0),0); }
+function liveCount(){ return S.eliminated.filter(e=>!e).length; }
+
+// ═══════════════════════════════════════
+// COUNTDOWN
+// ═══════════════════════════════════════
+function tick(){
+  const now=new Date();
+  let next=null,label='';
+  for(const dl of DEADLINES){ const t=new Date(dl.iso); if(t>now){next=t;label=dl.day+' · '+dl.date+' · '+dl.time;break;} }
+  if(!next){ document.getElementById('cd-time').textContent='DONE'; document.getElementById('cd-next').textContent='Tournament complete'; return; }
+  const diff=next-now;
+  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-time').textContent=pad(h)+':'+pad(m)+':'+pad(s);
+  document.getElementById('cd-next').textContent=label;
+}
+function pad(n){ return String(n).padStart(2,'0'); }
+setInterval(tick,1000); tick();
+
+// ═══════════════════════════════════════
+// PANEL NAV
+// ═══════════════════════════════════════
+function show(name,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  el.classList.add('active');
+  if(name==='board') renderBoard();
+  if(name==='commanders') renderCards('all');
+  if(name==='tiebreaker') renderTB();
+  if(name==='scenarios') renderSim();
+  if(name==='schedule') renderSchedDL();
+}
+
+// ═══════════════════════════════════════
+// RENDER FUNNEL
+// ═══════════════════════════════════════
+function renderFunnel(){
+  const days=['D1','D2','D3','D4','D5','D6','D7+8','D9','D10'];
+  const rounds=['R64','R64','R32','R32','S16','S16','E8','F4','🏆'];
+  const el=document.getElementById('funnel');
+  el.innerHTML='';
+  FUNNEL.forEach((n,i)=>{
+    const pct=Math.round((n/20)*100);
+    el.innerHTML+=`<div class="f-stage">
+      <div class="f-bar-wrap">
+        <div class="f-bar" style="height:${pct}%;background:${FUNNEL_COLORS[i]};opacity:0.8">
+          <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue',sans-serif;font-size:15px;color:${FUNNEL_COLORS[i]}">${n}</div>
+        </div>
+      </div>
+      <div class="f-day">${days[i]}</div>
+      <div class="f-round">${rounds[i]}</div>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// RENDER COMMANDER CARDS
+// ═══════════════════════════════════════
+function renderCmdCards(){
+  const el=document.getElementById('cmd-cards');
+  el.innerHTML='';
+  COMMANDERS.forEach(c=>{
+    const chips=c.entries.map(i=>{
+      const cls=S.eliminated[i]?'dead':'alive';
+      return `<span class="cmd-entry-chip ${cls}">E${i+1}</span>`;
+    }).join('');
+    el.innerHTML+=`<div class="cmd-card ${c.cls}">
+      <div class="cmd-name ${c.cls}">${c.name}</div>
+      <div class="cmd-email">${c.email}</div>
+      <div class="cmd-entries">${chips}</div>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// RENDER DEADLINES
+// ═══════════════════════════════════════
+function renderDL(elId, cols){
+  const now=new Date();
+  const el=document.getElementById(elId);
+  if(!el) return;
+  if(cols) el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+  el.innerHTML='';
+  DEADLINES.forEach((dl,i)=>{
+    const t=new Date(dl.iso);
+    const isCur=t>now&&(i===0||new Date(DEADLINES[i-1].iso)<now);
+    const isPast=t<now;
+    el.innerHTML+=`<div class="dl-card ${isCur?'current':''} ${isPast?'past':''}">
+      ${isCur?'<div class="dl-badge">NEXT</div>':''}
+      ${dl.double?'<div class="dl-badge double" style="top:'+(isCur?'-21px':'-7px')+'">2 PICKS</div>':''}
+      <div class="dl-day">${dl.day}</div>
+      <div class="dl-round">${dl.round} · ${dl.games}g</div>
+      <div class="dl-date">${dl.date}</div>
+      <div class="dl-time">Lock ${dl.time}</div>
+    </div>`;
+  });
+}
+
+function renderSchedDL(){
+  const el=document.getElementById('sched-dl');
+  if(!el) return;
+  el.style.gridTemplateColumns='repeat(3,1fr)';
+  el.innerHTML='';
+  const now=new Date();
+  DEADLINES.forEach((dl,i)=>{
+    const t=new Date(dl.iso);
+    const isCur=t>now&&(i===0||new Date(DEADLINES[i-1].iso)<now);
+    const isPast=t<now;
+    el.innerHTML+=`<div class="dl-card ${isCur?'current':''} ${isPast?'past':''}">
+      ${dl.double?'<div class="dl-badge double">DOUBLE PICK</div>':''}
+      <div class="dl-day" style="font-size:32px">${dl.day}</div>
+      <div class="dl-round" style="font-size:10px;color:var(--t2)">${dl.round}</div>
+      <div class="dl-date" style="font-size:11px;margin:5px 0">${dl.date}</div>
+      <div class="dl-time" style="font-size:10px">Lock ${dl.time}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);margin-top:4px">${dl.games} game${dl.games>1?'s':''}</div>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// RENDER BOARD
+// ═══════════════════════════════════════
+function pill(team,dayIdx,entryIdx){
+  const res=S.results[entryIdx][dayIdx];
+  const isD78=(dayIdx===6||dayIdx===7);
+  let cls='future';
+  if(res==='win') cls='used';
+  else if(res==='loss') cls='dead-p';
+  else if(dayIdx===S.currentDay) cls='next-p';
+  if(isD78&&cls==='future') cls='dp-pill';
+  return `<span class="pill ${cls}" onclick="openModal(${entryIdx},${dayIdx})">${team||'—'}</span>`;
+}
+
+function renderBoard(){
+  const tb=document.getElementById('board-body');
+  tb.innerHTML='';
+  S.picks.forEach((picks,i)=>{
+    const c=cmdCls(i);
+    const lane=LANE_INFO[i];
+    const tbVal=getTB(i);
+    const alive=!S.eliminated[i];
+    const d78=picks[6]+(picks[7]?' + '+picks[7]:'');
+    const tr=document.createElement('tr');
+    if(!alive) tr.classList.add('dead-row');
+    tr.innerHTML=`
+      <td><span class="b-enum ${c}">E${i+1}</span></td>
+      <td><span class="entry-tag tag-${c}">${cmdName(i)}</span></td>
+      <td><div style="display:flex;align-items:center;gap:5px"><div class="lane-dot ${lane.dot}"></div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3)">${lane.name}</span></div></td>
+      <td>${pill(picks[0],0,i)}</td>
+      <td>${pill(picks[1],1,i)}</td>
+      <td>${pill(picks[2],2,i)}</td>
+      <td>${pill(picks[3],3,i)}</td>
+      <td>${pill(picks[4],4,i)}</td>
+      <td>${pill(picks[5],5,i)}</td>
+      <td>${pill(d78,6,i)}</td>
+      <td>${pill(picks[8],8,i)}</td>
+      <td>${pill(picks[9],9,i)}</td>
+      <td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue)">${tbVal}</td>
+      <td><span class="e-status ${alive?'alive-s':'dead-s'}">${alive?'● ALIVE':'✕ OUT'}</span></td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+// ═══════════════════════════════════════
+// RENDER ENTRY CARDS
+// ═══════════════════════════════════════
+function renderCards(filter){
+  const grid=document.getElementById('entry-grid');
+  grid.innerHTML='';
+  const dayLbls=['D1','D2','D3','D4','D5','D6','D7a','D7b','D9','D10'];
+  S.picks.forEach((picks,i)=>{
+    const c=cmdCls(i);
+    if(filter!=='all'&&cmdName(i)!==filter) return;
+    const lane=LANE_INFO[i];
+    const tbVal=getTB(i);
+    const alive=!S.eliminated[i];
+    const pickSlots=picks.map((t,d)=>{
+      const res=S.results[i][d];
+      let cls='';
+      if(res==='win') cls='win';
+      else if(res==='loss') cls='loss';
+      else if(d===S.currentDay) cls='next';
+      else if(d===6||d===7) cls='dp';
+      const short=t.length>6?t.substring(0,6):t;
+      return `<div class="pick-slot"><div class="pd">${dayLbls[d]}</div><div class="pt ${cls}">${short}</div></div>`;
+    }).join('');
+    grid.innerHTML+=`<div class="entry-card ${alive?'':'dead'}">
+      <div class="entry-hdr">
+        <div class="entry-num ${c}">E${i+1}</div>
+        <span class="entry-tag tag-${c}">${cmdName(i)}</span>
+      </div>
+      <div class="entry-lane">
+        <div class="lane-dot ${lane.dot}"></div>
+        <span class="lane-txt">${lane.name} ${lane.seed}-seed</span>
+      </div>
+      <div class="picks-wrap">${pickSlots}</div>
+      <div class="entry-ftr">
+        <div class="tb-num">TB: ${tbVal}</div>
+        <div class="e-status ${alive?'alive-s':'dead-s'}">${alive?'● ALIVE':'✕ OUT'}</div>
+      </div>
+    </div>`;
+  });
+}
+
+function filterCmd(val, btn){
+  document.querySelectorAll('.cf-btn').forEach(b=>{b.classList.remove('active','all','kerry','whopper','dustin','george');});
+  btn.classList.add('active');
+  if(val==='all') btn.classList.add('all');
+  else { const c=COMMANDERS.find(c=>c.name===val); if(c) btn.classList.add(c.cls); }
+  renderCards(val);
+}
+
+// ═══════════════════════════════════════
+// RENDER TIEBREAKER
+// ═══════════════════════════════════════
+function renderTB(){
+  const scores=S.picks.map((_,i)=>({i,tb:getTB(i),c:cmdCls(i),name:cmdName(i),lane:LANE_INFO[i],alive:!S.eliminated[i]}));
+  scores.sort((a,b)=>b.tb-a.tb);
+  const maxTB=scores[0].tb||1;
+  const el=document.getElementById('tb-ladder');
+  el.innerHTML='';
+  scores.forEach((s,rank)=>{
+    const pct=Math.round((s.tb/maxTB)*100);
+    el.innerHTML+=`<div class="tb-row">
+      <div class="tb-rank">${rank+1}</div>
+      <div class="tb-who" style="color:var(--${s.c})">E${s.i+1} · ${s.name}</div>
+      <div class="tb-lane">${s.lane.name}</div>
+      <div class="tb-bar-bg"><div class="tb-bar-fill" style="width:${pct}%"></div></div>
+      <div class="tb-val">${s.tb}</div>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// RENDER SIM
+// ═══════════════════════════════════════
+function renderSim(){
+  const el=document.getElementById('sim-grid');
+  el.innerHTML='';
+  Object.entries(SIM_DATA).forEach(([region,rows])=>{
+    const rowHtml=rows.map(([team,seed,r32,s16,e8,f4,title])=>{
+      const tc=title>15?'var(--green)':title>5?'var(--gold)':'var(--t2)';
+      return `<tr>
+        <td style="font-weight:500">${team}</td>
+        <td style="color:var(--t3)">S${seed}</td>
+        <td>${r32}%</td><td>${s16}%</td><td>${e8}%</td><td>${f4}%</td>
+        <td style="color:${tc};font-weight:600">${title}%</td>
+      </tr>`;
+    }).join('');
+    el.innerHTML+=`<div class="sim-region">
+      <div class="sim-region-hdr">${region} Region</div>
+      <table class="sim-table">
+        <thead><tr><th>TEAM</th><th>SEED</th><th>R32</th><th>S16</th><th>E8</th><th>F4</th><th>TITLE</th></tr></thead>
+        <tbody>${rowHtml}</tbody>
+      </table>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════
+// PICK MODAL
+// ═══════════════════════════════════════
+let mEntry=null,mDay=null;
+const dayNames=['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 (Sun 3/22)','Day 5 (Thu 3/26)','Day 6 (Fri 3/27)','Day 7a (Sat 3/28)','Day 7b (Sun 3/29)','Day 9 (Sat 4/4)','Day 10 (Mon 4/6)'];
+
+function openModal(entryIdx,dayIdx){
+  mEntry=entryIdx; mDay=dayIdx;
+  document.getElementById('modal-ctx').textContent='E'+(entryIdx+1)+' · '+cmdName(entryIdx)+' · '+dayNames[dayIdx];
+  const sel=document.getElementById('modal-team');
+  sel.innerHTML='';
+  const used=new Set(S.picks[entryIdx].filter((_,d)=>d!==dayIdx));
+  Object.keys(TEAMS).filter(t=>!used.has(t)).forEach(t=>{
+    const o=document.createElement('option');
+    o.value=t; o.textContent=t+' (S'+TEAMS[t].seed+', '+TEAMS[t].region+')';
+    if(S.picks[entryIdx][dayIdx]===t) o.selected=true;
+    sel.appendChild(o);
+  });
+  document.getElementById('modal-result').value=S.results[entryIdx][dayIdx]||'pending';
+  document.getElementById('pick-modal').classList.add('open');
+}
+function closeModal(){ document.getElementById('pick-modal').classList.remove('open'); }
+function savePick(){
+  const team=document.getElementById('modal-team').value;
+  const result=document.getElementById('modal-result').value;
+  S.picks[mEntry][mDay]=team;
+  S.results[mEntry][mDay]=result;
+  if(result==='loss') S.eliminated[mEntry]=true;
+  saveState();
+  closeModal();
+  renderBoard();
+  renderCmdCards();
+  document.getElementById('s-live').textContent=liveCount();
+}
+
+// ═══════════════════════════════════════
+// CHECKLIST MODAL
+// ═══════════════════════════════════════
+function showChecklist(){
+  const now=new Date();
+  const next=DEADLINES.find(dl=>new Date(dl.iso)>now)||DEADLINES[DEADLINES.length-1];
+  let html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;display:flex;align-items:center;justify-content:center" id="cl-overlay" onclick="if(event.target===this)this.remove()">';
+  html+='<div style="background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:24px;width:500px;max-height:85vh;overflow-y:auto">';
+  html+='<div style="font-family:Bebas Neue,sans-serif;font-size:20px;letter-spacing:3px;margin-bottom:3px">PICK CHECKLIST</div>';
+  html+='<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);margin-bottom:18px">'+next.day+' · '+next.date+' · Lock '+next.time+(next.double?' · ⚠️ DOUBLE PICK':'')+'</div>';
+  COMMANDERS.forEach(c=>{
+    html+='<div style="margin-bottom:14px;padding:12px;background:var(--s2);border-radius:6px;border-left:3px solid '+c.color+'">';
+    html+='<div style="font-family:Bebas Neue,sans-serif;font-size:16px;letter-spacing:2px;color:'+c.color+';margin-bottom:8px">'+c.name+' <span style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);font-style:normal">'+c.email+'</span></div>';
+    c.entries.forEach(i=>{
+      const alive=!S.eliminated[i];
+      const submitted=S.results[i][S.currentDay]!=='pending';
+      const pick=S.picks[i][S.currentDay]||'—';
+      html+='<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(37,45,58,0.4)">';
+      html+='<div style="font-family:Bebas Neue,sans-serif;font-size:14px;color:'+c.color+';width:26px">E'+(i+1)+'</div>';
+      if(!alive){
+        html+='<span style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--red)">✕ ELIMINATED</span>';
+      } else {
+        html+='<span style="font-family:JetBrains Mono,monospace;font-size:10px;flex:1">'+pick+(next.double?' + 2nd pick':'')+'</span>';
+        html+='<span style="font-family:JetBrains Mono,monospace;font-size:9px;'+( submitted?'color:var(--green)':'color:var(--gold)')+'">'+( submitted?'✓ SUBMITTED':'⏳ PENDING')+'</span>';
+      }
+      html+='</div>';
+    });
+    html+='</div>';
+  });
+  html+='<div style="text-align:center;margin-top:14px"><button onclick="document.getElementById('cl-overlay').remove()" style="background:var(--orange);border:none;color:white;padding:9px 22px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1px;cursor:pointer">CLOSE</button></div>';
+  html+='</div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+// ═══════════════════════════════════════
+// NUDGE
+// ═══════════════════════════════════════
+function showNudge(){
+  const now=new Date();
+  const next=DEADLINES.find(dl=>new Date(dl.iso)>now)||DEADLINES[DEADLINES.length-1];
+  const msg='🏀 TOBACCO ROAD SURVIVOR — '+next.day+' PICKS DUE
+'
+    +'Lock: '+next.date+' at '+next.time+(next.double?' ⚠️ DOUBLE PICK DAY':'')+'
+
+'
+    +'ASSIGNMENTS:
+'
+    +'Kerry (E1-E5): Submit on Splash Sports
+'
+    +'Whopper (E6-E10): Submit on Splash Sports
+'
+    +'Dustin (E11-E15): Submit on Splash Sports
+'
+    +'George (E16-E20): Submit on Splash Sports
+
+'
+    +(next.double?'⚠️ You need 2 picks per entry today!
+
+':'')
+    +'Check the War Room for your exact picks. Don't miss the lock!';
+  document.getElementById('nudge-msg').textContent=msg;
+  const emails=COMMANDERS.map(c=>c.email).join(',');
+  document.getElementById('nudge-email').href='mailto:'+emails+'?subject='+encodeURIComponent('🏀 TOBACCO ROAD — '+next.day+' PICKS DUE')+'&body='+encodeURIComponent(msg);
+  const smsBody=encodeURIComponent(msg);
+  document.getElementById('nudge-sms').href='sms:&body='+smsBody;
+  document.getElementById('nudge-modal').classList.add('open');
+}
+function copyNudge(){
+  const txt=document.getElementById('nudge-msg').textContent;
+  navigator.clipboard.writeText(txt).then(()=>{ const b=document.querySelector('#nudge-modal .nudge-btn:nth-child(3)'); b.textContent='✓ Copied!'; setTimeout(()=>b.textContent='📋 Copy Text',2000); });
+}
+document.getElementById('nudge-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+
+// ═══════════════════════════════════════
+// BROWSER NOTIFICATIONS
+// ═══════════════════════════════════════
+async function enableAlerts(){
+  if(!('Notification' in window)){ alert('Browser notifications not supported'); return; }
+  const p=await Notification.requestPermission();
+  updateAlertBtn();
+  if(p==='granted') new Notification('🏀 Tobacco Road Alerts Enabled',{body:'You will be notified before each pick deadline.'});
+}
+function updateAlertBtn(){
+  const btn=document.getElementById('notif-btn');
+  const p=window.Notification?.permission;
+  if(p==='granted'){ btn.textContent='🔔 Alerts On'; btn.classList.add('alert-on'); }
+  else if(p==='denied'){ btn.textContent='🔕 Blocked'; btn.classList.add('alert-blocked'); }
+}
+updateAlertBtn();
+
+const FIRED=new Set(JSON.parse(localStorage.getItem('tr-fired-2026')||'[]'));
+function checkAlerts(){
+  const now=new Date();
+  if(Notification.permission!=='granted') return;
+  DEADLINES.forEach(dl=>{
+    const lock=new Date(dl.iso);
+    const mins=(lock-now)/60000;
+    if(mins<0) return;
+    [[180,'3 hours'],[60,'1 hour'],[15,'15 minutes']].forEach(([w,label])=>{
+      const key=dl.day+'-'+w;
+      if(FIRED.has(key)||mins>w||mins<w-2) return;
+      FIRED.add(key);
+      localStorage.setItem('tr-fired-2026',JSON.stringify([...FIRED]));
+      new Notification('🏀 TOBACCO ROAD — '+dl.day+' DUE IN '+label.toUpperCase()+(dl.double?' ⚠️ DOUBLE PICK':''),{
+        body:'Lock: '+dl.date+' at '+dl.time+'. Submit all picks on Splash Sports.',
+        requireInteraction:true
+      });
+    });
+  });
+}
+setInterval(checkAlerts,30000); checkAlerts();
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+renderFunnel();
+renderCmdCards();
+renderDL('dl-strip');
+document.getElementById('s-live').textContent=liveCount();
+</script>
+</body>
+</html>
