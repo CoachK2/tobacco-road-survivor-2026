@@ -1,8 +1,8 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Tobacco Road | Survivor War Room 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -18,7 +18,7 @@
   --rd:#ef4444;--rd-d:rgba(239,68,68,0.12);
   --t1:#f1f5f9;--t2:#94a3b8;--t3:#475569;--t4:#2d3748;
 }
-body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 body::before{content:'';position:fixed;inset:0;
   background:radial-gradient(ellipse 70% 40% at 15% -10%,rgba(249,115,22,0.07) 0%,transparent 60%),
              radial-gradient(ellipse 50% 30% at 85% 110%,rgba(59,130,246,0.05) 0%,transparent 60%);
@@ -249,12 +249,88 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 .elim-toggle{display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;user-select:none}
 .elim-toggle input{cursor:pointer;accent-color:var(--rd)}
 .elim-toggle span{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3)}
+/* ── TABLET (max 1100px) ── */
 @media(max-width:1100px){
   .stats{grid-template-columns:repeat(3,1fr)}
   .egrid{grid-template-columns:repeat(2,1fr)}
   .dl-strip{grid-template-columns:repeat(5,1fr)}
   .cmd-cards{grid-template-columns:repeat(2,1fr)}
   .sc-grid,.sim-grid{grid-template-columns:1fr}
+  .pool-title{font-size:13px;letter-spacing:3px}
+  .pool-meta{font-size:7px}
+}
+/* ── MOBILE (max 768px) ── */
+@media(max-width:768px){
+  /* Header */
+  header{flex-wrap:wrap;gap:10px;padding:10px 14px}
+  .hdr-left{order:1}
+  .hdr-right{order:2;margin-left:auto}
+  .hdr-center{order:3;width:100%;text-align:left}
+  .pool-title{font-size:12px;letter-spacing:2px}
+  .pool-meta{font-size:7px}
+  .logo{font-size:20px;letter-spacing:3px}
+  .logo-sub{font-size:7px}
+  .cd-time{font-size:20px}
+  .hbtn{font-size:7px;padding:3px 8px}
+  /* Nav - scrollable */
+  nav{overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;padding:0 14px}
+  nav::-webkit-scrollbar{display:none}
+  .tab{padding:9px 12px;font-size:8px;letter-spacing:1px}
+  /* Content */
+  .content{padding:14px}
+  /* Stats - 2 col on mobile */
+  .stats{grid-template-columns:repeat(2,1fr);gap:7px}
+  .sval{font-size:22px}
+  /* Cmd cards - 1 col on mobile */
+  .cmd-cards{grid-template-columns:1fr 1fr;gap:8px}
+  .cmd-n{font-size:15px}
+  /* Funnel - hide some labels on mobile */
+  .f-rnd{display:none}
+  .f-num{font-size:11px}
+  /* Deadline strip - 3 col on mobile */
+  .dl-strip{grid-template-columns:repeat(3,1fr);gap:6px}
+  .dl-day{font-size:15px}
+  .dl-date{font-size:6px}
+  .dl-time{font-size:6px}
+  /* Board - horizontal scroll */
+  .bwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .bwrap::-webkit-scrollbar{height:3px;background:var(--s3)}
+  .bwrap::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
+  .board th,.board td{padding:5px 7px;font-size:8px}
+  .be{font-size:12px}
+  .pill{font-size:8px;padding:2px 5px}
+  /* Entry cards - 1 col on mobile */
+  .egrid{grid-template-columns:1fr 1fr}
+  /* Section headers */
+  .sec-t{font-size:13px;letter-spacing:2px}
+  /* Scenarios */
+  .sc-grid,.sim-grid{grid-template-columns:1fr}
+  /* TB ladder */
+  .tb-who{width:70px;font-size:8px}
+  .tb-lane{display:none}
+  .tb-v{font-size:15px}
+  /* Schedule */
+  .schedule-wrap{grid-template-columns:1fr}
+  /* Field Intel */
+  .puf-grid{grid-template-columns:repeat(2,1fr)}
+}
+/* ── SMALL MOBILE (max 480px) ── */
+@media(max-width:480px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .cmd-cards{grid-template-columns:1fr 1fr}
+  .egrid{grid-template-columns:1fr}
+  .dl-strip{grid-template-columns:repeat(3,1fr)}
+  .hdr-btns{display:none} /* hide extra buttons on tiny screens */
+  .puf-grid{grid-template-columns:1fr}
+  .sc-grid,.sim-grid{grid-template-columns:1fr}
+  /* Make pills bigger for touch */
+  .pill{padding:4px 8px;font-size:9px;min-height:28px;display:inline-flex;align-items:center}
+  /* Board becomes card view on tiny screens */
+  .board thead{display:none}
+  .board tr{display:block;margin-bottom:8px;background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:8px}
+  .board td{display:flex;align-items:center;justify-content:space-between;padding:3px 6px;border-bottom:1px solid rgba(37,45,58,0.3);font-size:9px}
+  .board td:last-child{border-bottom:none}
+  .board td:before{content:attr(data-label);font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;width:50px}
 }
 </style>
 </head>
