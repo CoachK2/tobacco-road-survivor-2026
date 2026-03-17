@@ -3,304 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tobacco Road | Survivor War Room</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Tobacco Road | Survivor War Room 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --bg:#080a0f;--s1:#0e1117;--s2:#161b24;--s3:#1e2430;
   --b1:#252d3a;--b2:#2e3848;
-  --orange:#f97316;--orange-dim:rgba(249,115,22,0.12);--orange-glow:rgba(249,115,22,0.25);
-  --blue:#3b82f6;--blue-dim:rgba(59,130,246,0.12);
-  --green:#22c55e;--green-dim:rgba(34,197,94,0.12);
-  --purple:#a78bfa;--purple-dim:rgba(167,139,250,0.12);
-  --gold:#f59e0b;--gold-dim:rgba(245,158,11,0.12);
-  --red:#ef4444;--red-dim:rgba(239,68,68,0.12);
+  --or:#f97316;--or-d:rgba(249,115,22,0.12);
+  --bl:#3b82f6;--bl-d:rgba(59,130,246,0.12);
+  --gn:#22c55e;--gn-d:rgba(34,197,94,0.12);
+  --pu:#a78bfa;--pu-d:rgba(167,139,250,0.12);
+  --gd:#f59e0b;--gd-d:rgba(245,158,11,0.12);
+  --rd:#ef4444;--rd-d:rgba(239,68,68,0.12);
   --t1:#f1f5f9;--t2:#94a3b8;--t3:#475569;--t4:#2d3748;
-  --kerry:var(--orange);--whopper:var(--blue);--dustin:var(--green);--george:var(--purple);
 }
 body{background:var(--bg);color:var(--t1);font-family:'Outfit',sans-serif;min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;
-  background:radial-gradient(ellipse 70% 40% at 15% -10%,rgba(249,115,22,0.08) 0%,transparent 60%),
-             radial-gradient(ellipse 50% 30% at 85% 110%,rgba(59,130,246,0.06) 0%,transparent 60%);
+  background:radial-gradient(ellipse 70% 40% at 15% -10%,rgba(249,115,22,0.07) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 30% at 85% 110%,rgba(59,130,246,0.05) 0%,transparent 60%);
   pointer-events:none;z-index:0}
 .app{position:relative;z-index:1}
-
-/* ── HEADER ── */
-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 28px;border-bottom:1px solid var(--b1);
-  background:rgba(8,10,15,0.92);backdrop-filter:blur(16px);
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;
+  border-bottom:1px solid var(--b1);background:rgba(8,10,15,0.94);backdrop-filter:blur(16px);
   position:sticky;top:0;z-index:200}
-.hdr-left{display:flex;flex-direction:column;gap:2px}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;
-  background:linear-gradient(135deg,var(--orange),var(--gold));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.logo-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:3px;text-transform:uppercase}
-.hdr-center{text-align:center}
-.pool-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:5px;color:var(--t1)}
-.pool-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:1px;margin-top:2px}
-.hdr-right{display:flex;align-items:center;gap:12px}
-.hdr-btns{display:flex;gap:6px;flex-direction:column;align-items:flex-end}
-.hdr-btn-row{display:flex;gap:6px}
-.hbtn{padding:4px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;
-  letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);background:transparent;
-  color:var(--t3);transition:all 0.15s}
-.hbtn:hover{border-color:var(--t2);color:var(--t2)}
-.hbtn.alert-on{border-color:var(--green);color:var(--green)}
-.hbtn.alert-blocked{border-color:var(--red);color:var(--red)}
-.hbtn.checklist-btn{border-color:var(--blue);color:var(--blue)}
-.countdown-wrap{text-align:right}
-.cd-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase}
-.cd-time{font-family:'Bebas Neue',sans-serif;font-size:28px;
-  background:linear-gradient(135deg,var(--orange),var(--gold));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
-.cd-next{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gold)}
-
-/* ── NAV ── */
-nav{display:flex;gap:1px;padding:0 28px;background:var(--s1);border-bottom:1px solid var(--b1)}
-.tab{padding:12px 18px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--t3);cursor:pointer;
-  border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;
+  background:linear-gradient(135deg,var(--or),var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:3px;text-transform:uppercase;margin-top:1px}
+.pool-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:5px;color:var(--t1);text-align:center}
+.pool-meta{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:1px;text-align:center;margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.hdr-btns{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.hbtn{padding:4px 11px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:8px;
+  letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);background:transparent;color:var(--t3);transition:all 0.15s}
+.hbtn:hover,.hbtn:focus{border-color:var(--t2);color:var(--t2);outline:none}
+.hbtn.on{border-color:var(--gn);color:var(--gn)}
+.hbtn.blocked{border-color:var(--rd);color:var(--rd)}
+.cd-label{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;text-align:right}
+.cd-time{font-family:'Bebas Neue',sans-serif;font-size:26px;
+  background:linear-gradient(135deg,var(--or),var(--gd));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;text-align:right}
+.cd-next{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--gd);text-align:right}
+/* NAV */
+nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px solid var(--b1)}
+.tab{padding:11px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
 .tab:hover{color:var(--t2)}
-.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
-
-/* ── CONTENT ── */
-.content{padding:22px 28px}
+.tab.active{color:var(--or);border-bottom-color:var(--or)}
+/* CONTENT */
+.content{padding:20px 24px}
 .panel{display:none}.panel.active{display:block}
-
-/* ── ALERT BAR ── */
-.alert-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;
-  background:var(--orange-dim);border:1px solid rgba(249,115,22,0.3);
-  border-radius:6px;margin-bottom:18px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--orange)}
-.alert-dot{width:7px;height:7px;border-radius:50%;background:var(--orange);
-  animation:blink 1.4s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-
-/* ── STAT CARDS ── */
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px}
-.stat{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:14px;position:relative;overflow:hidden}
-.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange)}
-.stat.blue::after{background:var(--blue)}
-.stat.green::after{background:var(--green)}
-.stat.gold::after{background:var(--gold)}
-.stat.purple::after{background:var(--purple)}
-.stat-label{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
-.stat-val{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--t1);line-height:1}
-.stat-sub{font-size:10px;color:var(--t3);margin-top:2px}
-
-/* ── SECTION HEADER ── */
-.sec-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;color:var(--t1)}
-.sec-badge{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--orange);
-  border:1px solid rgba(249,115,22,0.4);padding:2px 7px;border-radius:2px;letter-spacing:1px}
-
-/* ── FUNNEL ── */
-.funnel{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:20px;margin-bottom:20px}
-.funnel-title{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
-.funnel-stages{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;align-items:flex-end;height:130px}
-.f-stage{text-align:center;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
-.f-bar-wrap{flex:1;display:flex;align-items:flex-end;justify-content:center;padding:0 3px}
-.f-bar{width:100%;border-radius:3px 3px 0 0;transition:height 0.8s ease;position:relative;min-height:4px}
-.f-num{font-family:'Bebas Neue',sans-serif;font-size:16px;display:block;margin-top:6px}
-.f-day{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:1px}
-.f-round{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t4);margin-top:1px}
-
-/* ── DEADLINE STRIP ── */
-.dl-strip{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin-bottom:20px}
-.dl-card{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:10px 8px;
-  text-align:center;position:relative;transition:border-color 0.2s}
-.dl-card.current{border-color:var(--orange);background:var(--orange-dim)}
-.dl-card.past{opacity:0.35}
-.dl-badge{position:absolute;top:-7px;left:50%;transform:translateX(-50%);
-  background:var(--orange);color:white;font-family:'JetBrains Mono',monospace;
-  font-size:7px;padding:1px 6px;border-radius:8px;letter-spacing:1px;white-space:nowrap}
-.dl-badge.double{background:var(--blue)}
-.dl-day{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;line-height:1}
-.dl-round{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:1px;margin:3px 0}
-.dl-date{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t2)}
-.dl-time{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-top:1px}
-
-/* ── COMMANDER CARDS ── */
-.cmd-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.cmd-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:16px;position:relative;overflow:hidden}
+/* ALERT */
+.alert-bar{display:flex;align-items:center;gap:9px;padding:9px 13px;
+  background:var(--or-d);border:1px solid rgba(249,115,22,0.3);border-radius:6px;
+  margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--or)}
+.adot{width:6px;height:6px;border-radius:50%;background:var(--or);animation:blink 1.4s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-bottom:18px}
+.stat{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:13px;position:relative;overflow:hidden}
+.stat::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--or)}
+.stat.b::after{background:var(--bl)}.stat.g::after{background:var(--gn)}.stat.gold::after{background:var(--gd)}.stat.p::after{background:var(--pu)}
+.slbl{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.sval{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--t1);line-height:1}
+.ssub{font-size:9px;color:var(--t3);margin-top:2px}
+/* SECTION */
+.sec{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.sec-t{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--t1)}
+.sec-b{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--or);border:1px solid rgba(249,115,22,0.4);padding:2px 6px;border-radius:2px;letter-spacing:1px}
+/* CMD CARDS */
+.cmd-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.cmd-card{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:14px;position:relative;overflow:hidden}
 .cmd-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px}
-.cmd-card.kerry::before{background:var(--orange)}
-.cmd-card.whopper::before{background:var(--blue)}
-.cmd-card.dustin::before{background:var(--green)}
-.cmd-card.george::before{background:var(--purple)}
-.cmd-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;margin-bottom:2px}
-.cmd-name.kerry{color:var(--orange)}.cmd-name.whopper{color:var(--blue)}
-.cmd-name.dustin{color:var(--green)}.cmd-name.george{color:var(--purple)}
-.cmd-email{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:10px}
-.cmd-entries{display:flex;gap:4px;flex-wrap:wrap}
-.cmd-entry-chip{font-family:'JetBrains Mono',monospace;font-size:9px;padding:3px 7px;
-  border-radius:3px;border:1px solid var(--b2);color:var(--t2)}
-.cmd-entry-chip.alive{border-color:rgba(34,197,94,0.4);color:var(--green);background:var(--green-dim)}
-.cmd-entry-chip.dead{border-color:rgba(239,68,68,0.3);color:var(--red);opacity:0.6;text-decoration:line-through}
-
-/* ── CMD FILTER ── */
-.cmd-filter{display:flex;gap:6px;margin-bottom:16px}
-.cf-btn{padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
-  border:1px solid var(--b1);background:transparent;color:var(--t3);cursor:pointer;border-radius:4px;transition:all 0.15s}
-.cf-btn:hover{border-color:var(--t3);color:var(--t2)}
-.cf-btn.active.all{border-color:var(--t2);color:var(--t2);background:rgba(148,163,184,0.08)}
-.cf-btn.active.kerry{border-color:var(--orange);color:var(--orange);background:var(--orange-dim)}
-.cf-btn.active.whopper{border-color:var(--blue);color:var(--blue);background:var(--blue-dim)}
-.cf-btn.active.dustin{border-color:var(--green);color:var(--green);background:var(--green-dim)}
-.cf-btn.active.george{border-color:var(--purple);color:var(--purple);background:var(--purple-dim)}
-
-/* ── ENTRY GRID ── */
-.entry-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.entry-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;overflow:hidden;transition:all 0.2s}
-.entry-card:hover{border-color:var(--b2);transform:translateY(-1px)}
-.entry-card.dead{opacity:0.4}
-.entry-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--s2);border-bottom:1px solid var(--b1)}
-.entry-num{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px}
-.entry-num.kerry{color:var(--orange)}.entry-num.whopper{color:var(--blue)}
-.entry-num.dustin{color:var(--green)}.entry-num.george{color:var(--purple)}
-.entry-tag{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 7px;border-radius:2px}
-.tag-kerry{background:var(--orange-dim);color:var(--orange)}
-.tag-whopper{background:var(--blue-dim);color:var(--blue)}
-.tag-dustin{background:var(--green-dim);color:var(--green)}
-.tag-george{background:var(--purple-dim);color:var(--purple)}
-.entry-lane{padding:6px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px}
-.lane-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.lane-txt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t2)}
-.picks-wrap{padding:8px 12px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
-.pick-slot .pd{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t4);text-align:center;margin-bottom:2px}
-.pick-slot .pt{font-family:'JetBrains Mono',monospace;font-size:8px;padding:3px 2px;border-radius:2px;
-  background:var(--s3);border:1px solid var(--b1);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pt.win{background:var(--green-dim);border-color:rgba(34,197,94,0.3);color:var(--green)}
-.pt.next{background:var(--orange-dim);border-color:var(--orange);color:var(--orange);animation:blink 2s infinite}
-.pt.loss{background:var(--red-dim);border-color:rgba(239,68,68,0.3);color:var(--red);text-decoration:line-through}
-.pt.dp{background:var(--purple-dim);border-color:rgba(167,139,250,0.3);color:var(--purple)}
-.entry-ftr{padding:7px 12px;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
-.tb-num{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--blue)}
-.e-status{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1px}
-.alive-s{color:var(--green)}.dead-s{color:var(--red)}.pending-s{color:var(--gold)}
-
-/* ── BOARD TABLE ── */
-.board-wrap{overflow-x:auto}
-.board{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:10px}
-.board th{padding:9px 10px;text-align:left;border-bottom:1px solid var(--b1);
-  color:var(--t3);font-size:8px;letter-spacing:2px;text-transform:uppercase;background:var(--s2);white-space:nowrap}
-.board td{padding:8px 10px;border-bottom:1px solid rgba(37,45,58,0.5);vertical-align:middle;white-space:nowrap}
+.cmd-card.kerry::before{background:var(--or)}.cmd-card.whopper::before{background:var(--bl)}
+.cmd-card.dustin::before{background:var(--gn)}.cmd-card.george::before{background:var(--pu)}
+.cmd-n{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:1px}
+.kerry .cmd-n{color:var(--or)}.whopper .cmd-n{color:var(--bl)}.dustin .cmd-n{color:var(--gn)}.george .cmd-n{color:var(--pu)}
+.cmd-e{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-bottom:9px}
+.cmd-chips{display:flex;gap:3px;flex-wrap:wrap}
+.chip{font-family:'JetBrains Mono',monospace;font-size:8px;padding:2px 6px;border-radius:2px;border:1px solid var(--b2);color:var(--t2)}
+.chip.alive{border-color:rgba(34,197,94,0.4);color:var(--gn);background:var(--gn-d)}
+.chip.dead{border-color:rgba(239,68,68,0.3);color:var(--rd);opacity:0.5;text-decoration:line-through}
+/* FUNNEL */
+.funnel{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:18px;margin-bottom:18px}
+.f-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
+.f-stages{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;height:120px;align-items:flex-end}
+.f-col{text-align:center;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.f-bar{width:100%;border-radius:3px 3px 0 0;min-height:4px;transition:height 0.8s ease}
+.f-num{font-family:'Bebas Neue',sans-serif;font-size:14px;display:block;margin-top:5px}
+.f-day{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t3);letter-spacing:1px}
+.f-rnd{font-family:'JetBrains Mono',monospace;font-size:5px;color:var(--t4);margin-top:1px}
+/* DEADLINES */
+.dl-strip{display:grid;grid-template-columns:repeat(9,1fr);gap:7px;margin-bottom:18px}
+.dl-card{background:var(--s1);border:1px solid var(--b1);border-radius:6px;padding:9px 7px;text-align:center;position:relative}
+.dl-card.cur{border-color:var(--or);background:var(--or-d)}.dl-card.past{opacity:0.3}
+.dl-badge{position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  background:var(--or);color:#fff;font-family:'JetBrains Mono',monospace;font-size:6px;
+  padding:1px 5px;border-radius:8px;letter-spacing:1px;white-space:nowrap}
+.dl-badge.dbl{background:var(--bl)}
+.dl-day{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;line-height:1}
+.dl-rnd{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t3);letter-spacing:1px;margin:2px 0}
+.dl-date{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t2)}
+.dl-time{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t3);margin-top:1px}
+/* BOARD */
+.bwrap{overflow-x:auto}
+.board{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
+.board th{padding:8px 9px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);
+  font-size:7px;letter-spacing:2px;text-transform:uppercase;background:var(--s2);white-space:nowrap}
+.board td{padding:7px 9px;border-bottom:1px solid rgba(37,45,58,0.5);vertical-align:middle}
 .board tr:hover td{background:var(--s2)}
-.board tr.dead-row td{opacity:0.4}
-.b-enum{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px}
-.pill{display:inline-block;padding:2px 7px;border-radius:3px;font-size:9px;font-weight:500;white-space:nowrap;cursor:pointer;transition:all 0.15s}
-.pill:hover{filter:brightness(1.2)}
-.pill.used{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,0.3)}
-.pill.next-p{background:var(--orange-dim);color:var(--orange);border:1px solid var(--orange);animation:blink 2s infinite}
+.board tr.dead td{opacity:0.35}
+.be{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px}
+.be.kerry{color:var(--or)}.be.whopper{color:var(--bl)}.be.dustin{color:var(--gn)}.be.george{color:var(--pu)}
+/* PILLS */
+.pill{display:inline-block;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;white-space:nowrap;cursor:pointer;transition:filter 0.15s;user-select:none}
+.pill:hover{filter:brightness(1.3)}
+.pill.win{background:var(--gn-d);color:var(--gn);border:1px solid rgba(34,197,94,0.3)}
+.pill.next{background:var(--or-d);color:var(--or);border:1px solid var(--or);animation:blink 2s infinite}
 .pill.future{background:var(--s3);color:var(--t3);border:1px solid var(--b1)}
-.pill.dead-p{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,0.2);text-decoration:line-through}
-.pill.dp-pill{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(167,139,250,0.3)}
-
-/* ── SCENARIO CARDS ── */
-.scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
-.sc-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
-.sc-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;margin-bottom:4px}
-.sc-desc{font-size:11px;color:var(--t3);margin-bottom:14px;line-height:1.5}
-.sc-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
-.sc-table th{padding:5px 7px;border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;text-transform:uppercase;text-align:left}
-.sc-table td{padding:5px 7px;border-bottom:1px solid rgba(37,45,58,0.4)}
-.prob-wrap{display:flex;align-items:center;gap:6px}
-.prob-bar-bg{flex:1;height:3px;background:var(--s3);border-radius:2px}
-.prob-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--green))}
-.prob-pct{color:var(--green);font-size:9px}
-
-/* ── SIM TABLE ── */
-.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sim-region{background:var(--s1);border:1px solid var(--b1);border-radius:8px;overflow:hidden}
-.sim-region-hdr{padding:8px 14px;background:var(--s2);border-bottom:1px solid var(--b1);
-  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2)}
-.sim-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
-.sim-table th{padding:7px 10px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;text-transform:uppercase}
-.sim-table td{padding:7px 10px;border-bottom:1px solid rgba(37,45,58,0.4)}
-
-/* ── TIEBREAKER LADDER ── */
-.tb-container{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
-.tb-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(37,45,58,0.4)}
-.tb-rank{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--t4);width:22px;text-align:center}
-.tb-who{font-family:'JetBrains Mono',monospace;font-size:10px;width:100px}
-.tb-lane{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);width:70px}
-.tb-bar-bg{flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden}
-.tb-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--orange))}
-.tb-val{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue);width:30px;text-align:right}
-
-/* ── SCHEDULE PANEL ── */
-.schedule-wrap{display:grid;grid-template-columns:2fr 1fr;gap:18px}
-.rules-card{background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:18px}
-.rule-item{display:flex;align-items:flex-start;gap:8px;padding:5px 0;
-  border-bottom:1px solid rgba(37,45,58,0.4);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);line-height:1.5}
-.rule-icon{color:var(--orange);flex-shrink:0}
-
-/* ── MODAL ── */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:500;
-  align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:22px;width:380px}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:4px}
-.modal-sub{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);margin-bottom:14px}
-.modal select{width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);
-  padding:9px 11px;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:11px;margin-bottom:10px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
-.mbtn{padding:7px 16px;border-radius:4px;font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);
-  background:transparent;color:var(--t2);transition:all 0.15s}
-.mbtn.primary{background:var(--orange);border-color:var(--orange);color:white}
-.mbtn:hover{opacity:0.8}
-
-/* ── LANE DOTS ── */
+.pill.dead{background:var(--rd-d);color:var(--rd);border:1px solid rgba(239,68,68,0.2);text-decoration:line-through}
+.pill.dp{background:var(--pu-d);color:var(--pu);border:1px solid rgba(167,139,250,0.3)}
+/* CMD FILTER */
+.cf{display:flex;gap:5px;margin-bottom:14px}
+.cfb{padding:5px 13px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;
+  border:1px solid var(--b1);background:transparent;color:var(--t3);cursor:pointer;border-radius:4px;transition:all 0.15s}
+.cfb:hover{border-color:var(--t3);color:var(--t2)}
+.cfb.a-all{border-color:var(--t2);color:var(--t2);background:rgba(148,163,184,0.08)}
+.cfb.a-kerry{border-color:var(--or);color:var(--or);background:var(--or-d)}
+.cfb.a-whopper{border-color:var(--bl);color:var(--bl);background:var(--bl-d)}
+.cfb.a-dustin{border-color:var(--gn);color:var(--gn);background:var(--gn-d)}
+.cfb.a-george{border-color:var(--pu);color:var(--pu);background:var(--pu-d)}
+/* ENTRY CARDS */
+.egrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.ecard{background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden;transition:all 0.2s}
+.ecard:hover{border-color:var(--b2);transform:translateY(-1px)}
+.ecard.dead{opacity:0.35}
+.ehdr{display:flex;align-items:center;justify-content:space-between;padding:8px 11px;background:var(--s2);border-bottom:1px solid var(--b1)}
+.enum{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px}
+.enum.kerry{color:var(--or)}.enum.whopper{color:var(--bl)}.enum.dustin{color:var(--gn)}.enum.george{color:var(--pu)}
+.etag{font-family:'JetBrains Mono',monospace;font-size:7px;padding:2px 6px;border-radius:2px}
+.etag.kerry{background:var(--or-d);color:var(--or)}.etag.whopper{background:var(--bl-d);color:var(--bl)}
+.etag.dustin{background:var(--gn-d);color:var(--gn)}.etag.george{background:var(--pu-d);color:var(--pu)}
+.elane{padding:5px 11px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:5px}
+.ldot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ltxt{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t2)}
+.picks{padding:7px 11px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.ps .pd{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t4);text-align:center;margin-bottom:2px}
+.ps .pt{font-family:'JetBrains Mono',monospace;font-size:7px;padding:2px;border-radius:2px;
+  background:var(--s3);border:1px solid var(--b1);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt.win{background:var(--gn-d);border-color:rgba(34,197,94,0.3);color:var(--gn)}
+.pt.next{background:var(--or-d);border-color:var(--or);color:var(--or);animation:blink 2s infinite}
+.pt.loss{background:var(--rd-d);border-color:rgba(239,68,68,0.3);color:var(--rd);text-decoration:line-through}
+.pt.dp{background:var(--pu-d);border-color:rgba(167,139,250,0.3);color:var(--pu)}
+.eftr{padding:6px 11px;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
+.tbn{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--bl)}
+.est{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:1px}
+.est.ok{color:var(--gn)}.est.no{color:var(--rd)}.est.pd{color:var(--gd)}
+/* PROB TABLE */
+.prob-section{background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden;margin-bottom:14px}
+.prob-hdr{padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--b1);
+  display:flex;align-items:center;justify-content:space-between}
+.prob-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--t2)}
+.prob-note{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3)}
+.ptable{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px}
+.ptable th{padding:7px 10px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;text-transform:uppercase}
+.ptable td{padding:7px 10px;border-bottom:1px solid rgba(37,45,58,0.4)}
+.ptable tr:last-child td{border-bottom:none}
+.pbar-wrap{display:flex;align-items:center;gap:6px}
+.pbar{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--bl),var(--gn))}
+.elim-row td{opacity:0.3;text-decoration:line-through}
+/* LANE DOTS */
 .ld-mich{background:#FFCB05}.ld-ariz{background:#CC0033}.ld-duke{background:#4B9CD3}
 .ld-flor{background:#0021A5}.ld-purd{background:#CEB888}.ld-conn{background:#6B7280}
-.ld-iowa{background:#C8102E}.ld-hous{background:#C8102E;filter:brightness(1.3)}
-
-/* ── NUDGE MODAL ── */
-.nudge-modal{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:22px;width:500px}
-.nudge-msg{background:var(--s3);border:1px solid var(--b1);border-radius:6px;padding:12px;
-  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t2);line-height:1.6;
-  margin-bottom:12px;white-space:pre-wrap}
-.nudge-actions{display:flex;gap:8px;flex-wrap:wrap}
-.nudge-btn{padding:8px 14px;border-radius:4px;font-family:'JetBrains Mono',monospace;
-  font-size:10px;letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);
-  background:var(--s2);color:var(--t2);text-decoration:none;transition:all 0.15s;display:inline-block}
-.nudge-btn:hover{border-color:var(--orange);color:var(--orange)}
-
+.ld-iowa{background:#C8102E}.ld-hous{background:#FF4040}
+/* TB LADDER */
+.tb-wrap{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px}
+.tb-row{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid rgba(37,45,58,0.4)}
+.tb-rk{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--t4);width:20px;text-align:center}
+.tb-who{font-family:'JetBrains Mono',monospace;font-size:9px;width:95px}
+.tb-lane{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);width:65px}
+.tb-bg{flex:1;height:4px;background:var(--s3);border-radius:2px;overflow:hidden}
+.tb-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--bl),var(--or))}
+.tb-v{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--bl);width:28px;text-align:right}
+/* SCENARIO */
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.sc-card{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px}
+.sc-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;margin-bottom:3px}
+.sc-desc{font-size:10px;color:var(--t3);margin-bottom:12px;line-height:1.5}
+.sc-tbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:8px}
+.sc-tbl th{padding:4px 6px;border-bottom:1px solid var(--b1);color:var(--t3);font-size:6px;letter-spacing:1.5px;text-transform:uppercase;text-align:left}
+.sc-tbl td{padding:4px 6px;border-bottom:1px solid rgba(37,45,58,0.4)}
+/* SIM */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sim-r{background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden}
+.sim-rh{padding:7px 12px;background:var(--s2);border-bottom:1px solid var(--b1);
+  font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;color:var(--t2)}
+.sim-tbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:8px}
+.sim-tbl th{padding:6px 9px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);font-size:6px;letter-spacing:1.5px;text-transform:uppercase}
+.sim-tbl td{padding:6px 9px;border-bottom:1px solid rgba(37,45,58,0.4)}
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:500;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--s1);border:1px solid var(--b1);border-radius:9px;padding:20px;width:370px}
+.modal-t{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;margin-bottom:3px}
+.modal-s{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:12px}
+.modal select{width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);
+  padding:8px 10px;border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:10px;margin-bottom:8px;appearance:none}
+.modal-acts{display:flex;gap:7px;justify-content:flex-end;margin-top:4px}
+.mbtn{padding:6px 14px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);background:transparent;color:var(--t2);transition:all 0.15s}
+.mbtn.ok{background:var(--or);border-color:var(--or);color:#fff}
+.mbtn:hover{opacity:0.8}
+/* NUDGE */
+.nudge{background:var(--s1);border:1px solid var(--b1);border-radius:9px;padding:20px;width:480px}
+.nmsg{background:var(--s3);border:1px solid var(--b1);border-radius:5px;padding:11px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t2);line-height:1.7;margin-bottom:11px;white-space:pre-wrap}
+.nacts{display:flex;gap:7px;flex-wrap:wrap}
+.nbtn{padding:7px 12px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:1px;cursor:pointer;border:1px solid var(--b2);background:var(--s2);color:var(--t2);text-decoration:none;display:inline-block;transition:all 0.15s}
+.nbtn:hover{border-color:var(--or);color:var(--or)}
+/* RULES */
+.rules{background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px}
+.rule{display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px solid rgba(37,45,58,0.4);
+  font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);line-height:1.5}
+.rule-ic{color:var(--or);flex-shrink:0}
+.warn-box{margin-top:10px;padding:9px;background:var(--or-d);border:1px solid rgba(249,115,22,0.3);
+  border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--or);line-height:1.8}
+/* PROB UPDATE FORM */
+.prob-update{background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:14px;margin-bottom:14px}
+.puf-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;margin-bottom:3px}
+.puf-desc{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:12px;line-height:1.5}
+.puf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.puf-cell{background:var(--s1);border:1px solid var(--b1);border-radius:5px;padding:8px}
+.puf-team{font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1px;margin-bottom:4px}
+.puf-seed{font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-bottom:6px}
+.puf-input{width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);
+  padding:4px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:9px}
+.puf-input:focus{outline:none;border-color:var(--or)}
+.puf-label{font-family:'JetBrains Mono',monospace;font-size:6px;color:var(--t3);margin-bottom:2px}
+.puf-btn{background:var(--or);border:none;color:#fff;padding:7px 16px;border-radius:4px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;transition:opacity 0.15s}
+.puf-btn:hover{opacity:0.85}
+.elim-toggle{display:flex;align-items:center;gap:6px;margin-top:8px;cursor:pointer;user-select:none}
+.elim-toggle input{cursor:pointer;accent-color:var(--rd)}
+.elim-toggle span{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3)}
 @media(max-width:1100px){
   .stats{grid-template-columns:repeat(3,1fr)}
-  .entry-grid{grid-template-columns:repeat(2,1fr)}
+  .egrid{grid-template-columns:repeat(2,1fr)}
   .dl-strip{grid-template-columns:repeat(5,1fr)}
   .cmd-cards{grid-template-columns:repeat(2,1fr)}
-  .scenario-grid{grid-template-columns:1fr}
-  .sim-grid{grid-template-columns:1fr}
+  .sc-grid,.sim-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- HEADER -->
 <header>
-  <div class="hdr-left">
+  <div>
     <div class="logo">TOBACCO ROAD</div>
     <div class="logo-sub">Survivor War Room · 2026</div>
   </div>
-  <div class="hdr-center">
+  <div>
     <div class="pool-title">Raleigh March Madness Survivor</div>
     <div class="pool-meta">Splash Sports &nbsp;·&nbsp; 796 Entries &nbsp;·&nbsp; $39,800 Prize &nbsp;·&nbsp; 4 Commanders &nbsp;·&nbsp; 20 Entries</div>
   </div>
   <div class="hdr-right">
     <div class="hdr-btns">
-      <div class="hdr-btn-row">
-        <button class="hbtn checklist-btn" onclick="showChecklist()">📋 Checklist</button>
-        <button class="hbtn" id="notif-btn" onclick="enableAlerts()">🔔 Enable Alerts</button>
-        <button class="hbtn" style="border-color:var(--orange);color:var(--orange)" onclick="showNudge()">📣 Nudge Group</button>
+      <div style="display:flex;gap:5px">
+        <button class="hbtn" id="notif-btn">🔔 Alerts</button>
+        <button class="hbtn" id="checklist-btn">📋 Checklist</button>
+        <button class="hbtn" id="nudge-btn" style="border-color:var(--or);color:var(--or)">📣 Nudge</button>
       </div>
     </div>
-    <div class="countdown-wrap">
+    <div>
       <div class="cd-label">Next Lock</div>
       <div class="cd-time" id="cd-time">--:--:--</div>
       <div class="cd-next" id="cd-next">Loading...</div>
@@ -308,67 +285,53 @@ nav{display:flex;gap:1px;padding:0 28px;background:var(--s1);border-bottom:1px s
   </div>
 </header>
 
-<!-- NAV -->
 <nav>
-  <div class="tab active" onclick="show('overview',this)">Overview</div>
-  <div class="tab" onclick="show('board',this)">Full Board</div>
-  <div class="tab" onclick="show('commanders',this)">Commanders</div>
-  <div class="tab" onclick="show('scenarios',this)">Scenarios</div>
-  <div class="tab" onclick="show('tiebreaker',this)">Tiebreaker</div>
-  <div class="tab" onclick="show('schedule',this)">Schedule</div>
+  <div class="tab active" data-panel="overview">Overview</div>
+  <div class="tab" data-panel="board">Full Board</div>
+  <div class="tab" data-panel="commanders">Commanders</div>
+  <div class="tab" data-panel="probs">Live Probs</div>
+  <div class="tab" data-panel="scenarios">Scenarios</div>
+  <div class="tab" data-panel="tiebreaker">Tiebreaker</div>
+  <div class="tab" data-panel="schedule">Schedule</div>
 </nav>
 
 <div class="content">
 
-<!-- ══ OVERVIEW ══ -->
+<!-- OVERVIEW -->
 <div class="panel active" id="panel-overview">
-  <div class="alert-bar" id="main-alert">
-    <div class="alert-dot"></div>
-    <span id="alert-txt">🏀 DAY 1 PICKS DUE Thu 3/19 at 12:15 PM · All 20 entries must be submitted · Check Board tab for your assignments</span>
-  </div>
+  <div class="alert-bar"><div class="adot"></div><span id="alert-txt">🏀 D1 PICKS DUE Thu 3/19 at 12:15 PM · All 20 entries must be submitted · Check Board tab for your pick</span></div>
   <div class="stats">
-    <div class="stat"><div class="stat-label">Live Entries</div><div class="stat-val" id="s-live">20</div><div class="stat-sub">of 20 total</div></div>
-    <div class="stat blue"><div class="stat-label">Current Day</div><div class="stat-val">PRE</div><div class="stat-sub">D1 locks Thu 3/19</div></div>
-    <div class="stat green"><div class="stat-label">Win Probability</div><div class="stat-val">6.3%</div><div class="stat-sub">1 in 16 · skill-adjusted</div></div>
-    <div class="stat gold"><div class="stat-label">Your Prize</div><div class="stat-val">$9,950</div><div class="stat-sub">4-way split if we win</div></div>
-    <div class="stat"><div class="stat-label">Invested</div><div class="stat-val">$1,000</div><div class="stat-sub">$250 × 4 commanders</div></div>
-    <div class="stat purple"><div class="stat-label">Pool Field</div><div class="stat-val">796</div><div class="stat-sub">total entries</div></div>
+    <div class="stat"><div class="slbl">Live Entries</div><div class="sval" id="s-live">20</div><div class="ssub">of 20 total</div></div>
+    <div class="stat b"><div class="slbl">Current Day</div><div class="sval">PRE</div><div class="ssub">D1 starts Thu 3/19</div></div>
+    <div class="stat g"><div class="slbl">Win Probability</div><div class="sval">6.3%</div><div class="ssub">1 in 16 · skill-adj</div></div>
+    <div class="stat gold"><div class="slbl">Your Prize</div><div class="sval">$9,950</div><div class="ssub">4-way split if we win</div></div>
+    <div class="stat"><div class="slbl">Total In</div><div class="sval">$1,000</div><div class="ssub">$250 × 4 commanders</div></div>
+    <div class="stat p"><div class="slbl">Pool Field</div><div class="sval">796</div><div class="ssub">total entries</div></div>
   </div>
-
-  <!-- Commander cards -->
-  <div class="sec-hdr"><div class="sec-title">THE FOUR COMMANDERS</div></div>
+  <div class="sec"><div class="sec-t">THE FOUR COMMANDERS</div></div>
   <div class="cmd-cards" id="cmd-cards"></div>
-
-  <!-- Funnel -->
-  <div class="funnel">
-    <div class="funnel-title">STAGED PORTFOLIO · SURVIVAL TARGET BY ROUND</div>
-    <div class="funnel-stages" id="funnel"></div>
-  </div>
-
-  <!-- Deadlines -->
-  <div class="sec-hdr"><div class="sec-title">PICK DEADLINES</div></div>
+  <div class="funnel"><div class="f-lbl">STAGED PORTFOLIO · SURVIVAL TARGET BY ROUND</div><div class="f-stages" id="funnel"></div></div>
+  <div class="sec"><div class="sec-t">PICK DEADLINES</div></div>
   <div class="dl-strip" id="dl-strip"></div>
 </div>
 
-<!-- ══ BOARD ══ -->
+<!-- FULL BOARD -->
 <div class="panel" id="panel-board">
-  <div class="sec-hdr">
-    <div class="sec-title">20-ENTRY PICK BOARD</div>
-    <div class="sec-badge">CLICK ANY PICK TO UPDATE</div>
-  </div>
-  <div class="board-wrap">
+  <div class="sec"><div class="sec-t">20-ENTRY PICK BOARD</div><div class="sec-b">CLICK ANY PICK TO UPDATE</div></div>
+  <div class="bwrap">
     <table class="board" id="board-tbl">
       <thead><tr>
         <th>ENTRY</th><th>CMD</th><th>LANE</th>
-        <th>D1<br><span style="font-weight:300;color:var(--t4)">3/19 Thu</span></th>
-        <th>D2<br><span style="font-weight:300;color:var(--t4)">3/20 Fri</span></th>
-        <th>D3<br><span style="font-weight:300;color:var(--t4)">3/21 Sat</span></th>
-        <th>D4<br><span style="font-weight:300;color:var(--t4)">3/22 Sun</span></th>
-        <th>D5<br><span style="font-weight:300;color:var(--t4)">3/26 Thu</span></th>
-        <th>D6<br><span style="font-weight:300;color:var(--t4)">3/27 Fri</span></th>
-        <th>D7+8 ×2<br><span style="font-weight:300;color:var(--t4)">3/28-29</span></th>
-        <th>D9<br><span style="font-weight:300;color:var(--t4)">4/4 Sat</span></th>
-        <th>D10<br><span style="font-weight:300;color:var(--t4)">4/6 Mon</span></th>
+        <th>D1<br><small style="color:var(--t4);font-weight:300">3/19 Thu</small></th>
+        <th>D2<br><small style="color:var(--t4);font-weight:300">3/20 Fri</small></th>
+        <th>D3<br><small style="color:var(--t4);font-weight:300">3/21 Sat</small></th>
+        <th>D4<br><small style="color:var(--t4);font-weight:300">3/22 Sun</small></th>
+        <th>D5<br><small style="color:var(--t4);font-weight:300">3/26</small></th>
+        <th>D6<br><small style="color:var(--t4);font-weight:300">3/27</small></th>
+        <th>D7a<br><small style="color:var(--t4);font-weight:300">3/28</small></th>
+        <th>D7b<br><small style="color:var(--t4);font-weight:300">3/29</small></th>
+        <th>D9<br><small style="color:var(--t4);font-weight:300">4/4</small></th>
+        <th>D10<br><small style="color:var(--t4);font-weight:300">4/6</small></th>
         <th>TB</th><th>STATUS</th>
       </tr></thead>
       <tbody id="board-body"></tbody>
@@ -376,206 +339,213 @@ nav{display:flex;gap:1px;padding:0 28px;background:var(--s1);border-bottom:1px s
   </div>
 </div>
 
-<!-- ══ COMMANDERS ══ -->
+<!-- COMMANDERS -->
 <div class="panel" id="panel-commanders">
-  <div class="cmd-filter" id="cmd-filter">
-    <button class="cf-btn active all" onclick="filterCmd('all',this)">ALL 20</button>
-    <button class="cf-btn" onclick="filterCmd('Kerry',this)">Kerry · E1-E5</button>
-    <button class="cf-btn" onclick="filterCmd('Whopper',this)">Whopper · E6-E10</button>
-    <button class="cf-btn" onclick="filterCmd('Dustin',this)">Dustin · E11-E15</button>
-    <button class="cf-btn" onclick="filterCmd('George',this)">George · E16-E20</button>
+  <div class="cf" id="cf">
+    <button class="cfb a-all" data-cmd="all">ALL 20</button>
+    <button class="cfb" data-cmd="Kerry">Kerry · E1–E5</button>
+    <button class="cfb" data-cmd="Whopper">Whopper · E6–E10</button>
+    <button class="cfb" data-cmd="Dustin">Dustin · E11–E15</button>
+    <button class="cfb" data-cmd="George">George · E16–E20</button>
   </div>
-  <div class="entry-grid" id="entry-grid"></div>
+  <div class="egrid" id="entry-grid"></div>
 </div>
 
-<!-- ══ SCENARIOS ══ -->
+<!-- LIVE PROBS -->
+<div class="panel" id="panel-probs">
+  <div class="sec"><div class="sec-t">LIVE PROBABILITY UPDATER</div><div class="sec-b">UPDATE AFTER EACH ROUND</div></div>
+  <div class="prob-update" id="prob-update-form"></div>
+  <div class="sec" style="margin-top:16px"><div class="sec-t">CURRENT PROJECTIONS</div><div class="sec-b" id="prob-last-updated">NOT YET UPDATED</div></div>
+  <div class="prob-section">
+    <div class="prob-hdr">
+      <div class="prob-title">ENTRY SURVIVAL PROJECTIONS</div>
+      <div class="prob-note">Updates when you log results · Sorted by projected win %</div>
+    </div>
+    <table class="ptable" id="prob-table">
+      <thead><tr><th>ENTRY</th><th>CMD</th><th>LANE</th><th>PICKS LEFT</th><th>TEAMS AVAILABLE</th><th>PROJ WIN %</th><th>TB SO FAR</th><th>STATUS</th></tr></thead>
+      <tbody id="prob-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SCENARIOS -->
 <div class="panel" id="panel-scenarios">
-  <div class="sec-hdr"><div class="sec-title">SCENARIO PLANNING</div><div class="sec-badge">EVANMIYA SIM</div></div>
-  <div class="scenario-grid">
+  <div class="sec"><div class="sec-t">SCENARIO PLANNING</div><div class="sec-b">EVANMIYA SIM</div></div>
+  <div class="sc-grid">
     <div class="sc-card">
       <div class="sc-title">CHALK RUNS DEEP</div>
-      <div class="sc-desc">All 1/2-seeds reach Elite Eight. Pool thins slowly. Tiebreaker battle among survivors decides winner.</div>
-      <table class="sc-table">
-        <tr><th>STAGE</th><th>TARGET ALIVE</th><th>OUR POSITION</th></tr>
-        <tr><td>D1-D2</td><td>17-18</td><td style="color:var(--green)">Strong</td></tr>
-        <tr><td>D3-D4</td><td>13-15</td><td style="color:var(--green)">Strong</td></tr>
-        <tr><td>Sweet 16</td><td>10-12</td><td style="color:var(--gold)">Good</td></tr>
-        <tr><td>Elite Eight</td><td>7-8</td><td style="color:var(--gold)">Good</td></tr>
-        <tr><td>Final Four</td><td>3-4</td><td style="color:var(--orange)">Competing</td></tr>
-        <tr><td>Champ</td><td>1-2</td><td><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:52%"></div></div><span class="prob-pct">~8%</span></div></td></tr>
+      <div class="sc-desc">All 1/2-seeds reach Elite Eight. Pool thins slowly. Tiebreaker battle decides winner.</div>
+      <table class="sc-tbl">
+        <tr><th>STAGE</th><th>ALIVE</th><th>POSITION</th></tr>
+        <tr><td>D1-D2</td><td>17-18</td><td style="color:var(--gn)">Strong</td></tr>
+        <tr><td>D3-D4</td><td>13-15</td><td style="color:var(--gn)">Strong</td></tr>
+        <tr><td>Sweet 16</td><td>10-12</td><td style="color:var(--gd)">Good</td></tr>
+        <tr><td>Elite Eight</td><td>7-8</td><td style="color:var(--gd)">Good</td></tr>
+        <tr><td>Final Four</td><td>3-4</td><td style="color:var(--or)">Competing</td></tr>
+        <tr><td>Champ</td><td>1-2</td><td style="color:var(--gn)">~8% win</td></tr>
       </table>
     </div>
     <div class="sc-card">
       <div class="sc-title">EARLY UPSET WAVE</div>
-      <div class="sc-desc">Multiple 2-seeds fall D1/D2. Pool collapses early. Our preserved ammo becomes the tiebreaker advantage.</div>
-      <table class="sc-table">
-        <tr><th>STAGE</th><th>TARGET ALIVE</th><th>OUR POSITION</th></tr>
-        <tr><td>D1-D2</td><td>12-14</td><td style="color:var(--gold)">Managed</td></tr>
-        <tr><td>D3-D4</td><td>8-10</td><td style="color:var(--green)">TB edge</td></tr>
-        <tr><td>Sweet 16</td><td>5-7</td><td style="color:var(--green)">TB advantage</td></tr>
-        <tr><td>Elite Eight</td><td>3-5</td><td style="color:var(--green)">Favored</td></tr>
-        <tr><td>Final Four</td><td>2-3</td><td style="color:var(--orange)">Strong</td></tr>
-        <tr><td>Champ</td><td>1-2</td><td><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:72%"></div></div><span class="prob-pct">~12%</span></div></td></tr>
+      <div class="sc-desc">Multiple 2-seeds fall D1/D2. Pool collapses. Our preserved ammo wins tiebreaker.</div>
+      <table class="sc-tbl">
+        <tr><th>STAGE</th><th>ALIVE</th><th>POSITION</th></tr>
+        <tr><td>D1-D2</td><td>12-14</td><td style="color:var(--gd)">Managed</td></tr>
+        <tr><td>D3-D4</td><td>8-10</td><td style="color:var(--gn)">TB edge</td></tr>
+        <tr><td>Sweet 16</td><td>5-7</td><td style="color:var(--gn)">TB advantage</td></tr>
+        <tr><td>Elite Eight</td><td>3-5</td><td style="color:var(--gn)">Favored</td></tr>
+        <tr><td>Final Four</td><td>2-3</td><td style="color:var(--or)">Strong</td></tr>
+        <tr><td>Champ</td><td>1-2</td><td style="color:var(--gn)">~12% win</td></tr>
       </table>
     </div>
     <div class="sc-card">
       <div class="sc-title">MICHIGAN RUNS THE TABLE</div>
-      <div class="sc-desc">Michigan (31.4% title prob) anchors D10. Lanes E1-E3 are built for this. Best case for the syndicate.</div>
-      <table class="sc-table">
-        <tr><th>LANE</th><th>ENTRIES</th><th>D10 ANCHOR</th></tr>
-        <tr><td style="color:#FFCB05">Michigan 1</td><td>E1, E2, E3</td><td style="color:var(--green)">Michigan</td></tr>
-        <tr><td style="color:#4B9CD3">Duke 1</td><td>E7, E8, E9</td><td>Duke</td></tr>
-        <tr><td style="color:#CC0033">Arizona 1</td><td>E4, E5, E6</td><td>Arizona</td></tr>
-        <tr><td style="color:#0021A5">Florida 1</td><td>E10, E11</td><td>Florida</td></tr>
-        <tr><td colspan="3" style="color:var(--t4);font-size:8px;padding-top:8px">TB edge: D1 3/4-seed picks = higher seed sum vs pure chalk</td></tr>
+      <div class="sc-desc">Michigan (31.4% title prob) anchors D10. E1-E3 built for this. Best case for the syndicate.</div>
+      <table class="sc-tbl">
+        <tr><th>LANE</th><th>ENTRIES</th><th>D10</th></tr>
+        <tr><td style="color:#FFCB05">Michigan</td><td>E1-E3</td><td style="color:var(--gn)">Michigan ✓</td></tr>
+        <tr><td style="color:#4B9CD3">Duke</td><td>E7-E9</td><td>Duke</td></tr>
+        <tr><td style="color:#CC0033">Arizona</td><td>E4-E6</td><td>Arizona</td></tr>
+        <tr><td style="color:#0021A5">Florida</td><td>E10-E11</td><td>Florida</td></tr>
+        <tr><td colspan="3" style="color:var(--t4);font-size:7px;padding-top:7px">D1 3/4/5-seed picks = higher TB vs pure chalk</td></tr>
       </table>
     </div>
     <div class="sc-card">
       <div class="sc-title">2-SEED GOES ALL THE WAY</div>
-      <div class="sc-desc">Purdue (8.8%), Houston (3.5%), UConn (1.6%), or Iowa St (0.8%) wins it. Lanes E12-E20 built for this.</div>
-      <table class="sc-table">
-        <tr><th>LANE</th><th>ENTRIES</th><th>TITLE PROB</th></tr>
-        <tr><td style="color:var(--gold)">Purdue 2</td><td>E12, E13</td><td style="color:var(--gold)">8.8%</td></tr>
-        <tr><td style="color:#C8102E">Houston 2</td><td>E14, E15</td><td>3.5%</td></tr>
-        <tr><td style="color:var(--t3)">UConn 2</td><td>E18, E19, E20</td><td>1.6%</td></tr>
-        <tr><td style="color:#C8102E">Iowa St 2</td><td>E16, E17</td><td>0.8%</td></tr>
-        <tr><td colspan="3" style="color:var(--t4);font-size:8px;padding-top:8px">2-seed lanes have tiebreak equity from early round 3/4-seed usage</td></tr>
+      <div class="sc-desc">Purdue (8.8%), Houston (3.5%), UConn (1.6%), or Iowa St (0.8%) wins it all.</div>
+      <table class="sc-tbl">
+        <tr><th>LANE</th><th>ENTRIES</th><th>TITLE%</th></tr>
+        <tr><td style="color:var(--gd)">Purdue</td><td>E12-E13</td><td style="color:var(--gd)">8.8%</td></tr>
+        <tr><td>Houston</td><td>E14-E15</td><td>3.5%</td></tr>
+        <tr><td style="color:var(--t3)">UConn</td><td>E18-E20</td><td>1.6%</td></tr>
+        <tr><td style="color:var(--rd)">Iowa St</td><td>E16-E17</td><td>0.8%</td></tr>
       </table>
     </div>
   </div>
-  <div class="sec-hdr"><div class="sec-title">EVANMIYA SIM PROBABILITIES</div><div class="sec-badge">10,000 SIMULATIONS</div></div>
+  <div class="sec"><div class="sec-t">SIM PROBABILITIES</div><div class="sec-b">EVANMIYA 10K SIMS</div></div>
   <div class="sim-grid" id="sim-grid"></div>
 </div>
 
-<!-- ══ TIEBREAKER ══ -->
+<!-- TIEBREAKER -->
 <div class="panel" id="panel-tiebreaker">
-  <div class="sec-hdr"><div class="sec-title">TIEBREAKER LADDER</div><div class="sec-badge">HIGHEST SEED SUM WINS</div></div>
-  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:8px;padding:14px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--t3);line-height:1.8">
-    <span style="color:var(--t2)">Rule:</span> Tiebreaker = sum of all seeds picked including final losing pick &nbsp;·&nbsp;
-    <span style="color:var(--orange)">Target range:</span> 18-26 pts with 1/2/3-seed strategy &nbsp;·&nbsp;
-    Entries using 4-seeds (Nebraska, Arkansas) on D1 push to 22-26
+  <div class="sec"><div class="sec-t">TIEBREAKER LADDER</div><div class="sec-b">HIGHEST SEED SUM WINS</div></div>
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:12px;margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3);line-height:1.8">
+    Rule: sum of all seeds picked including final losing pick &nbsp;·&nbsp;
+    <span style="color:var(--or)">Our range:</span> 18–26 with 1/2/3-seed strategy &nbsp;·&nbsp;
+    Nebraska/Arkansas D1 picks push entries to 22–26
   </div>
-  <div class="tb-container" id="tb-ladder"></div>
+  <div class="tb-wrap" id="tb-ladder"></div>
 </div>
 
-<!-- ══ SCHEDULE ══ -->
+<!-- SCHEDULE -->
 <div class="panel" id="panel-schedule">
-  <div class="sec-hdr"><div class="sec-title">FULL SCHEDULE + RULES</div></div>
-  <div class="schedule-wrap">
+  <div class="sec"><div class="sec-t">SCHEDULE + RULES</div></div>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
     <div class="dl-strip" id="sched-dl" style="grid-template-columns:repeat(3,1fr)"></div>
-    <div class="rules-card">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;margin-bottom:12px;color:var(--t2)">POOL RULES</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>1 pick per day · 2 picks on D7+8 (Elite Eight)</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Each team used once per entry — no repeats</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Miss a pick = auto-pick fires · set auto-pick to CHALK</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Run out of teams = eliminated</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Loss or missed pick = eliminated immediately</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Tiebreaker: highest cumulative seed sum wins</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Tiebreaker includes your final losing pick</div>
-      <div class="rule-item"><span class="rule-icon">✓</span>Winner takes $39,800 — 4-way split = ~$9,950 each</div>
-      <div style="margin-top:12px;padding:10px;background:var(--orange-dim);border:1px solid rgba(249,115,22,0.3);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--orange);line-height:1.8">
-        ⚡ Configure auto-pick to CHALK before Thu 3/19<br>
-        ⚡ D7+8 requires 2 picks — don't forget<br>
-        ⚡ Check War Room before every lock
-      </div>
+    <div class="rules">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:3px;margin-bottom:10px;color:var(--t2)">POOL RULES</div>
+      <div class="rule"><span class="rule-ic">✓</span>1 pick/day · 2 picks on D7+8 (Elite Eight)</div>
+      <div class="rule"><span class="rule-ic">✓</span>Each team used once per entry — no repeats</div>
+      <div class="rule"><span class="rule-ic">✓</span>Miss pick = auto-pick fires · set to CHALK</div>
+      <div class="rule"><span class="rule-ic">✓</span>Run out of teams = eliminated</div>
+      <div class="rule"><span class="rule-ic">✓</span>Tiebreaker: highest cumulative seed sum wins</div>
+      <div class="rule"><span class="rule-ic">✓</span>Tiebreaker includes your final losing pick</div>
+      <div class="rule"><span class="rule-ic">✓</span>Winner takes $39,800 · 4-way split = ~$9,950</div>
+      <div class="warn-box">⚡ Set auto-pick CHALK before Thu 3/19<br>⚡ D7+8 = 2 picks required<br>⚡ Check War Room before every lock</div>
     </div>
   </div>
 </div>
 
 </div><!-- /content -->
 
-<!-- PICK EDIT MODAL -->
+<!-- PICK MODAL -->
 <div class="modal-bg" id="pick-modal">
   <div class="modal">
-    <div class="modal-title">UPDATE PICK</div>
-    <div class="modal-sub" id="modal-ctx"></div>
+    <div class="modal-t">UPDATE PICK</div>
+    <div class="modal-s" id="modal-ctx">—</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-bottom:3px">TEAM (unused in this entry)</div>
     <select id="modal-team"></select>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:7px;color:var(--t3);margin-bottom:3px">RESULT</div>
     <select id="modal-result">
-      <option value="pending">⏳ Pending</option>
-      <option value="win">✓ Win — Survived</option>
-      <option value="loss">✗ Loss — Eliminated</option>
+      <option value="pending">⏳ Pending — not played yet</option>
+      <option value="win">✓ Win — entry survived</option>
+      <option value="loss">✗ Loss — entry eliminated</option>
     </select>
-    <div class="modal-actions">
-      <button class="mbtn" onclick="closeModal()">Cancel</button>
-      <button class="mbtn primary" onclick="savePick()">Save Pick</button>
+    <div class="modal-acts">
+      <button class="mbtn" id="modal-cancel">Cancel</button>
+      <button class="mbtn ok" id="modal-save">Save Pick</button>
     </div>
   </div>
 </div>
 
 <!-- NUDGE MODAL -->
 <div class="modal-bg" id="nudge-modal">
-  <div class="nudge-modal">
-    <div class="modal-title" style="margin-bottom:8px">📣 NUDGE THE GROUP</div>
-    <div id="nudge-msg" class="nudge-msg"></div>
-    <div class="nudge-actions">
-      <a id="nudge-sms" class="nudge-btn" href="#">📱 Open iMessage</a>
-      <a id="nudge-email" class="nudge-btn" href="#">✉️ Open Email</a>
-      <button class="nudge-btn" onclick="copyNudge()">📋 Copy Text</button>
-      <button class="nudge-btn" onclick="document.getElementById('nudge-modal').classList.remove('open')" style="margin-left:auto">Close</button>
+  <div class="nudge">
+    <div class="modal-t" style="margin-bottom:7px">📣 NUDGE THE GROUP</div>
+    <div id="nudge-msg" class="nmsg"></div>
+    <div class="nacts">
+      <a id="nudge-sms" class="nbtn" href="#">📱 iMessage</a>
+      <a id="nudge-email" class="nbtn" href="#">✉️ Email</a>
+      <button class="nbtn" id="nudge-copy">📋 Copy</button>
+      <button class="nbtn" id="nudge-close" style="margin-left:auto">Close</button>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════
-// CORE DATA
-// ═══════════════════════════════════════
-
-const COMMANDERS = [
-  { name:'Kerry',   color:'var(--orange)', cls:'kerry',   email:'kerrykeating3@gmail.com',   entries:[0,1,2,3,4]   },
-  { name:'Whopper', color:'var(--blue)',   cls:'whopper', email:'whopperj@mac.com',           entries:[5,6,7,8,9]   },
-  { name:'Dustin',  color:'var(--green)',  cls:'dustin',  email:'dustinsnavely@yahoo.com',    entries:[10,11,12,13,14] },
-  { name:'George',  color:'var(--purple)', cls:'george',  email:'georgebaker0823@gmail.com',  entries:[15,16,17,18,19] },
+(function() {
+// ═══ DATA ═══
+var CMDS = [
+  {name:'Kerry',   cls:'kerry',   email:'kerrykeating3@gmail.com',   entries:[0,1,2,3,4]   },
+  {name:'Whopper', cls:'whopper', email:'whopperj@mac.com',           entries:[5,6,7,8,9]   },
+  {name:'Dustin',  cls:'dustin',  email:'dustinsnavely@yahoo.com',    entries:[10,11,12,13,14]},
+  {name:'George',  cls:'george',  email:'georgebaker0823@gmail.com',  entries:[15,16,17,18,19]},
 ];
-
-const DEADLINES = [
-  {day:'D1',  round:'R64', date:'Thu 3/19', time:'12:15 PM', iso:'2026-03-19T12:15:00', games:16},
-  {day:'D2',  round:'R64', date:'Fri 3/20', time:'12:15 PM', iso:'2026-03-20T12:15:00', games:16},
-  {day:'D3',  round:'R32', date:'Sat 3/21', time:'1:45 PM',  iso:'2026-03-21T13:45:00', games:8},
-  {day:'D4',  round:'R32', date:'Sun 3/22', time:'1:10 PM',  iso:'2026-03-22T13:10:00', games:8},
-  {day:'D5',  round:'S16', date:'Thu 3/26', time:'8:09 PM',  iso:'2026-03-26T20:09:00', games:4},
-  {day:'D6',  round:'S16', date:'Fri 3/27', time:'8:09 PM',  iso:'2026-03-27T20:09:00', games:4},
-  {day:'D7+8',round:'E8',  date:'Sat-Sun 3/28-29',time:'7:09 PM',iso:'2026-03-28T19:09:00',games:4,double:true},
-  {day:'D9',  round:'F4',  date:'Sat 4/4',  time:'7:09 PM',  iso:'2026-04-04T19:09:00', games:2},
-  {day:'D10', round:'🏆',  date:'Mon 4/6',  time:'9:30 PM',  iso:'2026-04-06T21:30:00', games:1},
+var CMD_MAP = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
+var DLS = [
+  {day:'D1',  rnd:'R64', date:'Thu 3/19', time:'12:15 PM', iso:'2026-03-19T12:15:00', g:16},
+  {day:'D2',  rnd:'R64', date:'Fri 3/20', time:'12:15 PM', iso:'2026-03-20T12:15:00', g:16},
+  {day:'D3',  rnd:'R32', date:'Sat 3/21', time:'1:45 PM',  iso:'2026-03-21T13:45:00', g:8},
+  {day:'D4',  rnd:'R32', date:'Sun 3/22', time:'1:10 PM',  iso:'2026-03-22T13:10:00', g:8},
+  {day:'D5',  rnd:'S16', date:'Thu 3/26', time:'8:09 PM',  iso:'2026-03-26T20:09:00', g:4},
+  {day:'D6',  rnd:'S16', date:'Fri 3/27', time:'8:09 PM',  iso:'2026-03-27T20:09:00', g:4},
+  {day:'D7+8',rnd:'E8',  date:'Sat-Sun 3/28-29',time:'7:09 PM',iso:'2026-03-28T19:09:00',g:4,dbl:true},
+  {day:'D9',  rnd:'F4',  date:'Sat 4/4',  time:'7:09 PM',  iso:'2026-04-04T19:09:00', g:2},
+  {day:'D10', rnd:'🏆',  date:'Mon 4/6',  time:'9:30 PM',  iso:'2026-04-06T21:30:00', g:1},
 ];
-
-const FUNNEL = [20,20,17,14,11,9,7,4,2];
-const FUNNEL_COLORS = ['#f97316','#f97316','#fb923c','#fbbf24','#34d399','#10b981','#3b82f6','#6366f1','#a78bfa'];
-
-const TEAMS = {
-  'Duke':    {seed:1,region:'East',   r32:99.7,title:18.8},
-  'UConn':   {seed:2,region:'East',   r32:97.2,title:1.6},
-  'MichSt':  {seed:3,region:'East',   r32:94.2,title:1.8},
-  'Kansas':  {seed:4,region:'East',   r32:92.9,title:0.2},
-  'Arizona': {seed:1,region:'West',   r32:99.5,title:17.4},
-  'Purdue':  {seed:2,region:'West',   r32:99.8,title:8.8},
-  'Gonzaga': {seed:3,region:'West',   r32:95.3,title:1.2},
-  'Arkansas':{seed:4,region:'West',   r32:87.0,title:0.5},
-  'Florida': {seed:1,region:'South',  r32:99.8,title:10.6},
-  'Houston': {seed:2,region:'South',  r32:96.2,title:3.5},
-  'Illinois':{seed:3,region:'South',  r32:98.6,title:2.2},
-  'Nebraska':{seed:4,region:'South',  r32:86.7,title:1.2},
-  'Michigan':{seed:1,region:'Midwest',r32:99.7,title:31.4},
-  'IowasSt': {seed:2,region:'Midwest',r32:89.5,title:0.8},
-  'Virginia':{seed:3,region:'Midwest',r32:95.5,title:0.4},
-  'Alabama': {seed:4,region:'Midwest',r32:87.1,title:0.8},
-  'Wisconsin':{seed:5,region:'West',  r32:73.6,title:0.0},
+var FUNNEL = [20,20,17,14,11,9,7,4,2];
+var FC = ['#f97316','#f97316','#fb923c','#fbbf24','#34d399','#10b981','#3b82f6','#6366f1','#a78bfa'];
+var FRND = ['R64','R64','R32','R32','S16','S16','E8','F4','🏆'];
+var TEAMS = {
+  'Duke':    {seed:1,region:'East',   r32:99.7,s16:88.5,e8:71.4,f4:55.9,title:18.8},
+  'UConn':   {seed:2,region:'East',   r32:97.2,s16:73.5,e8:41.6,f4:18.5,title:1.6},
+  'MichSt':  {seed:3,region:'East',   r32:94.2,s16:63.7,e8:26.8,f4:12.7,title:1.8},
+  'Kansas':  {seed:4,region:'East',   r32:92.9,s16:40.3,e8:7.8, f4:3.0, title:0.2},
+  'Arizona': {seed:1,region:'West',   r32:99.5,s16:90.8,e8:77.1,f4:58.5,title:17.4},
+  'Purdue':  {seed:2,region:'West',   r32:99.8,s16:88.6,e8:57.4,f4:44.5,title:8.8},
+  'Gonzaga': {seed:3,region:'West',   r32:95.3,s16:65.7,e8:32.4,f4:14.5,title:1.2},
+  'Arkansas':{seed:4,region:'West',   r32:87.0,s16:29.0,e8:5.1, f4:1.5, title:0.0},
+  'Florida': {seed:1,region:'South',  r32:99.8,s16:86.4,e8:65.6,f4:39.9,title:10.6},
+  'Houston': {seed:2,region:'South',  r32:96.2,s16:54.2,e8:31.0,f4:15.8,title:3.5},
+  'Illinois':{seed:3,region:'South',  r32:98.6,s16:66.5,e8:38.0,f4:17.0,title:2.2},
+  'Nebraska':{seed:4,region:'South',  r32:86.7,s16:43.6,e8:11.0,f4:4.6, title:1.2},
+  'Michigan':{seed:1,region:'Midwest',r32:99.7,s16:93.7,e8:86.3,f4:68.7,title:31.4},
+  'IowasSt': {seed:2,region:'Midwest',r32:89.5,s16:69.9,e8:39.2,f4:14.4,title:0.8},
+  'Virginia':{seed:3,region:'Midwest',r32:95.5,s16:52.6,e8:23.4,f4:6.0, title:0.4},
+  'Alabama': {seed:4,region:'Midwest',r32:87.1,s16:49.2,e8:18.2,f4:2.3, title:0.8},
+  'Wisconsin':{seed:5,region:'West',  r32:73.6,s16:28.8,e8:5.1, f4:1.5, title:0.0},
 };
-
-const LANE_INFO = [
-  {name:'Michigan', dot:'ld-mich',seed:1},{name:'Michigan',dot:'ld-mich',seed:1},{name:'Michigan',dot:'ld-mich',seed:1},
-  {name:'Arizona',  dot:'ld-ariz',seed:1},{name:'Arizona', dot:'ld-ariz',seed:1},{name:'Arizona', dot:'ld-ariz',seed:1},
-  {name:'Duke',     dot:'ld-duke',seed:1},{name:'Duke',    dot:'ld-duke',seed:1},{name:'Duke',    dot:'ld-duke',seed:1},
-  {name:'Florida',  dot:'ld-flor',seed:1},{name:'Florida', dot:'ld-flor',seed:1},
-  {name:'Purdue',   dot:'ld-purd',seed:2},{name:'Purdue',  dot:'ld-purd',seed:2},
-  {name:'Houston',  dot:'ld-hous',seed:2},{name:'Houston', dot:'ld-hous',seed:2},
-  {name:'IowaSt',   dot:'ld-iowa',seed:2},{name:'IowaSt',  dot:'ld-iowa',seed:2},
-  {name:'UConn',    dot:'ld-conn',seed:2},{name:'UConn',   dot:'ld-conn',seed:2},{name:'UConn',dot:'ld-conn',seed:2},
+var LANE = [
+  {n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},
+  {n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},
+  {n:'Duke',    d:'ld-duke',s:1},{n:'Duke',    d:'ld-duke',s:1},{n:'Duke',    d:'ld-duke',s:1},
+  {n:'Florida', d:'ld-flor',s:1},{n:'Florida', d:'ld-flor',s:1},
+  {n:'Purdue',  d:'ld-purd',s:2},{n:'Purdue',  d:'ld-purd',s:2},
+  {n:'Houston', d:'ld-hous',s:2},{n:'Houston', d:'ld-hous',s:2},
+  {n:'IowasSt', d:'ld-iowa',s:2},{n:'IowasSt', d:'ld-iowa',s:2},
+  {n:'UConn',   d:'ld-conn',s:2},{n:'UConn',   d:'ld-conn',s:2},{n:'UConn',d:'ld-conn',s:2},
 ];
-
-// picks[i] = [D1,D2,D3,D4,D5,D6,D7a,D7b,D9,D10]
-const DEFAULT_PICKS = [
+var DP = [
   ['MichSt','Virginia','Duke','UConn','Arizona','Purdue','IowasSt','Houston','Arizona','Michigan'],
   ['MichSt','Alabama','UConn','Purdue','Duke','Florida','IowasSt','Houston','Duke','Michigan'],
   ['MichSt','Kansas','Purdue','Houston','UConn','Duke','IowasSt','Florida','Arizona','Michigan'],
@@ -597,374 +567,404 @@ const DEFAULT_PICKS = [
   ['Michigan','Virginia','Duke','Arizona','Purdue','Florida','IowasSt','Houston','Duke','UConn'],
   ['Michigan','Alabama','Arizona','Duke','Purdue','Florida','IowasSt','Houston','Arizona','UConn'],
 ];
-
-const CMD_MAP = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
-const SIM_DATA = {
+var SIM = {
   'East':    [['Duke',1,99.7,88.5,71.4,55.9,18.8],['UConn',2,97.2,73.5,41.6,18.5,1.6],['MichSt',3,94.2,63.7,26.8,12.7,1.8],['Kansas',4,92.9,40.3,7.8,3.0,0.2]],
   'West':    [['Arizona',1,99.5,90.8,77.1,58.5,17.4],['Purdue',2,99.8,88.6,57.4,44.5,8.8],['Gonzaga',3,95.3,65.7,32.4,14.5,1.2],['Arkansas',4,87.0,29.0,5.1,1.5,0.0]],
   'South':   [['Florida',1,99.8,86.4,65.6,39.9,10.6],['Houston',2,96.2,54.2,31.0,15.8,3.5],['Illinois',3,98.6,66.5,38.0,17.0,2.2],['Nebraska',4,86.7,43.6,11.0,4.6,1.2]],
   'Midwest': [['Michigan',1,99.7,93.7,86.3,68.7,31.4],['IowasSt',2,89.5,69.9,39.2,14.4,0.8],['Virginia',3,95.5,52.6,23.4,6.0,0.4],['Alabama',4,87.1,49.2,18.2,2.3,0.8]],
 };
+var DAY_NAMES = ['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 (Sun 3/22)','Day 5 (Thu 3/26)','Day 6 (Fri 3/27)','Day 7a (Sat 3/28)','Day 7b (Sun 3/29)','Day 9 (Sat 4/4)','Day 10 (Mon 4/6)'];
 
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
-function loadState() {
-  try { const s=localStorage.getItem('tr-state-2026'); if(s) return JSON.parse(s); } catch(e){}
+// ═══ STATE ═══
+function loadS() {
+  try { var s=localStorage.getItem('tr26'); if(s) return JSON.parse(s); } catch(e){}
   return {
-    picks: DEFAULT_PICKS.map(p=>[...p]),
-    results: Array(20).fill(null).map(()=>Array(10).fill('pending')),
-    eliminated: Array(20).fill(false),
+    picks: DP.map(function(p){return p.slice();}),
+    results: DP.map(function(){return ['pending','pending','pending','pending','pending','pending','pending','pending','pending','pending'];}),
+    eliminated: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
     currentDay: 0,
+    lastUpdated: null,
   };
 }
-function saveState(){ localStorage.setItem('tr-state-2026', JSON.stringify(S)); }
-const S = loadState();
+function saveS(){ try{localStorage.setItem('tr26',JSON.stringify(S));}catch(e){} }
+var S = loadS();
+function cCls(i){ return CMDS[CMD_MAP[i]].cls; }
+function cName(i){ return CMDS[CMD_MAP[i]].name; }
+function getTB(i){ return S.picks[i].reduce(function(a,t){return a+(TEAMS[t]?TEAMS[t].seed:0);},0); }
+function liveCt(){ return S.eliminated.filter(function(e){return !e;}).length; }
 
-function cmdCls(i){ return ['kerry','whopper','dustin','george'][CMD_MAP[i]]; }
-function cmdName(i){ return COMMANDERS[CMD_MAP[i]].name; }
-function getTB(i){ return S.picks[i].reduce((a,t)=>a+(TEAMS[t]?TEAMS[t].seed:0),0); }
-function liveCount(){ return S.eliminated.filter(e=>!e).length; }
-
-// ═══════════════════════════════════════
-// COUNTDOWN
-// ═══════════════════════════════════════
-function tick(){
-  const now=new Date();
-  let next=null,label='';
-  for(const dl of DEADLINES){ const t=new Date(dl.iso); if(t>now){next=t;label=dl.day+' · '+dl.date+' · '+dl.time;break;} }
-  if(!next){ document.getElementById('cd-time').textContent='DONE'; document.getElementById('cd-next').textContent='Tournament complete'; return; }
-  const diff=next-now;
-  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  document.getElementById('cd-time').textContent=pad(h)+':'+pad(m)+':'+pad(s);
-  document.getElementById('cd-next').textContent=label;
-}
+// ═══ COUNTDOWN ═══
 function pad(n){ return String(n).padStart(2,'0'); }
+function tick(){
+  var now=new Date(), next=null, lbl='';
+  for(var i=0;i<DLS.length;i++){ var t=new Date(DLS[i].iso); if(t>now){next=t;lbl=DLS[i].day+' · '+DLS[i].date+' · '+DLS[i].time;break;} }
+  var te=document.getElementById('cd-time'), ne=document.getElementById('cd-next');
+  if(!te||!ne) return;
+  if(!next){ te.textContent='DONE'; ne.textContent='Tournament complete'; return; }
+  var d=next-now, h=Math.floor(d/3600000), m=Math.floor((d%3600000)/60000), ss=Math.floor((d%60000)/1000);
+  te.textContent=pad(h)+':'+pad(m)+':'+pad(ss);
+  ne.textContent=lbl;
+}
 setInterval(tick,1000); tick();
 
-// ═══════════════════════════════════════
-// PANEL NAV
-// ═══════════════════════════════════════
-function show(name,el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+// ═══ PANEL NAV — event delegation ═══
+document.querySelector('nav').addEventListener('click', function(e){
+  var tab = e.target.closest('.tab');
+  if(!tab) return;
+  var name = tab.dataset.panel;
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('panel-'+name).classList.add('active');
-  el.classList.add('active');
+  tab.classList.add('active');
   if(name==='board') renderBoard();
   if(name==='commanders') renderCards('all');
   if(name==='tiebreaker') renderTB();
   if(name==='scenarios') renderSim();
   if(name==='schedule') renderSchedDL();
-  if(name==='overview'){ renderCmdCards(); renderDL('dl-strip'); renderFunnel(); }
-}
+  if(name==='probs') renderProbs();
+});
 
-// ═══════════════════════════════════════
-// RENDER FUNNEL
-// ═══════════════════════════════════════
+// ═══ FUNNEL ═══
 function renderFunnel(){
-  const days=['D1','D2','D3','D4','D5','D6','D7+8','D9','D10'];
-  const rounds=['R64','R64','R32','R32','S16','S16','E8','F4','🏆'];
-  const el=document.getElementById('funnel');
+  var el=document.getElementById('funnel'); if(!el) return;
   el.innerHTML='';
-  FUNNEL.forEach((n,i)=>{
-    const pct=Math.round((n/20)*100);
-    el.innerHTML+=`<div class="f-stage">
-      <div class="f-bar-wrap">
-        <div class="f-bar" style="height:${pct}%;background:${FUNNEL_COLORS[i]};opacity:0.8">
-          <div style="position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue',sans-serif;font-size:15px;color:${FUNNEL_COLORS[i]}">${n}</div>
-        </div>
-      </div>
-      <div class="f-day">${days[i]}</div>
-      <div class="f-round">${rounds[i]}</div>
-    </div>`;
+  FUNNEL.forEach(function(n,i){
+    var pct=Math.round((n/20)*100);
+    el.innerHTML+='<div class="f-col"><div style="flex:1;display:flex;align-items:flex-end;padding:0 2px"><div class="f-bar" style="height:'+pct+'%;background:'+FC[i]+';opacity:0.85;position:relative"><span style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:Bebas Neue,sans-serif;font-size:13px;color:'+FC[i]+'">'+n+'</span></div></div><div class="f-day">'+DLS[i].day+'</div><div class="f-rnd">'+FRND[i]+'</div></div>';
   });
 }
 
-// ═══════════════════════════════════════
-// RENDER COMMANDER CARDS
-// ═══════════════════════════════════════
+// ═══ CMD CARDS ═══
 function renderCmdCards(){
-  const el=document.getElementById('cmd-cards');
+  var el=document.getElementById('cmd-cards'); if(!el) return;
   el.innerHTML='';
-  COMMANDERS.forEach(c=>{
-    const chips=c.entries.map(i=>{
-      const cls=S.eliminated[i]?'dead':'alive';
-      return `<span class="cmd-entry-chip ${cls}">E${i+1}</span>`;
+  CMDS.forEach(function(c){
+    var chips=c.entries.map(function(i){
+      var cls=S.eliminated[i]?'dead':'alive';
+      return '<span class="chip '+cls+'">E'+(i+1)+'</span>';
     }).join('');
-    el.innerHTML+=`<div class="cmd-card ${c.cls}">
-      <div class="cmd-name ${c.cls}">${c.name}</div>
-      <div class="cmd-email">${c.email}</div>
-      <div class="cmd-entries">${chips}</div>
-    </div>`;
+    el.innerHTML+='<div class="cmd-card '+c.cls+'"><div class="cmd-n">'+c.name+'</div><div class="cmd-e">'+c.email+'</div><div class="cmd-chips">'+chips+'</div></div>';
   });
 }
 
-// ═══════════════════════════════════════
-// RENDER DEADLINES
-// ═══════════════════════════════════════
-function renderDL(elId, cols){
-  const now=new Date();
-  const el=document.getElementById(elId);
-  if(!el) return;
-  if(cols) el.style.gridTemplateColumns=`repeat(${cols},1fr)`;
+// ═══ DEADLINES ═══
+function renderDL(id, cols){
+  var el=document.getElementById(id); if(!el) return;
+  if(cols) el.style.gridTemplateColumns='repeat('+cols+',1fr)';
+  var now=new Date();
   el.innerHTML='';
-  DEADLINES.forEach((dl,i)=>{
-    const t=new Date(dl.iso);
-    const isCur=t>now&&(i===0||new Date(DEADLINES[i-1].iso)<now);
-    const isPast=t<now;
-    el.innerHTML+=`<div class="dl-card ${isCur?'current':''} ${isPast?'past':''}">
-      ${isCur?'<div class="dl-badge">NEXT</div>':''}
-      ${dl.double?'<div class="dl-badge double" style="top:'+(isCur?'-21px':'-7px')+'">2 PICKS</div>':''}
-      <div class="dl-day">${dl.day}</div>
-      <div class="dl-round">${dl.round} · ${dl.games}g</div>
-      <div class="dl-date">${dl.date}</div>
-      <div class="dl-time">Lock ${dl.time}</div>
-    </div>`;
+  DLS.forEach(function(dl,i){
+    var t=new Date(dl.iso);
+    var isCur=t>now&&(i===0||new Date(DLS[i-1].iso)<now);
+    var isPast=t<now;
+    var badge=isCur?'<div class="dl-badge">NEXT</div>':'';
+    var dbl=dl.dbl?'<div class="dl-badge dbl" style="top:'+(isCur?'-19px':'-6px')+'">2 PICKS</div>':'';
+    el.innerHTML+='<div class="dl-card '+(isCur?'cur':'')+(isPast?' past':'')+'">'+badge+dbl+'<div class="dl-day">'+dl.day+'</div><div class="dl-rnd">'+dl.rnd+' · '+dl.g+'g</div><div class="dl-date">'+dl.date+'</div><div class="dl-time">Lock '+dl.time+'</div></div>';
   });
 }
-
 function renderSchedDL(){
-  const el=document.getElementById('sched-dl');
-  if(!el) return;
+  var el=document.getElementById('sched-dl'); if(!el) return;
   el.style.gridTemplateColumns='repeat(3,1fr)';
+  var now=new Date();
   el.innerHTML='';
-  const now=new Date();
-  DEADLINES.forEach((dl,i)=>{
-    const t=new Date(dl.iso);
-    const isCur=t>now&&(i===0||new Date(DEADLINES[i-1].iso)<now);
-    const isPast=t<now;
-    el.innerHTML+=`<div class="dl-card ${isCur?'current':''} ${isPast?'past':''}">
-      ${dl.double?'<div class="dl-badge double">DOUBLE PICK</div>':''}
-      <div class="dl-day" style="font-size:32px">${dl.day}</div>
-      <div class="dl-round" style="font-size:10px;color:var(--t2)">${dl.round}</div>
-      <div class="dl-date" style="font-size:11px;margin:5px 0">${dl.date}</div>
-      <div class="dl-time" style="font-size:10px">Lock ${dl.time}</div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t4);margin-top:4px">${dl.games} game${dl.games>1?'s':''}</div>
-    </div>`;
+  DLS.forEach(function(dl,i){
+    var t=new Date(dl.iso);
+    var isCur=t>now&&(i===0||new Date(DLS[i-1].iso)<now);
+    var isPast=t<now;
+    el.innerHTML+='<div class="dl-card '+(isCur?'cur':'')+(isPast?' past':'')+'">'+(dl.dbl?'<div class="dl-badge dbl">DOUBLE PICK</div>':'')+'<div class="dl-day" style="font-size:28px">'+dl.day+'</div><div class="dl-rnd" style="font-size:9px;color:var(--t2)">'+dl.rnd+'</div><div class="dl-date" style="font-size:10px;margin:4px 0">'+dl.date+'</div><div class="dl-time" style="font-size:9px">Lock '+dl.time+'</div><div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t4);margin-top:3px">'+dl.g+' game'+(dl.g>1?'s':'')+'</div></div>';
   });
 }
 
-// ═══════════════════════════════════════
-// RENDER BOARD
-// ═══════════════════════════════════════
-function pill(team,dayIdx,entryIdx){
-  const res=S.results[entryIdx][dayIdx];
-  const isD78=(dayIdx===6||dayIdx===7);
-  let cls='future';
-  if(res==='win') cls='used';
-  else if(res==='loss') cls='dead-p';
-  else if(dayIdx===S.currentDay) cls='next-p';
-  if(isD78&&cls==='future') cls='dp-pill';
-  return `<span class="pill ${cls}" onclick="openModal(${entryIdx},${dayIdx})">${team||'—'}</span>`;
+// ═══ BOARD — uses event delegation, NO inline onclick ═══
+function pillCls(dayIdx, entryIdx){
+  var res=S.results[entryIdx][dayIdx];
+  if(res==='win') return 'win';
+  if(res==='loss') return 'dead';
+  if(dayIdx===S.currentDay) return 'next';
+  if(dayIdx===6||dayIdx===7) return 'dp';
+  return 'future';
+}
+function makePill(team, dayIdx, entryIdx){
+  var cls=pillCls(dayIdx,entryIdx);
+  return '<span class="pill '+cls+'" data-entry="'+entryIdx+'" data-day="'+dayIdx+'">'+(team||'—')+'</span>';
 }
 
 function renderBoard(){
-  const tb=document.getElementById('board-body');
-  tb.innerHTML='';
-  S.picks.forEach((picks,i)=>{
-    const c=cmdCls(i);
-    const lane=LANE_INFO[i];
-    const tbVal=getTB(i);
-    const alive=!S.eliminated[i];
-    const tr=document.createElement('tr');
-    if(!alive) tr.classList.add('dead-row');
-    tr.innerHTML=`
-      <td><span class="b-enum ${c}">E${i+1}</span></td>
-      <td><span class="entry-tag tag-${c}">${cmdName(i)}</span></td>
-      <td><div style="display:flex;align-items:center;gap:5px"><div class="lane-dot ${lane.dot}"></div><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3)">${lane.name}</span></div></td>
-      <td>${pill(picks[0],0,i)}</td>
-      <td>${pill(picks[1],1,i)}</td>
-      <td>${pill(picks[2],2,i)}</td>
-      <td>${pill(picks[3],3,i)}</td>
-      <td>${pill(picks[4],4,i)}</td>
-      <td>${pill(picks[5],5,i)}</td>
-      <td>${pill(picks[6],6,i)} ${pill(picks[7],7,i)}</td>
-      <td>${pill(picks[8],8,i)}</td>
-      <td>${pill(picks[9],9,i)}</td>
-      <td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue)">${tbVal}</td>
-      <td><span class="e-status ${alive?'alive-s':'dead-s'}">${alive?'● ALIVE':'✕ OUT'}</span></td>
-    `;
-    tb.appendChild(tr);
-  });
+  var tb=document.getElementById('board-body'); if(!tb) return;
+  var rows='';
+  for(var i=0;i<S.picks.length;i++){
+    var picks=S.picks[i];
+    var c=cCls(i), lane=LANE[i], tbVal=getTB(i), alive=!S.eliminated[i];
+    rows+='<tr class="'+(alive?'':'dead')+'">'
+      +'<td><span class="be '+c+'">E'+(i+1)+'</span></td>'
+      +'<td><span class="etag '+c+'">'+cName(i)+'</span></td>'
+      +'<td><div style="display:flex;align-items:center;gap:4px"><div class="ldot '+lane.d+'"></div><span style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3)">'+lane.n+'</span></div></td>'
+      +'<td>'+makePill(picks[0],0,i)+'</td>'
+      +'<td>'+makePill(picks[1],1,i)+'</td>'
+      +'<td>'+makePill(picks[2],2,i)+'</td>'
+      +'<td>'+makePill(picks[3],3,i)+'</td>'
+      +'<td>'+makePill(picks[4],4,i)+'</td>'
+      +'<td>'+makePill(picks[5],5,i)+'</td>'
+      +'<td>'+makePill(picks[6],6,i)+' '+makePill(picks[7],7,i)+'</td>'
+      +'<td>'+makePill(picks[8],8,i)+'</td>'
+      +'<td>'+makePill(picks[9],9,i)+'</td>'
+      +'<td style="font-family:Bebas Neue,sans-serif;font-size:17px;color:var(--bl)">'+tbVal+'</td>'
+      +'<td><span class="est '+(alive?'ok':'no')+'">'+(alive?'● ALIVE':'✕ OUT')+'</span></td>'
+      +'</tr>';
+  }
+  tb.innerHTML=rows;
 }
 
-// ═══════════════════════════════════════
-// RENDER ENTRY CARDS
-// ═══════════════════════════════════════
+// Board click via event delegation on the table
+document.addEventListener('click', function(e){
+  var pill=e.target.closest('.pill');
+  if(pill && pill.dataset.entry !== undefined){
+    openModal(parseInt(pill.dataset.entry), parseInt(pill.dataset.day));
+    return;
+  }
+});
+
+// ═══ ENTRY CARDS ═══
 function renderCards(filter){
-  const grid=document.getElementById('entry-grid');
-  grid.innerHTML='';
-  const dayLbls=['D1','D2','D3','D4','D5','D6','D7a','D7b','D9','D10'];
-  S.picks.forEach((picks,i)=>{
-    const c=cmdCls(i);
-    if(filter!=='all'&&cmdName(i)!==filter) return;
-    const lane=LANE_INFO[i];
-    const tbVal=getTB(i);
-    const alive=!S.eliminated[i];
-    const pickSlots=picks.map((t,d)=>{
-      const res=S.results[i][d];
-      let cls='';
-      if(res==='win') cls='win';
-      else if(res==='loss') cls='loss';
-      else if(d===S.currentDay) cls='next';
-      else if(d===6||d===7) cls='dp';
-      const short=t.length>6?t.substring(0,6):t;
-      return `<div class="pick-slot"><div class="pd">${dayLbls[d]}</div><div class="pt ${cls}">${short}</div></div>`;
-    }).join('');
-    grid.innerHTML+=`<div class="entry-card ${alive?'':'dead'}">
-      <div class="entry-hdr">
-        <div class="entry-num ${c}">E${i+1}</div>
-        <span class="entry-tag tag-${c}">${cmdName(i)}</span>
-      </div>
-      <div class="entry-lane">
-        <div class="lane-dot ${lane.dot}"></div>
-        <span class="lane-txt">${lane.name} ${lane.seed}-seed</span>
-      </div>
-      <div class="picks-wrap">${pickSlots}</div>
-      <div class="entry-ftr">
-        <div class="tb-num">TB: ${tbVal}</div>
-        <div class="e-status ${alive?'alive-s':'dead-s'}">${alive?'● ALIVE':'✕ OUT'}</div>
-      </div>
-    </div>`;
+  var grid=document.getElementById('entry-grid'); if(!grid) return;
+  var DLBLS=['D1','D2','D3','D4','D5','D6','D7a','D7b','D9','D10'];
+  var html='';
+  for(var i=0;i<S.picks.length;i++){
+    var picks=S.picks[i], c=cCls(i), nm=cName(i);
+    if(filter!=='all'&&nm!==filter) continue;
+    var lane=LANE[i], tbVal=getTB(i), alive=!S.eliminated[i];
+    var pSlots='';
+    for(var d=0;d<picks.length;d++){
+      var res=S.results[i][d], cls2='';
+      if(res==='win') cls2='win';
+      else if(res==='loss') cls2='loss';
+      else if(d===S.currentDay) cls2='next';
+      else if(d===6||d===7) cls2='dp';
+      var sh=picks[d]?picks[d].substring(0,6):'-';
+      pSlots+='<div class="ps"><div class="pd">'+DLBLS[d]+'</div><div class="pt '+cls2+'">'+sh+'</div></div>';
+    }
+    html+='<div class="ecard '+(alive?'':'dead')+'">'
+      +'<div class="ehdr"><div class="enum '+c+'">E'+(i+1)+'</div><span class="etag '+c+'">'+nm+'</span></div>'
+      +'<div class="elane"><div class="ldot '+lane.d+'"></div><span class="ltxt">'+lane.n+' '+lane.s+'-seed</span></div>'
+      +'<div class="picks">'+pSlots+'</div>'
+      +'<div class="eftr"><div class="tbn">TB: '+tbVal+'</div><div class="est '+(alive?'ok':'no')+'">'+(alive?'● ALIVE':'✕ OUT')+'</div></div>'
+      +'</div>';
+  }
+  grid.innerHTML=html;
+}
+
+// Commander filter — event delegation
+document.getElementById('cf').addEventListener('click', function(e){
+  var btn=e.target.closest('.cfb'); if(!btn) return;
+  var cmd=btn.dataset.cmd;
+  document.querySelectorAll('.cfb').forEach(function(b){
+    b.className='cfb';
   });
-}
+  btn.className='cfb a-'+( cmd==='all'?'all':cmd.toLowerCase() );
+  renderCards(cmd);
+});
 
-function filterCmd(val, btn){
-  document.querySelectorAll('.cf-btn').forEach(b=>{b.classList.remove('active','all','kerry','whopper','dustin','george');});
-  btn.classList.add('active');
-  if(val==='all') btn.classList.add('all');
-  else { const c=COMMANDERS.find(c=>c.name===val); if(c) btn.classList.add(c.cls); }
-  renderCards(val);
-}
-
-// ═══════════════════════════════════════
-// RENDER TIEBREAKER
-// ═══════════════════════════════════════
+// ═══ TIEBREAKER ═══
 function renderTB(){
-  const scores=S.picks.map((_,i)=>({i,tb:getTB(i),c:cmdCls(i),name:cmdName(i),lane:LANE_INFO[i],alive:!S.eliminated[i]}));
-  scores.sort((a,b)=>b.tb-a.tb);
-  const maxTB=scores[0].tb||1;
-  const el=document.getElementById('tb-ladder');
-  el.innerHTML='';
-  scores.forEach((s,rank)=>{
-    const pct=Math.round((s.tb/maxTB)*100);
-    el.innerHTML+=`<div class="tb-row">
-      <div class="tb-rank">${rank+1}</div>
-      <div class="tb-who" style="color:var(--${s.c})">E${s.i+1} · ${s.name}</div>
-      <div class="tb-lane">${s.lane.name}</div>
-      <div class="tb-bar-bg"><div class="tb-bar-fill" style="width:${pct}%"></div></div>
-      <div class="tb-val">${s.tb}</div>
-    </div>`;
+  var el=document.getElementById('tb-ladder'); if(!el) return;
+  var scores=[];
+  for(var i=0;i<S.picks.length;i++){
+    scores.push({i:i,tb:getTB(i),c:cCls(i),nm:cName(i),lane:LANE[i],alive:!S.eliminated[i]});
+  }
+  scores.sort(function(a,b){return b.tb-a.tb;});
+  var maxTB=scores[0].tb||1, html='';
+  scores.forEach(function(s,rank){
+    var pct=Math.round((s.tb/maxTB)*100);
+    html+='<div class="tb-row"><div class="tb-rk">'+(rank+1)+'</div>'
+      +'<div class="tb-who" style="color:var(--'+s.c+')">E'+(s.i+1)+' · '+s.nm+'</div>'
+      +'<div class="tb-lane">'+s.lane.n+'</div>'
+      +'<div class="tb-bg"><div class="tb-fill" style="width:'+pct+'%"></div></div>'
+      +'<div class="tb-v">'+s.tb+'</div></div>';
   });
+  el.innerHTML=html;
 }
 
-// ═══════════════════════════════════════
-// RENDER SIM
-// ═══════════════════════════════════════
+// ═══ SIM TABLES ═══
 function renderSim(){
-  const el=document.getElementById('sim-grid');
-  el.innerHTML='';
-  Object.entries(SIM_DATA).forEach(([region,rows])=>{
-    const rowHtml=rows.map(([team,seed,r32,s16,e8,f4,title])=>{
-      const tc=title>15?'var(--green)':title>5?'var(--gold)':'var(--t2)';
-      return `<tr>
-        <td style="font-weight:500">${team}</td>
-        <td style="color:var(--t3)">S${seed}</td>
-        <td>${r32}%</td><td>${s16}%</td><td>${e8}%</td><td>${f4}%</td>
-        <td style="color:${tc};font-weight:600">${title}%</td>
-      </tr>`;
+  var el=document.getElementById('sim-grid'); if(!el) return;
+  var html='';
+  Object.keys(SIM).forEach(function(region){
+    var rows=SIM[region].map(function(r){
+      var tc=r[6]>15?'var(--gn)':r[6]>5?'var(--gd)':'var(--t2)';
+      return '<tr><td style="font-weight:500">'+r[0]+'</td><td style="color:var(--t3)">S'+r[1]+'</td><td>'+r[2]+'%</td><td>'+r[3]+'%</td><td>'+r[4]+'%</td><td>'+r[5]+'%</td><td style="color:'+tc+';font-weight:600">'+r[6]+'%</td></tr>';
     }).join('');
-    el.innerHTML+=`<div class="sim-region">
-      <div class="sim-region-hdr">${region} Region</div>
-      <table class="sim-table">
-        <thead><tr><th>TEAM</th><th>SEED</th><th>R32</th><th>S16</th><th>E8</th><th>F4</th><th>TITLE</th></tr></thead>
-        <tbody>${rowHtml}</tbody>
-      </table>
-    </div>`;
+    html+='<div class="sim-r"><div class="sim-rh">'+region+' Region</div>'
+      +'<table class="sim-tbl"><thead><tr><th>TEAM</th><th>SEED</th><th>R32</th><th>S16</th><th>E8</th><th>F4</th><th>TITLE</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   });
+  el.innerHTML=html;
 }
 
-// ═══════════════════════════════════════
-// PICK MODAL
-// ═══════════════════════════════════════
-let mEntry=null,mDay=null;
-const dayNames=['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 (Sun 3/22)','Day 5 (Thu 3/26)','Day 6 (Fri 3/27)','Day 7a (Sat 3/28)','Day 7b (Sun 3/29)','Day 9 (Sat 4/4)','Day 10 (Mon 4/6)'];
+// ═══ LIVE PROBABILITY SYSTEM ═══
+function calcProjWin(i){
+  if(S.eliminated[i]) return 0;
+  var picks=S.picks[i];
+  var proj=1.0;
+  var now=new Date();
+  var curDay=0;
+  for(var d=0;d<DLS.length-1;d++){ if(new Date(DLS[d].iso)<now) curDay=d+1; }
+  for(var d=curDay;d<picks.length;d++){
+    var t=picks[d];
+    if(!TEAMS[t]) continue;
+    var prob;
+    if(d<=1) prob=TEAMS[t].r32/100;
+    else if(d<=3) prob=TEAMS[t].s16/100;
+    else if(d<=5) prob=TEAMS[t].e8/100;
+    else if(d<=7) prob=TEAMS[t].f4/100;
+    else prob=TEAMS[t].title/100;
+    proj*=prob;
+  }
+  return Math.round(proj*10000)/100;
+}
 
-function openModal(entryIdx,dayIdx){
+function renderProbs(){
+  // Render update form
+  var form=document.getElementById('prob-update-form'); if(!form) return;
+  var formHtml='<div class="puf-title">UPDATE TEAM PROBABILITIES</div>'
+    +'<div class="puf-desc">After each round, update the surviving teams with current win probabilities from EvanMiya or your own model. This recalculates projected win % for all live entries.</div>'
+    +'<div class="puf-grid">';
+  Object.keys(TEAMS).forEach(function(t){
+    var tm=TEAMS[t];
+    formHtml+='<div class="puf-cell">'
+      +'<div class="puf-team">'+t+'</div>'
+      +'<div class="puf-seed">S'+tm.seed+' · '+tm.region+'</div>'
+      +'<div class="puf-label">TITLE % (current)</div>'
+      +'<input class="puf-input" type="number" step="0.1" min="0" max="100" data-team="'+t+'" data-field="title" value="'+tm.title+'" placeholder="0.0">'
+      +'<div class="puf-label" style="margin-top:4px">R32/NEXT ROUND %</div>'
+      +'<input class="puf-input" type="number" step="0.1" min="0" max="100" data-team="'+t+'" data-field="r32" value="'+tm.r32+'" placeholder="0.0">'
+      +'<label class="elim-toggle"><input type="checkbox" data-team="'+t+'" data-field="elim"'+(tm.r32===0?' checked':'')+'>Eliminated</label>'
+      +'</div>';
+  });
+  formHtml+='</div><button class="puf-btn" id="puf-save">↻ Recalculate All Projections</button>';
+  form.innerHTML=formHtml;
+
+  // Save button
+  document.getElementById('puf-save').addEventListener('click', function(){
+    document.querySelectorAll('.puf-input').forEach(function(inp){
+      var t=inp.dataset.team, f=inp.dataset.field;
+      if(t&&f&&TEAMS[t]) TEAMS[t][f]=parseFloat(inp.value)||0;
+    });
+    document.querySelectorAll('.elim-toggle input[type=checkbox]').forEach(function(cb){
+      if(cb.dataset.team&&TEAMS[cb.dataset.team]){
+        if(cb.checked){ TEAMS[cb.dataset.team].r32=0; TEAMS[cb.dataset.team].title=0; }
+      }
+    });
+    var lu=document.getElementById('prob-last-updated');
+    if(lu){ var now=new Date(); lu.textContent='UPDATED '+now.toLocaleTimeString(); }
+    renderProbTable();
+  });
+
+  renderProbTable();
+}
+
+function renderProbTable(){
+  var tb=document.getElementById('prob-body'); if(!tb) return;
+  var entries=[];
+  for(var i=0;i<S.picks.length;i++){
+    entries.push({i:i, proj:calcProjWin(i), tb:getTB(i), alive:!S.eliminated[i]});
+  }
+  entries.sort(function(a,b){ return b.proj-a.proj; });
+  var html='';
+  entries.forEach(function(e){
+    var picks=S.picks[e.i];
+    var remaining=picks.filter(function(t,d){ return S.results[e.i][d]==='pending' && t; });
+    var usedTeams=new Set(picks.filter(function(t,d){ return S.results[e.i][d]==='win'; }));
+    var avail=Object.keys(TEAMS).filter(function(t){ return !usedTeams.has(t)&&TEAMS[t].r32>0; });
+    var c=cCls(e.i), nm=cName(e.i);
+    var pColor=e.proj>5?'var(--gn)':e.proj>2?'var(--gd)':e.proj>0?'var(--or)':'var(--rd)';
+    html+='<tr class="'+(e.alive?'':'elim-row')+'">'
+      +'<td><span class="be '+c+'">E'+(e.i+1)+'</span></td>'
+      +'<td><span class="etag '+c+'">'+nm+'</span></td>'
+      +'<td><div style="display:flex;align-items:center;gap:4px"><div class="ldot '+LANE[e.i].d+'"></div>'+LANE[e.i].n+'</div></td>'
+      +'<td style="color:var(--t2)">'+remaining.length+' picks</td>'
+      +'<td style="color:var(--t3);font-size:8px">'+avail.slice(0,4).join(', ')+(avail.length>4?'…':'')+'</td>'
+      +'<td><div class="pbar-wrap"><div class="pbar" style="width:'+Math.min(e.proj*3,100)+'%;background:'+pColor+'"></div><span style="color:'+pColor+';font-weight:600">'+e.proj+'%</span></div></td>'
+      +'<td style="color:var(--bl);font-family:Bebas Neue,sans-serif;font-size:16px">'+e.tb+'</td>'
+      +'<td><span class="est '+(e.alive?'ok':'no')+'">'+(e.alive?'ALIVE':'OUT')+'</span></td>'
+      +'</tr>';
+  });
+  tb.innerHTML=html;
+}
+
+// ═══ MODAL — NO inline onclick ═══
+var mEntry=null, mDay=null;
+function openModal(entryIdx, dayIdx){
   mEntry=entryIdx; mDay=dayIdx;
-  const ctx=document.getElementById('modal-ctx');
-  if(ctx) ctx.textContent='E'+(entryIdx+1)+' · '+cmdName(entryIdx)+' · '+dayNames[dayIdx];
-  const sel=document.getElementById('modal-team');
+  var ctx=document.getElementById('modal-ctx');
+  if(ctx) ctx.textContent='E'+(entryIdx+1)+' · '+cName(entryIdx)+' · '+DAY_NAMES[dayIdx];
+  var sel=document.getElementById('modal-team'); if(!sel) return;
   sel.innerHTML='';
-  // Build set of teams used on ALL other days for this entry
-  const used=new Set(S.picks[entryIdx].filter((_,d)=>d!==dayIdx).filter(t=>t&&t!==''));
-  Object.keys(TEAMS).filter(t=>!used.has(t)).forEach(t=>{
-    const o=document.createElement('option');
-    o.value=t; o.textContent=t+' (S'+TEAMS[t].seed+', '+TEAMS[t].region+', R32: '+TEAMS[t].r32+'%, Title: '+TEAMS[t].title+'%)';
+  var used=new Set();
+  S.picks[entryIdx].forEach(function(t,d){ if(d!==dayIdx&&t) used.add(t); });
+  Object.keys(TEAMS).forEach(function(t){
+    if(used.has(t)) return;
+    var o=document.createElement('option');
+    o.value=t;
+    o.textContent=t+' (S'+TEAMS[t].seed+' · '+TEAMS[t].region+' · R32:'+TEAMS[t].r32+'% · Title:'+TEAMS[t].title+'%)';
     if(S.picks[entryIdx][dayIdx]===t) o.selected=true;
     sel.appendChild(o);
   });
-  const res=document.getElementById('modal-result');
+  var res=document.getElementById('modal-result');
   if(res) res.value=S.results[entryIdx][dayIdx]||'pending';
   document.getElementById('pick-modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('pick-modal').classList.remove('open'); }
 function savePick(){
-  const team=document.getElementById('modal-team').value;
-  const result=document.getElementById('modal-result').value;
+  if(mEntry===null||mDay===null) return;
+  var team=document.getElementById('modal-team').value;
+  var result=document.getElementById('modal-result').value;
   S.picks[mEntry][mDay]=team;
   S.results[mEntry][mDay]=result;
   if(result==='loss') S.eliminated[mEntry]=true;
-  saveState();
+  saveS();
   closeModal();
   renderBoard();
   renderCmdCards();
-  document.getElementById('s-live').textContent=liveCount();
+  var sl=document.getElementById('s-live');
+  if(sl) sl.textContent=liveCt();
 }
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('modal-save').addEventListener('click', savePick);
+document.getElementById('pick-modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
-// ═══════════════════════════════════════
-// CHECKLIST MODAL
-// ═══════════════════════════════════════
+// ═══ CHECKLIST ═══
 function showChecklist(){
-  const now=new Date();
-  const next=DEADLINES.find(dl=>new Date(dl.iso)>now)||DEADLINES[DEADLINES.length-1];
-  let html='<div style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;display:flex;align-items:center;justify-content:center" id="cl-overlay" onclick="if(event.target===this)this.remove()">';
-  html+='<div style="background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:24px;width:500px;max-height:85vh;overflow-y:auto">';
-  html+='<div style="font-family:Bebas Neue,sans-serif;font-size:20px;letter-spacing:3px;margin-bottom:3px">PICK CHECKLIST</div>';
-  html+='<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);margin-bottom:18px">'+next.day+' · '+next.date+' · Lock '+next.time+(next.double?' · ⚠️ DOUBLE PICK':'')+'</div>';
-  COMMANDERS.forEach(c=>{
-    html+='<div style="margin-bottom:14px;padding:12px;background:var(--s2);border-radius:6px;border-left:3px solid '+c.color+'">';
-    html+='<div style="font-family:Bebas Neue,sans-serif;font-size:16px;letter-spacing:2px;color:'+c.color+';margin-bottom:8px">'+c.name+' <span style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);font-style:normal">'+c.email+'</span></div>';
-    c.entries.forEach(i=>{
-      const alive=!S.eliminated[i];
-      const submitted=S.results[i][S.currentDay]!=='pending';
-      const pick=S.picks[i][S.currentDay]||'—';
-      html+='<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(37,45,58,0.4)">';
-      html+='<div style="font-family:Bebas Neue,sans-serif;font-size:14px;color:'+c.color+';width:26px">E'+(i+1)+'</div>';
-      if(!alive){
-        html+='<span style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--red)">✕ ELIMINATED</span>';
-      } else {
-        html+='<span style="font-family:JetBrains Mono,monospace;font-size:10px;flex:1">'+pick+(next.double?' + 2nd pick':'')+'</span>';
-        html+='<span style="font-family:JetBrains Mono,monospace;font-size:9px;'+( submitted?'color:var(--green)':'color:var(--gold)')+'">'+( submitted?'✓ SUBMITTED':'⏳ PENDING')+'</span>';
-      }
+  var now=new Date(), next=DLS.filter(function(dl){return new Date(dl.iso)>now;})[0]||DLS[DLS.length-1];
+  var html='<div id="cl-ov" style="position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:600;display:flex;align-items:center;justify-content:center">'
+    +'<div style="background:var(--s1);border:1px solid var(--b1);border-radius:9px;padding:22px;width:480px;max-height:82vh;overflow-y:auto">'
+    +'<div style="font-family:Bebas Neue,sans-serif;font-size:18px;letter-spacing:3px;margin-bottom:3px">PICK CHECKLIST</div>'
+    +'<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:16px">'+next.day+' · '+next.date+' · Lock '+next.time+(next.dbl?' · ⚠️ DOUBLE PICK':'')+'</div>';
+  CMDS.forEach(function(c){
+    html+='<div style="margin-bottom:12px;padding:11px;background:var(--s2);border-radius:6px;border-left:3px solid var(--'+c.cls+')">'
+      +'<div style="font-family:Bebas Neue,sans-serif;font-size:15px;letter-spacing:2px;color:var(--'+c.cls+');margin-bottom:7px">'+c.name+' <span style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3)">'+c.email+'</span></div>';
+    c.entries.forEach(function(i){
+      var alive=!S.eliminated[i], sub=S.results[i][S.currentDay]!=='pending';
+      var pick=S.picks[i][S.currentDay]||'—';
+      html+='<div style="display:flex;align-items:center;gap:9px;padding:4px 0;border-bottom:1px solid rgba(37,45,58,0.4)">'
+        +'<div style="font-family:Bebas Neue,sans-serif;font-size:13px;color:var(--'+c.cls+');width:24px">E'+(i+1)+'</div>';
+      if(!alive) html+='<span style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--rd)">✕ ELIMINATED</span>';
+      else html+='<span style="font-family:JetBrains Mono,monospace;font-size:9px;flex:1">'+pick+(next.dbl?' + 2nd pick':'')+'</span>'
+        +'<span style="font-family:JetBrains Mono,monospace;font-size:8px;'+(sub?'color:var(--gn)':'color:var(--gd)')+'">'+(sub?'✓ SUBMITTED':'⏳ PENDING')+'</span>';
       html+='</div>';
     });
     html+='</div>';
   });
-  html+='<div style="text-align:center;margin-top:14px"><button onclick="document.getElementById('cl-overlay').remove()" style="background:var(--orange);border:none;color:white;padding:9px 22px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1px;cursor:pointer">CLOSE</button></div>';
-  html+='</div></div>';
+  html+='<div style="text-align:center;margin-top:12px"><button onclick="document.getElementById('cl-ov').remove()" style="background:var(--or);border:none;color:#fff;padding:8px 20px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">CLOSE</button></div>'
+    +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
 }
+document.getElementById('checklist-btn').addEventListener('click', showChecklist);
 
-// ═══════════════════════════════════════
-// NUDGE
-// ═══════════════════════════════════════
+// ═══ NUDGE ═══
 function showNudge(){
-  const now=new Date();
-  const next=DEADLINES.find(dl=>new Date(dl.iso)>now)||DEADLINES[DEADLINES.length-1];
-  const msg='🏀 TOBACCO ROAD SURVIVOR — '+next.day+' PICKS DUE
+  var now=new Date(), next=DLS.filter(function(dl){return new Date(dl.iso)>now;})[0]||DLS[DLS.length-1];
+  var msg='🏀 TOBACCO ROAD SURVIVOR — '+next.day+' PICKS DUE
 '
-    +'Lock: '+next.date+' at '+next.time+(next.double?' ⚠️ DOUBLE PICK DAY':'')+'
+    +'Lock: '+next.date+' at '+next.time+(next.dbl?' ⚠️ DOUBLE PICK DAY':'')+'
 
 '
     +'ASSIGNMENTS:
@@ -978,70 +978,64 @@ function showNudge(){
     +'George (E16-E20): Submit on Splash Sports
 
 '
-    +(next.double?'⚠️ You need 2 picks per entry today!
+    +(next.dbl?'⚠️ 2 picks required per entry today!
 
 ':'')
-    +'Check the War Room for your exact picks. Don't miss the lock!';
+    +'War Room: coachk2.github.io/tobacco-road-survivor-2026';
   document.getElementById('nudge-msg').textContent=msg;
-  const emails=COMMANDERS.map(c=>c.email).join(',');
+  var emails=CMDS.map(function(c){return c.email;}).join(',');
   document.getElementById('nudge-email').href='mailto:'+emails+'?subject='+encodeURIComponent('🏀 TOBACCO ROAD — '+next.day+' PICKS DUE')+'&body='+encodeURIComponent(msg);
-  const smsBody=encodeURIComponent(msg);
-  document.getElementById('nudge-sms').href='sms:&body='+smsBody;
+  document.getElementById('nudge-sms').href='sms:&body='+encodeURIComponent(msg);
   document.getElementById('nudge-modal').classList.add('open');
 }
-function copyNudge(){
-  const txt=document.getElementById('nudge-msg').textContent;
-  navigator.clipboard.writeText(txt).then(()=>{ const b=document.querySelector('#nudge-modal .nudge-btn:nth-child(3)'); b.textContent='✓ Copied!'; setTimeout(()=>b.textContent='📋 Copy Text',2000); });
-}
-document.getElementById('nudge-modal').addEventListener('click',e=>{ if(e.target===e.currentTarget) e.currentTarget.classList.remove('open'); });
+document.getElementById('nudge-btn').addEventListener('click', showNudge);
+document.getElementById('nudge-copy').addEventListener('click', function(){
+  navigator.clipboard.writeText(document.getElementById('nudge-msg').textContent).then(function(){
+    var b=document.getElementById('nudge-copy'); b.textContent='✓ Copied!';
+    setTimeout(function(){b.textContent='📋 Copy';},2000);
+  });
+});
+document.getElementById('nudge-close').addEventListener('click', function(){ document.getElementById('nudge-modal').classList.remove('open'); });
+document.getElementById('nudge-modal').addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
 
-// ═══════════════════════════════════════
-// BROWSER NOTIFICATIONS
-// ═══════════════════════════════════════
-async function enableAlerts(){
-  if(!('Notification' in window)){ alert('Browser notifications not supported'); return; }
-  const p=await Notification.requestPermission();
-  updateAlertBtn();
-  if(p==='granted') new Notification('🏀 Tobacco Road Alerts Enabled',{body:'You will be notified before each pick deadline.'});
-}
-function updateAlertBtn(){
-  const btn=document.getElementById('notif-btn');
-  const p=window.Notification?.permission;
-  if(p==='granted'){ btn.textContent='🔔 Alerts On'; btn.classList.add('alert-on'); }
-  else if(p==='denied'){ btn.textContent='🔕 Blocked'; btn.classList.add('alert-blocked'); }
-}
-updateAlertBtn();
-
-const FIRED=new Set(JSON.parse(localStorage.getItem('tr-fired-2026')||'[]'));
-function checkAlerts(){
-  const now=new Date();
-  if(Notification.permission!=='granted') return;
-  DEADLINES.forEach(dl=>{
-    const lock=new Date(dl.iso);
-    const mins=(lock-now)/60000;
+// ═══ NOTIFICATIONS ═══
+document.getElementById('notif-btn').addEventListener('click', function(){
+  if(!('Notification' in window)){ alert('Browser notifications not supported.'); return; }
+  Notification.requestPermission().then(function(p){
+    var btn=document.getElementById('notif-btn');
+    if(p==='granted'){ btn.classList.add('on'); btn.textContent='🔔 Alerts On'; new Notification('🏀 Tobacco Road Alerts On',{body:'You will be notified before each deadline.'}); }
+    else if(p==='denied'){ btn.classList.add('blocked'); btn.textContent='🔕 Blocked'; }
+  });
+});
+(function(){
+  var btn=document.getElementById('notif-btn'), p=window.Notification&&Notification.permission;
+  if(p==='granted'){ btn.classList.add('on'); btn.textContent='🔔 Alerts On'; }
+  else if(p==='denied'){ btn.classList.add('blocked'); btn.textContent='🔕 Blocked'; }
+})();
+var FIRED=new Set(); try{FIRED=new Set(JSON.parse(localStorage.getItem('tr26-fired')||'[]'));}catch(e){}
+setInterval(function(){
+  if(!window.Notification||Notification.permission!=='granted') return;
+  var now=new Date();
+  DLS.forEach(function(dl){
+    var lock=new Date(dl.iso), mins=(lock-now)/60000;
     if(mins<0) return;
-    [[180,'3 hours'],[60,'1 hour'],[15,'15 minutes']].forEach(([w,label])=>{
-      const key=dl.day+'-'+w;
-      if(FIRED.has(key)||mins>w||mins<w-2) return;
-      FIRED.add(key);
-      localStorage.setItem('tr-fired-2026',JSON.stringify([...FIRED]));
-      new Notification('🏀 TOBACCO ROAD — '+dl.day+' DUE IN '+label.toUpperCase()+(dl.double?' ⚠️ DOUBLE PICK':''),{
-        body:'Lock: '+dl.date+' at '+dl.time+'. Submit all picks on Splash Sports.',
-        requireInteraction:true
-      });
+    [[180,'3 HOURS'],[60,'1 HOUR'],[15,'15 MINUTES']].forEach(function(w){
+      var key=dl.day+'-'+w[0];
+      if(FIRED.has(key)||mins>w[0]||mins<w[0]-2) return;
+      FIRED.add(key); localStorage.setItem('tr26-fired',JSON.stringify([...FIRED]));
+      new Notification('🏀 TOBACCO ROAD — '+dl.day+' DUE IN '+w[1]+(dl.dbl?' ⚠️ DOUBLE PICK':''),{body:'Lock: '+dl.date+' at '+dl.time+'. Submit picks on Splash Sports.',requireInteraction:true});
     });
   });
-}
-setInterval(checkAlerts,30000); checkAlerts();
+},30000);
 
-// ═══════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════
+// ═══ INIT ═══
 renderFunnel();
 renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
-document.getElementById('s-live').textContent=liveCount();
+document.getElementById('s-live').textContent=liveCt();
+
+})(); // end IIFE
 </script>
 </body>
 </html>
