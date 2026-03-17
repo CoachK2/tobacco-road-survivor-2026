@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -954,35 +954,18 @@ function showChecklist(){
     });
     html+='</div>';
   });
-  html+='<div style="text-align:center;margin-top:12px"><button onclick="document.getElementById('cl-ov').remove()" style="background:var(--or);border:none;color:#fff;padding:8px 20px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">CLOSE</button></div>'
+  html+='<div style="text-align:center;margin-top:12px"><button id="cl-close-btn" style="background:var(--or);border:none;color:#fff;padding:8px 20px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">CLOSE</button></div>'
     +'</div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
+  var clBtn = document.getElementById('cl-close-btn');
+  if(clBtn) clBtn.addEventListener('click', function(){ var ov=document.getElementById('cl-ov'); if(ov) ov.remove(); });
 }
 document.getElementById('checklist-btn').addEventListener('click', showChecklist);
 
 // ═══ NUDGE ═══
 function showNudge(){
   var now=new Date(), next=DLS.filter(function(dl){return new Date(dl.iso)>now;})[0]||DLS[DLS.length-1];
-  var msg='🏀 TOBACCO ROAD SURVIVOR — '+next.day+' PICKS DUE
-'
-    +'Lock: '+next.date+' at '+next.time+(next.dbl?' ⚠️ DOUBLE PICK DAY':'')+'
-
-'
-    +'ASSIGNMENTS:
-'
-    +'Kerry (E1-E5): Submit on Splash Sports
-'
-    +'Whopper (E6-E10): Submit on Splash Sports
-'
-    +'Dustin (E11-E15): Submit on Splash Sports
-'
-    +'George (E16-E20): Submit on Splash Sports
-
-'
-    +(next.dbl?'⚠️ 2 picks required per entry today!
-
-':'')
-    +'War Room: coachk2.github.io/tobacco-road-survivor-2026';
+  var msg='[TOBACCO ROAD] '+next.day+' PICKS DUE | Lock: '+next.date+' at '+next.time+(next.dbl?' - DOUBLE PICK DAY! 2 picks needed!':'')+' | Kerry:E1-5 Whopper:E6-10 Dustin:E11-15 George:E16-20 | War Room: coachk2.github.io/tobacco-road-survivor-2026';
   document.getElementById('nudge-msg').textContent=msg;
   var emails=CMDS.map(function(c){return c.email;}).join(',');
   document.getElementById('nudge-email').href='mailto:'+emails+'?subject='+encodeURIComponent('🏀 TOBACCO ROAD — '+next.day+' PICKS DUE')+'&body='+encodeURIComponent(msg);
