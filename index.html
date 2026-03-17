@@ -900,6 +900,14 @@ var CMDS = [
   {name:'Dustin',  cls:'dustin',  email:'dustinsnavely@yahoo.com',    entries:[10,11,12,13,14]},
   {name:'George',  cls:'george',  email:'georgebaker0823@gmail.com',  entries:[15,16,17,18,19]},
 ];
+
+// Splash Sports entry names per commander
+var ENTRY_NAMES = [
+  'Stephortless','Onions','Send It In Jerome','Batista With The Catch','There Goes That Man',
+  'Whackupable the OG','Whackupable II','Whackupable III','Whackupable IV','Cinco de Whackupable',
+  'Dustin E11','Dustin E12','Dustin E13','Dustin E14','Dustin E15',
+  'George E16','George E17','George E18','George E19','George E20',
+];
 var CMD_MAP = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
 var DLS = [
   {day:'D1',  rnd:'R64', date:'Thu 3/19', time:'12:15 PM', iso:'2026-03-19T12:15:00', g:16},
@@ -1139,7 +1147,8 @@ function renderCmdCards(){
       var cls=S.eliminated[i]?'dead':'alive';
       return '<span class="chip '+cls+'">E'+(i+1)+'</span>';
     }).join('');
-    el.innerHTML+='<div class="cmd-card '+c.cls+'"><div class="cmd-n">'+c.name+'</div><div class="cmd-e">'+c.email+'</div><div class="cmd-chips">'+chips+'</div></div>';
+    var splashNames = c.entries.map(function(i){ return ENTRY_NAMES[i]||('E'+(i+1)); }).join(', ');
+    el.innerHTML+='<div class="cmd-card '+c.cls+'"><div class="cmd-n">'+c.name+'</div><div class="cmd-e">'+c.email+'</div><div class="cmd-chips">'+chips+'</div><div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t4);margin-top:7px;line-height:1.7">'+splashNames+'</div></div>';
   });
 }
 
@@ -1241,6 +1250,7 @@ function renderCards(filter){
     }
     html+='<div class="ecard '+(alive?'':'dead')+'">'
       +'<div class="ehdr"><div class="enum '+c+'">E'+(i+1)+'</div><span class="etag '+c+'">'+nm+'</span></div>'
+      +'<div style="padding:3px 11px;background:var(--s3);border-bottom:1px solid var(--b1);font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);">'+(ENTRY_NAMES[i]||'')+'</div>'
       +'<div class="elane"><div class="ldot '+lane.d+'"></div><span class="ltxt">'+lane.n+' '+lane.s+'-seed</span></div>'
       +'<div class="picks">'+pSlots+'</div>'
       +'<div class="eftr"><div class="tbn">TB: '+tbVal+'</div><div class="est '+(alive?'ok':'no')+'">'+(alive?'● ALIVE':'✕ OUT')+'</div></div>'
