@@ -655,6 +655,7 @@ function show(name,el){
   if(name==='tiebreaker') renderTB();
   if(name==='scenarios') renderSim();
   if(name==='schedule') renderSchedDL();
+  if(name==='overview'){ renderCmdCards(); renderDL('dl-strip'); renderFunnel(); }
 }
 
 // ═══════════════════════════════════════
@@ -765,7 +766,6 @@ function renderBoard(){
     const lane=LANE_INFO[i];
     const tbVal=getTB(i);
     const alive=!S.eliminated[i];
-    const d78=picks[6]+(picks[7]?' + '+picks[7]:'');
     const tr=document.createElement('tr');
     if(!alive) tr.classList.add('dead-row');
     tr.innerHTML=`
@@ -778,7 +778,7 @@ function renderBoard(){
       <td>${pill(picks[3],3,i)}</td>
       <td>${pill(picks[4],4,i)}</td>
       <td>${pill(picks[5],5,i)}</td>
-      <td>${pill(d78,6,i)}</td>
+      <td>${pill(picks[6],6,i)} ${pill(picks[7],7,i)}</td>
       <td>${pill(picks[8],8,i)}</td>
       <td>${pill(picks[9],9,i)}</td>
       <td style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue)">${tbVal}</td>
@@ -892,17 +892,20 @@ const dayNames=['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 
 
 function openModal(entryIdx,dayIdx){
   mEntry=entryIdx; mDay=dayIdx;
-  document.getElementById('modal-ctx').textContent='E'+(entryIdx+1)+' · '+cmdName(entryIdx)+' · '+dayNames[dayIdx];
+  const ctx=document.getElementById('modal-ctx');
+  if(ctx) ctx.textContent='E'+(entryIdx+1)+' · '+cmdName(entryIdx)+' · '+dayNames[dayIdx];
   const sel=document.getElementById('modal-team');
   sel.innerHTML='';
-  const used=new Set(S.picks[entryIdx].filter((_,d)=>d!==dayIdx));
+  // Build set of teams used on ALL other days for this entry
+  const used=new Set(S.picks[entryIdx].filter((_,d)=>d!==dayIdx).filter(t=>t&&t!==''));
   Object.keys(TEAMS).filter(t=>!used.has(t)).forEach(t=>{
     const o=document.createElement('option');
-    o.value=t; o.textContent=t+' (S'+TEAMS[t].seed+', '+TEAMS[t].region+')';
+    o.value=t; o.textContent=t+' (S'+TEAMS[t].seed+', '+TEAMS[t].region+', R32: '+TEAMS[t].r32+'%, Title: '+TEAMS[t].title+'%)';
     if(S.picks[entryIdx][dayIdx]===t) o.selected=true;
     sel.appendChild(o);
   });
-  document.getElementById('modal-result').value=S.results[entryIdx][dayIdx]||'pending';
+  const res=document.getElementById('modal-result');
+  if(res) res.value=S.results[entryIdx][dayIdx]||'pending';
   document.getElementById('pick-modal').classList.add('open');
 }
 function closeModal(){ document.getElementById('pick-modal').classList.remove('open'); }
@@ -1037,6 +1040,7 @@ setInterval(checkAlerts,30000); checkAlerts();
 renderFunnel();
 renderCmdCards();
 renderDL('dl-strip');
+renderBoard();
 document.getElementById('s-live').textContent=liveCount();
 </script>
 </body>
