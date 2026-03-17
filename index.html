@@ -516,28 +516,200 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     </div>
   </div>
   <!-- FOUR FACTORS MATCHUP ANALYZER -->
-  <div class="sec" style="margin-top:20px"><div class="sec-t">FOUR FACTORS MATCHUP ANALYZER</div><div class="sec-b">KENPOM + FOUR FACTORS</div></div>
+  <div class="sec" style="margin-top:20px"><div class="sec-t">FOUR FACTORS MATCHUP ANALYZER</div><div class="sec-b">SELECT ANY TWO TEAMS · WORKS ALL TOURNAMENT</div></div>
   <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:16px;margin-bottom:18px">
-    <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:5px;letter-spacing:1px">SELECT MATCHUP</div>
-    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:14px">
-      <select id="ff-matchup" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:8px 10px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:11px">
-        <option value="SantaClra|Kentucky">Santa Clara (10, KP#35) vs Kentucky (7, KP#28)</option>
-        <option value="Akron|TexasTech">Akron (12, KP#63) vs Texas Tech (5, KP#20)</option>
-        <option value="VCU|NCarolina">VCU (11, KP#44) vs North Carolina (6, KP#29)</option>
-        <option value="UCLA|UCLA_opp">UCLA (7, KP#27) vs UCF (10, KP#55)</option>
-        <option value="NorthIowa|StJohns">Northern Iowa (12, KP#72) vs St. Johns (5, KP#18)</option>
-        <option value="McNeese|Vanderbilt">McNeese (12, KP#68) vs Vanderbilt (5, KP#12)</option>
-        <option value="StMarys|TexasAM">St. Marys (7, KP#24) vs Texas A&M (10, KP#39)</option>
-        <option value="Wisconsin|HighPoint">Wisconsin (5, KP#22) vs High Point (12, KP#90)</option>
-      </select>
+    <div style="background:var(--bl-d);border:1px solid rgba(59,130,246,0.25);border-radius:5px;padding:8px 12px;margin-bottom:14px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--bl);line-height:1.7">
+      Pick any two teams from the dropdowns — you choose the actual matchup each round. Works from R64 through the Championship with no refreshing or updating needed. All 68 teams + KenPom ranks pre-loaded.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;margin-bottom:14px">
+      <div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:4px;letter-spacing:1px">TEAM A</div>
+        <select id="ff-team-a" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:8px 10px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+        <option value="">-- Select Team --</option>
+        <optgroup label="── 1 SEEDS ──">
+          <option value="Duke">Duke (1 East · KP#1)</option>
+          <option value="Arizona">Arizona (1 West · KP#2)</option>
+          <option value="Michigan">Michigan (1 Midwest · KP#3)</option>
+          <option value="Florida">Florida (1 South · KP#4)</option>
+        </optgroup>
+        <optgroup label="── 2 SEEDS ──">
+          <option value="Houston">Houston (2 South · KP#5)</option>
+          <option value="IowasSt">Iowa State (2 Midwest · KP#6)</option>
+          <option value="Purdue">Purdue (2 West · KP#8)</option>
+          <option value="UConn">UConn (2 East · KP#11)</option>
+        </optgroup>
+        <optgroup label="── 3 SEEDS ──">
+          <option value="Illinois">Illinois (3 South · KP#7)</option>
+          <option value="MichSt">Michigan State (3 East · KP#9)</option>
+          <option value="Gonzaga">Gonzaga (3 West · KP#10)</option>
+          <option value="Virginia">Virginia (3 Midwest · KP#13)</option>
+        </optgroup>
+        <optgroup label="── 4 SEEDS ──">
+          <option value="Nebraska">Nebraska (4 South · KP#14)</option>
+          <option value="Arkansas">Arkansas (4 West · KP#16)</option>
+          <option value="Alabama">Alabama (4 Midwest · KP#18)</option>
+          <option value="Kansas">Kansas (4 East · KP#21)</option>
+        </optgroup>
+        <optgroup label="── 5 SEEDS ──">
+          <option value="Vanderbilt">Vanderbilt (5 South · KP#12)</option>
+          <option value="Wisconsin">Wisconsin (5 West · KP#22)</option>
+          <option value="StJohns">St. Johns (5 East · KP#18)</option>
+          <option value="TexasTech">Texas Tech (5 Midwest · KP#20)</option>
+        </optgroup>
+        <optgroup label="── 6 SEEDS ──">
+          <option value="BYU">BYU (6 West · KP#23)</option>
+          <option value="NCarolina">N. Carolina (6 South · KP#29)</option>
+          <option value="Louisville">Louisville (6 East · KP#19)</option>
+          <option value="Tennessee">Tennessee (6 Midwest)</option>
+        </optgroup>
+        <optgroup label="── 7 SEEDS ──">
+          <option value="StMarys">St. Marys (7 South · KP#24)</option>
+          <option value="UCLA">UCLA (7 East · KP#27)</option>
+          <option value="Kentucky">Kentucky (7 Midwest · KP#28)</option>
+          <option value="MiamiFL">Miami FL (7 West)</option>
+        </optgroup>
+        <optgroup label="── 8-10 SEEDS ──">
+          <option value="OhioSt">Ohio State (8 East)</option>
+          <option value="Clemson">Clemson (8 South)</option>
+          <option value="Villanova">Villanova (8 West)</option>
+          <option value="Georgia">Georgia (8 Midwest)</option>
+          <option value="TCU">TCU (9 East)</option>
+          <option value="Iowa">Iowa (9 South)</option>
+          <option value="UtahSt">Utah State (9 West)</option>
+          <option value="StLouis">Saint Louis (9 Midwest)</option>
+          <option value="SantaClra">Santa Clara (10 Midwest · KP#35)</option>
+          <option value="TexasAM">Texas A&M (10 South · KP#39)</option>
+          <option value="UCF">UCF (10 East)</option>
+          <option value="Missouri">Missouri (10 West)</option>
+        </optgroup>
+        <optgroup label="── 11-12 SEEDS ──">
+          <option value="VCU">VCU (11 South · KP#44)</option>
+          <option value="SoFla">South Florida (11 East)</option>
+          <option value="TxNCSt">Texas/NC State (11 West)</option>
+          <option value="MiamiOH">Miami OH/SMU (11 Midwest)</option>
+          <option value="Akron">Akron (12 Midwest · KP#63)</option>
+          <option value="McNeese">McNeese (12 South · KP#68)</option>
+          <option value="NorthIowa">Northern Iowa (12 East · KP#72)</option>
+          <option value="HighPt">High Point (12 West · KP#90)</option>
+        </optgroup>
+        <optgroup label="── 13-16 SEEDS ──">
+          <option value="Troy">Troy (13 South)</option>
+          <option value="Hawaii">Hawaii (13 West)</option>
+          <option value="CalBapt">Cal Baptist (13 East)</option>
+          <option value="Hofstra">Hofstra (13 Midwest)</option>
+          <option value="NDSU">North Dakota State (14 East)</option>
+          <option value="WrightSt">Wright State (14 Midwest)</option>
+          <option value="KennesawSt">Kennesaw State (14 West)</option>
+          <option value="Penn">Penn (14 South)</option>
+          <option value="TennSt">Tennessee State (15 Midwest)</option>
+          <option value="Queens">Queens NC (15 West)</option>
+          <option value="Furman">Furman (15 East)</option>
+          <option value="Idaho">Idaho (15 South)</option>
+          <option value="Siena">Siena (16 East)</option>
+          <option value="LIU">LIU (16 West)</option>
+          <option value="PV_Lehigh">Prairie View/Lehigh (16 South)</option>
+          <option value="UMBC_How">UMBC/Howard (16 Midwest)</option>
+        </optgroup>
+        </select>
+      </div>
+      <div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:4px;letter-spacing:1px">TEAM B</div>
+        <select id="ff-team-b" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:8px 10px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+        <option value="">-- Select Team --</option>
+        <optgroup label="── 1 SEEDS ──">
+          <option value="Duke">Duke (1 East · KP#1)</option>
+          <option value="Arizona">Arizona (1 West · KP#2)</option>
+          <option value="Michigan">Michigan (1 Midwest · KP#3)</option>
+          <option value="Florida">Florida (1 South · KP#4)</option>
+        </optgroup>
+        <optgroup label="── 2 SEEDS ──">
+          <option value="Houston">Houston (2 South · KP#5)</option>
+          <option value="IowasSt">Iowa State (2 Midwest · KP#6)</option>
+          <option value="Purdue">Purdue (2 West · KP#8)</option>
+          <option value="UConn">UConn (2 East · KP#11)</option>
+        </optgroup>
+        <optgroup label="── 3 SEEDS ──">
+          <option value="Illinois">Illinois (3 South · KP#7)</option>
+          <option value="MichSt">Michigan State (3 East · KP#9)</option>
+          <option value="Gonzaga">Gonzaga (3 West · KP#10)</option>
+          <option value="Virginia">Virginia (3 Midwest · KP#13)</option>
+        </optgroup>
+        <optgroup label="── 4 SEEDS ──">
+          <option value="Nebraska">Nebraska (4 South · KP#14)</option>
+          <option value="Arkansas">Arkansas (4 West · KP#16)</option>
+          <option value="Alabama">Alabama (4 Midwest · KP#18)</option>
+          <option value="Kansas">Kansas (4 East · KP#21)</option>
+        </optgroup>
+        <optgroup label="── 5 SEEDS ──">
+          <option value="Vanderbilt">Vanderbilt (5 South · KP#12)</option>
+          <option value="Wisconsin">Wisconsin (5 West · KP#22)</option>
+          <option value="StJohns">St. Johns (5 East · KP#18)</option>
+          <option value="TexasTech">Texas Tech (5 Midwest · KP#20)</option>
+        </optgroup>
+        <optgroup label="── 6 SEEDS ──">
+          <option value="BYU">BYU (6 West · KP#23)</option>
+          <option value="NCarolina">N. Carolina (6 South · KP#29)</option>
+          <option value="Louisville">Louisville (6 East · KP#19)</option>
+          <option value="Tennessee">Tennessee (6 Midwest)</option>
+        </optgroup>
+        <optgroup label="── 7 SEEDS ──">
+          <option value="StMarys">St. Marys (7 South · KP#24)</option>
+          <option value="UCLA">UCLA (7 East · KP#27)</option>
+          <option value="Kentucky">Kentucky (7 Midwest · KP#28)</option>
+          <option value="MiamiFL">Miami FL (7 West)</option>
+        </optgroup>
+        <optgroup label="── 8-10 SEEDS ──">
+          <option value="OhioSt">Ohio State (8 East)</option>
+          <option value="Clemson">Clemson (8 South)</option>
+          <option value="Villanova">Villanova (8 West)</option>
+          <option value="Georgia">Georgia (8 Midwest)</option>
+          <option value="TCU">TCU (9 East)</option>
+          <option value="Iowa">Iowa (9 South)</option>
+          <option value="UtahSt">Utah State (9 West)</option>
+          <option value="StLouis">Saint Louis (9 Midwest)</option>
+          <option value="SantaClra">Santa Clara (10 Midwest · KP#35)</option>
+          <option value="TexasAM">Texas A&M (10 South · KP#39)</option>
+          <option value="UCF">UCF (10 East)</option>
+          <option value="Missouri">Missouri (10 West)</option>
+        </optgroup>
+        <optgroup label="── 11-12 SEEDS ──">
+          <option value="VCU">VCU (11 South · KP#44)</option>
+          <option value="SoFla">South Florida (11 East)</option>
+          <option value="TxNCSt">Texas/NC State (11 West)</option>
+          <option value="MiamiOH">Miami OH/SMU (11 Midwest)</option>
+          <option value="Akron">Akron (12 Midwest · KP#63)</option>
+          <option value="McNeese">McNeese (12 South · KP#68)</option>
+          <option value="NorthIowa">Northern Iowa (12 East · KP#72)</option>
+          <option value="HighPt">High Point (12 West · KP#90)</option>
+        </optgroup>
+        <optgroup label="── 13-16 SEEDS ──">
+          <option value="Troy">Troy (13 South)</option>
+          <option value="Hawaii">Hawaii (13 West)</option>
+          <option value="CalBapt">Cal Baptist (13 East)</option>
+          <option value="Hofstra">Hofstra (13 Midwest)</option>
+          <option value="NDSU">North Dakota State (14 East)</option>
+          <option value="WrightSt">Wright State (14 Midwest)</option>
+          <option value="KennesawSt">Kennesaw State (14 West)</option>
+          <option value="Penn">Penn (14 South)</option>
+          <option value="TennSt">Tennessee State (15 Midwest)</option>
+          <option value="Queens">Queens NC (15 West)</option>
+          <option value="Furman">Furman (15 East)</option>
+          <option value="Idaho">Idaho (15 South)</option>
+          <option value="Siena">Siena (16 East)</option>
+          <option value="LIU">LIU (16 West)</option>
+          <option value="PV_Lehigh">Prairie View/Lehigh (16 South)</option>
+          <option value="UMBC_How">UMBC/Howard (16 Midwest)</option>
+        </optgroup>
+        </select>
+      </div>
       <button id="ff-analyze" style="background:var(--or);border:none;color:#fff;padding:9px 20px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1px;cursor:pointer;white-space:nowrap">ANALYZE</button>
     </div>
     <div id="ff-result" style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:1.8">
-      Select a matchup and click Analyze.
+      Select both teams and click Analyze.
     </div>
   </div>
 
-  <div class="sec"><div class="sec-t">SIM PROBABILITIES + KENPOM + PATH DIFFICULTY</div><div class="sec-b">EVANMIYA 10K SIMS</div></div>
+    <div class="sec"><div class="sec-t">SIM PROBABILITIES + KENPOM + PATH DIFFICULTY</div><div class="sec-b">EVANMIYA 10K SIMS</div></div>
   <div class="sim-grid" id="sim-grid"></div>
 </div>
 
@@ -664,9 +836,21 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 <!-- BRACKET PANEL -->
 <div class="panel" id="panel-bracket">
   <div class="sec"><div class="sec-t">LIVE BRACKET + RESULTS</div><div class="sec-b">CLICK WINNER TO LOG RESULT</div></div>
-  <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:14px;margin-bottom:16px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:1.8">
-    Click the winning team in each game to log the result. Winners automatically advance to the next round.
-    The Four Factors Matchup Analyzer on the Scenarios tab updates automatically to show only live games.
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:14px">
+    <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:12px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:1.8">
+      Click the winning team in each game to log the result. Winners automatically advance to the next round.
+      The Matchup Analyzer on the Scenarios tab auto-updates to show the current round games.
+    </div>
+    <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.4);border-radius:7px;padding:12px">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);margin-bottom:6px">OFFICIAL BRACKET MANAGER</div>
+      <div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t2);line-height:1.7">
+        <span style="color:var(--or)">Kerry</span> is the only person who logs results here.<br>
+        After logging, text the group to hard refresh.<br><br>
+        <span style="color:var(--t3)">Mac: Cmd+Shift+R</span><br>
+        <span style="color:var(--t3)">PC: Ctrl+Shift+R</span><br>
+        <span style="color:var(--t3)">iPhone: Close + reopen tab</span>
+      </div>
+    </div>
   </div>
   <div id="bracket-games"></div>
 </div>
@@ -1354,58 +1538,105 @@ setInterval(function(){
 
 
 // ═══ FOUR FACTORS MATCHUP ANALYZER ═══
+// Simple two-dropdown system — you pick both teams, works all tournament
 document.getElementById('ff-analyze').addEventListener('click', function() {
-  var matchup = document.getElementById('ff-matchup').value;
-  var parts = matchup.split('|');
-  var uTeam = parts[0];
-  var fTeam = parts[1];
-  var result = analyzeMatchup(uTeam, fTeam);
+  var keyA = document.getElementById('ff-team-a').value;
+  var keyB = document.getElementById('ff-team-b').value;
   var el = document.getElementById('ff-result');
-  if (typeof result === 'string') { el.innerHTML = '<div style="color:var(--rd)">'+result+'</div>'; return; }
+  if (!keyA || !keyB) { el.innerHTML = '<span style="color:var(--rd)">Please select both teams.</span>'; return; }
+  if (keyA === keyB) { el.innerHTML = '<span style="color:var(--rd)">Please select two different teams.</span>'; return; }
 
-  // Get display names from the selected option
-  var sel = document.getElementById('ff-matchup');
-  var selTxt = sel.options[sel.selectedIndex].text;
-  var teamParts = selTxt.split(' vs ');
-  var uName = teamParts[0] || uTeam;
-  var fName = teamParts[1] || fTeam;
+  var ffA = FF[TEAM_FF_MAP[keyA] || keyA];
+  var ffB = FF[TEAM_FF_MAP[keyB] || keyB];
+  var tmA = TEAMS[TEAM_FF_MAP[keyA] || keyA];
+  var tmB = TEAMS[TEAM_FF_MAP[keyB] || keyB];
 
-  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">'
-    + '<div style="padding:10px;background:var(--or-d);border:1px solid rgba(249,115,22,0.3);border-radius:5px">'
-    + '<div style="color:var(--or);font-size:8px;letter-spacing:1px;margin-bottom:4px">UPSET CANDIDATE</div>'
-    + '<div style="font-size:11px;color:var(--t1);margin-bottom:4px">'+uName+'</div>'
-    + '<div style="color:var(--t3);font-size:8px;line-height:1.6">'+result.insight_u+'</div>'
-    + '</div>'
-    + '<div style="padding:10px;background:var(--bl-d);border:1px solid rgba(59,130,246,0.3);border-radius:5px">'
-    + '<div style="color:var(--bl);font-size:8px;letter-spacing:1px;margin-bottom:4px">FAVORITE</div>'
-    + '<div style="font-size:11px;color:var(--t1);margin-bottom:4px">'+fName+'</div>'
-    + '<div style="color:var(--t3);font-size:8px;line-height:1.6">'+result.insight_f+'</div>'
-    + '</div>'
-    + '</div>';
+  // Get display names from select options
+  var selA = document.getElementById('ff-team-a');
+  var selB = document.getElementById('ff-team-b');
+  var tA = selA.options[selA.selectedIndex].text.split(' (')[0];
+  var tB = selB.options[selB.selectedIndex].text.split(' (')[0];
 
-  if (result.edges.length > 0) {
-    html += '<div style="margin-bottom:10px;padding:10px;background:var(--gn-d);border:1px solid rgba(34,197,94,0.3);border-radius:5px">'
-      + '<div style="color:var(--gn);font-size:8px;letter-spacing:1px;margin-bottom:6px">EDGES FOR UPSET</div>'
-      + result.edges.map(function(e) {
-          return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--gn)">+</span><span style="color:var(--t2);font-size:9px">'+e+'</span></div>';
-        }).join('')
+  var html = '<div style="font-family:Bebas Neue,sans-serif;font-size:15px;letter-spacing:2px;margin-bottom:12px;color:var(--t1)">'
+    + tA + ' <span style="color:var(--t3)">vs</span> ' + tB + '</div>';
+
+  // Team cards side by side
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">';
+  [[tA,ffA,tmA,'var(--or)'],[tB,ffB,tmB,'var(--bl)']].forEach(function(side) {
+    var name=side[0], ff=side[1], tm=side[2], col=side[3];
+    html += '<div style="padding:10px;background:var(--s3);border:1px solid var(--b1);border-radius:5px">';
+    html += '<div style="color:'+col+';font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:1px;margin-bottom:4px">'+name+'</div>';
+    if (tm) html += '<div style="color:var(--t3);font-size:7px;margin-bottom:5px">KP#'+tm.kp+' · Net: +'+tm.net+' · Seed '+tm.seed+'</div>';
+    if (ff) {
+      html += '<div style="font-size:8px;color:var(--t2);line-height:1.6;margin-bottom:6px">'+ff[11]+'</div>';
+      html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">';
+      html += '<div style="font-size:7px;color:var(--t3)">Tempo: <span style="color:var(--t1)">'+ff[0]+'</span></div>';
+      html += '<div style="font-size:7px;color:var(--t3)">O-eFG%: <span style="color:var(--t1)">'+ff[2]+'%</span></div>';
+      html += '<div style="font-size:7px;color:var(--t3)">D-eFG%: <span style="color:var(--t1)">'+ff[7]+'%</span></div>';
+      html += '<div style="font-size:7px;color:var(--t3)">TO rank: <span style="color:'+(ff[3]>100?'var(--rd)':ff[3]<25?'var(--gn)':'var(--t1)')+'">'+ff[3]+'</span></div>';
+      html += '<div style="font-size:7px;color:var(--t3)">OR%: <span style="color:var(--t1)">'+ff[4]+'%</span></div>';
+      html += '<div style="font-size:7px;color:var(--t3)">FT Rate: <span style="color:var(--t1)">'+ff[5]+'</span></div>';
+      html += '</div>';
+    } else {
+      html += '<div style="color:var(--t3);font-size:8px;margin-top:4px">No Four Factors data available</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+
+  if (!ffA || !ffB) { el.innerHTML = html; return; }
+
+  var edgesA=[], edgesB=[], neutral=[];
+
+  // Tempo
+  var td = ffA[0]-ffB[0];
+  if (Math.abs(td)>3) {
+    if(td>0) edgesA.push('Faster pace ('+ffA[0]+' vs '+ffB[0]+') — suits '+tA+' style');
+    else edgesB.push('Faster pace ('+ffB[0]+' vs '+ffA[0]+') — suits '+tB+' style');
+  } else neutral.push('Similar tempo ('+ffA[0]+' vs '+ffB[0]+') — neither team gets a pace edge');
+
+  // eFG offense vs defense
+  if (ffA[2] > ffB[7]+4) edgesA.push(tA+' shooting efficiency ('+ffA[2]+'% eFG) exceeds '+tB+' defense ('+ffB[7]+'% D-eFG)');
+  if (ffB[2] > ffA[7]+4) edgesB.push(tB+' shooting efficiency ('+ffB[2]+'% eFG) exceeds '+tA+' defense ('+ffA[7]+'% D-eFG)');
+  if (ffB[7] > ffA[2]+4) edgesB.push(tB+' elite defense ('+ffB[7]+'% D-eFG) shuts down '+tA+' offense ('+ffA[2]+'% eFG)');
+  if (ffA[7] > ffB[2]+4) edgesA.push(tA+' elite defense ('+ffA[7]+'% D-eFG) shuts down '+tB+' offense ('+ffB[2]+'% eFG)');
+
+  // Turnovers
+  if (ffA[3]>120) edgesB.push(tA+' turnover-prone (rank '+ffA[3]+') — '+tB+' pressure defense can force mistakes');
+  else if (ffA[3]<25) edgesA.push(tA+' elite ball security (rank '+ffA[3]+') — limits '+tB+' transition opportunities');
+  if (ffB[3]>120) edgesA.push(tB+' turnover-prone (rank '+ffB[3]+') — '+tA+' pressure defense can force mistakes');
+  else if (ffB[3]<25) edgesB.push(tB+' elite ball security (rank '+ffB[3]+') — limits '+tA+' transition opportunities');
+
+  // Offensive rebounding
+  if (ffA[4]>ffB[9]+6) edgesA.push(tA+' offensive rebounding ('+ffA[4]+'% OR) vs '+tB+' weak defensive rebounding ('+ffB[9]+'%)');
+  if (ffB[4]>ffA[9]+6) edgesB.push(tB+' offensive rebounding ('+ffB[4]+'% OR) vs '+tA+' weak defensive rebounding ('+ffA[9]+'%)');
+
+  // Free throws
+  if (ffA[5]>35 && ffB[10]>28) edgesA.push(tA+' attacks the line (FTR '+ffA[5]+') and '+tB+' fouls (opp FTR '+ffB[10]+')');
+  if (ffB[5]>35 && ffA[10]>28) edgesB.push(tB+' attacks the line (FTR '+ffB[5]+') and '+tA+' fouls (opp FTR '+ffA[10]+')');
+
+  // Render edges
+  if (edgesA.length > 0) {
+    html += '<div style="margin-bottom:8px;padding:10px;background:var(--or-d);border:1px solid rgba(249,115,22,0.3);border-radius:5px">'
+      + '<div style="color:var(--or);font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1px;margin-bottom:6px">EDGES: '+tA.toUpperCase()+'</div>'
+      + edgesA.map(function(e){return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--or)">+</span><span style="color:var(--t2);font-size:9px">'+e+'</span></div>';}).join('')
       + '</div>';
-  } else {
-    html += '<div style="margin-bottom:10px;padding:10px;background:var(--s3);border:1px solid var(--b1);border-radius:5px;color:var(--t3);font-size:9px">No significant four-factor edges detected for the upset.</div>';
   }
-
-  if (result.risks.length > 0) {
-    html += '<div style="padding:10px;background:var(--rd-d);border:1px solid rgba(239,68,68,0.3);border-radius:5px">'
-      + '<div style="color:var(--rd);font-size:8px;letter-spacing:1px;margin-bottom:6px">RISKS FOR UPSET</div>'
-      + result.risks.map(function(r) {
-          return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--rd)">-</span><span style="color:var(--t2);font-size:9px">'+r+'</span></div>';
-        }).join('')
+  if (edgesB.length > 0) {
+    html += '<div style="margin-bottom:8px;padding:10px;background:var(--bl-d);border:1px solid rgba(59,130,246,0.3);border-radius:5px">'
+      + '<div style="color:var(--bl);font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1px;margin-bottom:6px">EDGES: '+tB.toUpperCase()+'</div>'
+      + edgesB.map(function(e){return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--bl)">+</span><span style="color:var(--t2);font-size:9px">'+e+'</span></div>';}).join('')
       + '</div>';
+  }
+  if (neutral.length > 0) {
+    html += '<div style="padding:6px 0;color:var(--t3);font-size:8px">'+neutral.join(' · ')+'</div>';
+  }
+  if (edgesA.length===0 && edgesB.length===0 && neutral.length===0) {
+    html += '<div style="padding:10px;background:var(--s3);border-radius:4px;font-size:9px;color:var(--t3)">No significant Four Factor edges detected. This game is a coin flip — trust seed and simulation data.</div>';
   }
 
   el.innerHTML = html;
 });
-
 
 // ═══════════════════════════════════════════════════════
 // COMPLETE BRACKET ENGINE - ALL 63 GAMES, ALL 6 ROUNDS
@@ -1677,9 +1908,10 @@ function renderBracketPanel() {
   el.querySelectorAll('[data-round]').forEach(function(btn) {
     btn.addEventListener('click', function() {
       el.dataset.showRound = this.dataset.round;
+      ff_current_round = parseInt(this.dataset.round);
       renderBracketPanel();
-      // Also update the matchup analyzer dropdowns
-      updateMatchupDropdowns(parseInt(this.dataset.round));
+      buildAnalyzerRoundBtns();
+      populateAnalyzerDropdown(ff_current_round);
     });
   });
 
@@ -1700,7 +1932,8 @@ function renderBracketPanel() {
       saveBracket();
       propagateBracket();
       renderBracketPanel();
-      updateMatchupDropdowns(parseInt(el.dataset.showRound || getCurrentRound()));
+      // Refresh analyzer dropdown for current round
+      populateAnalyzerDropdown(ff_current_round);
     });
   });
 }
@@ -1726,30 +1959,7 @@ function updateMatchupDropdowns(round) {
     }
   }
 
-  var upsetSel = document.getElementById('ff-upset');
-  var favSel = document.getElementById('ff-fav');
-  if (!upsetSel || !favSel) return;
-
-  var prevUpset = upsetSel.value;
-  var prevFav = favSel.value;
-
-  // Build options from live games
-  var gamesHtml = liveGames.map(function(g) {
-    var tA = TEAM_NAMES[g.teamA] || g.teamA || 'TBD';
-    var tB = TEAM_NAMES[g.teamB] || g.teamB || 'TBD';
-    return '<option value="'+g.id+'">'+tA+' vs '+tB+'</option>';
-  }).join('');
-
-  if (gamesHtml === '') {
-    gamesHtml = '<option value="">No live games — log results first</option>';
-  }
-
-  upsetSel.innerHTML = gamesHtml;
-  favSel.innerHTML = gamesHtml;
-
-  // Store game reference for analysis
-  upsetSel.dataset.type = 'game';
-  favSel.dataset.type = 'game';
+  // Dropdowns now handled by populateAnalyzerDropdown()
 }
 
 // Enhanced analyzer that works with live game IDs
@@ -1850,7 +2060,6 @@ renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
 document.getElementById('s-live').textContent=liveCt();
-updateMatchupDropdowns(1);
 
 // Add reset button to header for debugging
 var resetBtn = document.createElement('button');
@@ -1866,7 +2075,6 @@ resetBtn.addEventListener('click', function(){
     renderBoard();
     renderCmdCards();
     document.getElementById('s-live').textContent=liveCt();
-updateMatchupDropdowns(1);
     alert('State reset. Picks preserved, results cleared.');
   }
 });
