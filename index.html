@@ -116,9 +116,10 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 .be{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px}
 .be.kerry{color:var(--or)}.be.whopper{color:var(--bl)}.be.dustin{color:var(--gn)}.be.george{color:var(--pu)}
 /* PILLS */
-.pill{display:inline-block;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;
-  font-size:9px;white-space:nowrap;cursor:pointer;transition:filter 0.15s;user-select:none}
-.pill:hover{filter:brightness(1.3)}
+.pill{display:inline-block;padding:3px 8px;border-radius:3px;font-family:'JetBrains Mono',monospace;
+  font-size:9px;white-space:nowrap;cursor:pointer;transition:filter 0.15s,transform 0.1s;user-select:none}
+.pill:hover{filter:brightness(1.4);transform:scale(1.05)}
+.pill:active{transform:scale(0.96)}
 .pill.win{background:var(--gn-d);color:var(--gn);border:1px solid rgba(34,197,94,0.3)}
 .pill.next{background:var(--or-d);color:var(--or);border:1px solid var(--or);animation:blink 2s infinite}
 .pill.future{background:var(--s3);color:var(--t3);border:1px solid var(--b1)}
@@ -203,8 +204,8 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 .sim-tbl th{padding:6px 9px;text-align:left;border-bottom:1px solid var(--b1);color:var(--t3);font-size:6px;letter-spacing:1.5px;text-transform:uppercase}
 .sim-tbl td{padding:6px 9px;border-bottom:1px solid rgba(37,45,58,0.4)}
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:500;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:9999;align-items:center;justify-content:center}
+.modal-bg.open{display:flex !important}
 .modal{background:var(--s1);border:1px solid var(--b1);border-radius:9px;padding:20px;width:370px}
 .modal-t{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:3px;margin-bottom:3px}
 .modal-s{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:12px}
@@ -1029,11 +1030,39 @@ setInterval(function(){
 },30000);
 
 // ═══ INIT ═══
+// Clear any corrupt old state from previous versions
+var stateVersion = '3';
+if(localStorage.getItem('tr26-version') !== stateVersion) {
+  localStorage.removeItem('tr26');
+  localStorage.removeItem('tr26-fired');
+  localStorage.setItem('tr26-version', stateVersion);
+}
+
 renderFunnel();
 renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
 document.getElementById('s-live').textContent=liveCt();
+
+// Add reset button to header for debugging
+var resetBtn = document.createElement('button');
+resetBtn.className = 'hbtn';
+resetBtn.textContent = '↺ Reset State';
+resetBtn.style.borderColor = 'var(--rd)';
+resetBtn.style.color = 'var(--rd)';
+resetBtn.addEventListener('click', function(){
+  if(confirm('Reset all pick results and start fresh? (Picks stay, results clear)')) {
+    S.results = DP.map(function(){return ['pending','pending','pending','pending','pending','pending','pending','pending','pending','pending'];});
+    S.eliminated = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+    saveS();
+    renderBoard();
+    renderCmdCards();
+    document.getElementById('s-live').textContent=liveCt();
+    alert('State reset. Picks preserved, results cleared.');
+  }
+});
+document.querySelector('.hdr-btns .hbtn:last-child')?.after(resetBtn);
+
 
 })(); // end IIFE
 </script>
