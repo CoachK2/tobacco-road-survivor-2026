@@ -369,6 +369,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   <div class="tab" data-panel="probs">Live Probs</div>
   <div class="tab" data-panel="scenarios">Scenarios</div>
   <div class="tab" data-panel="tiebreaker">Tiebreaker</div>
+  <div class="tab" data-panel="bracket">Bracket</div>
   <div class="tab" data-panel="fieldintel">Field Intel</div>
   <div class="tab" data-panel="schedule">Schedule</div>
 </nav>
@@ -488,6 +489,20 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
         <tr><td colspan="3" style="color:var(--t4);font-size:7px;padding-top:7px">D1 3/4/5-seed picks = higher TB vs pure chalk</td></tr>
       </table>
     </div>
+    <div class="sc-card" style="grid-column:1/-1;background:var(--s2)">
+      <div class="sc-title" style="color:var(--or)">KENPOM ANCHOR PRIORITY + PATH DIFFICULTY</div>
+      <div class="sc-desc">KenPom rank + path difficulty (avg rank of opponents) combined with EvanMiya sim. Higher path number = easier road (weaker opponents).</div>
+      <table class="sc-tbl">
+        <tr><th>RANK</th><th>TEAM</th><th>KP#</th><th>NET RTG</th><th>TITLE%</th><th>PATH TO F4</th><th>PATH TO CHAMP</th><th>BEST FOR</th></tr>
+        <tr><td style="color:var(--gn)">1</td><td style="color:var(--gn);font-weight:600">Michigan</td><td>#3</td><td>+37.59</td><td style="color:var(--gn)">31.4%</td><td>78.3 (easy)</td><td>60.3 (easy)</td><td style="color:var(--gn)">D10 anchor</td></tr>
+        <tr><td style="color:var(--gn)">2</td><td style="color:var(--gn);font-weight:600">Arizona</td><td>#2</td><td>+37.66</td><td style="color:var(--gn)">17.4%</td><td>88.0 (easiest)</td><td>68.0 (easiest)</td><td style="color:var(--gn)">D9 pick</td></tr>
+        <tr><td style="color:var(--gd)">3</td><td style="color:var(--gd)">Iowa State</td><td>#6</td><td>+32.44</td><td>0.8%</td><td>76.0 (easy)</td><td>57.8 (easy)</td><td style="color:var(--gd)">Mid-round + lane</td></tr>
+        <tr><td style="color:var(--gd)">4</td><td style="color:var(--gd)">Houston</td><td>#5</td><td>+33.43</td><td>3.5%</td><td>58.7 (easiest 2)</td><td>45.0 (easiest 2)</td><td style="color:var(--gd)">Mid-round chalk</td></tr>
+        <tr><td>5</td><td>Duke</td><td>#1</td><td>+38.90</td><td>18.8%</td><td>79.7 (hard)</td><td>62.5 (hardest 1)</td><td>Mid-round, risky late</td></tr>
+        <tr><td>6</td><td>Florida</td><td>#4</td><td>+33.79</td><td>10.6%</td><td>111.3 (easiest ever)</td><td>84.8 (easiest ever)</td><td>Burn early D1/D2</td></tr>
+        <tr><td style="color:var(--or)">7</td><td style="color:var(--or)">Santa Clara</td><td>#35</td><td>+19.60</td><td>0%</td><td>—</td><td>—</td><td style="color:var(--or)">HIDDEN GEM upset</td></tr>
+      </table>
+    </div>
     <div class="sc-card">
       <div class="sc-title">2-SEED GOES ALL THE WAY</div>
       <div class="sc-desc">Purdue (8.8%), Houston (3.5%), UConn (1.6%), or Iowa St (0.8%) wins it all.</div>
@@ -500,7 +515,29 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
       </table>
     </div>
   </div>
-  <div class="sec"><div class="sec-t">SIM PROBABILITIES</div><div class="sec-b">EVANMIYA 10K SIMS</div></div>
+  <!-- FOUR FACTORS MATCHUP ANALYZER -->
+  <div class="sec" style="margin-top:20px"><div class="sec-t">FOUR FACTORS MATCHUP ANALYZER</div><div class="sec-b">KENPOM + FOUR FACTORS</div></div>
+  <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:16px;margin-bottom:18px">
+    <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:5px;letter-spacing:1px">SELECT MATCHUP</div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-bottom:14px">
+      <select id="ff-matchup" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:8px 10px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:11px">
+        <option value="SantaClra|Kentucky">Santa Clara (10, KP#35) vs Kentucky (7, KP#28)</option>
+        <option value="Akron|TexasTech">Akron (12, KP#63) vs Texas Tech (5, KP#20)</option>
+        <option value="VCU|NCarolina">VCU (11, KP#44) vs North Carolina (6, KP#29)</option>
+        <option value="UCLA|UCLA_opp">UCLA (7, KP#27) vs UCF (10, KP#55)</option>
+        <option value="NorthIowa|StJohns">Northern Iowa (12, KP#72) vs St. Johns (5, KP#18)</option>
+        <option value="McNeese|Vanderbilt">McNeese (12, KP#68) vs Vanderbilt (5, KP#12)</option>
+        <option value="StMarys|TexasAM">St. Marys (7, KP#24) vs Texas A&M (10, KP#39)</option>
+        <option value="Wisconsin|HighPoint">Wisconsin (5, KP#22) vs High Point (12, KP#90)</option>
+      </select>
+      <button id="ff-analyze" style="background:var(--or);border:none;color:#fff;padding:9px 20px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:1px;cursor:pointer;white-space:nowrap">ANALYZE</button>
+    </div>
+    <div id="ff-result" style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:1.8">
+      Select a matchup and click Analyze.
+    </div>
+  </div>
+
+  <div class="sec"><div class="sec-t">SIM PROBABILITIES + KENPOM + PATH DIFFICULTY</div><div class="sec-b">EVANMIYA 10K SIMS</div></div>
   <div class="sim-grid" id="sim-grid"></div>
 </div>
 
@@ -623,6 +660,17 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   </div>
 </div>
 
+
+<!-- BRACKET PANEL -->
+<div class="panel" id="panel-bracket">
+  <div class="sec"><div class="sec-t">LIVE BRACKET + RESULTS</div><div class="sec-b">CLICK WINNER TO LOG RESULT</div></div>
+  <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:14px;margin-bottom:16px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:1.8">
+    Click the winning team in each game to log the result. Winners automatically advance to the next round.
+    The Four Factors Matchup Analyzer on the Scenarios tab updates automatically to show only live games.
+  </div>
+  <div id="bracket-games"></div>
+</div>
+
 </div><!-- /content -->
 
 <!-- PICK MODAL -->
@@ -684,24 +732,118 @@ var FUNNEL = [20,20,17,14,11,9,7,4,2];
 var FC = ['#f97316','#f97316','#fb923c','#fbbf24','#34d399','#10b981','#3b82f6','#6366f1','#a78bfa'];
 var FRND = ['R64','R64','R32','R32','S16','S16','E8','F4','🏆'];
 var TEAMS = {
-  'Duke':    {seed:1,region:'East',   r32:99.7,s16:88.5,e8:71.4,f4:55.9,title:18.8},
-  'UConn':   {seed:2,region:'East',   r32:97.2,s16:73.5,e8:41.6,f4:18.5,title:1.6},
-  'MichSt':  {seed:3,region:'East',   r32:94.2,s16:63.7,e8:26.8,f4:12.7,title:1.8},
-  'Kansas':  {seed:4,region:'East',   r32:92.9,s16:40.3,e8:7.8, f4:3.0, title:0.2},
-  'Arizona': {seed:1,region:'West',   r32:99.5,s16:90.8,e8:77.1,f4:58.5,title:17.4},
-  'Purdue':  {seed:2,region:'West',   r32:99.8,s16:88.6,e8:57.4,f4:44.5,title:8.8},
-  'Gonzaga': {seed:3,region:'West',   r32:95.3,s16:65.7,e8:32.4,f4:14.5,title:1.2},
-  'Arkansas':{seed:4,region:'West',   r32:87.0,s16:29.0,e8:5.1, f4:1.5, title:0.0},
-  'Florida': {seed:1,region:'South',  r32:99.8,s16:86.4,e8:65.6,f4:39.9,title:10.6},
-  'Houston': {seed:2,region:'South',  r32:96.2,s16:54.2,e8:31.0,f4:15.8,title:3.5},
-  'Illinois':{seed:3,region:'South',  r32:98.6,s16:66.5,e8:38.0,f4:17.0,title:2.2},
-  'Nebraska':{seed:4,region:'South',  r32:86.7,s16:43.6,e8:11.0,f4:4.6, title:1.2},
-  'Michigan':{seed:1,region:'Midwest',r32:99.7,s16:93.7,e8:86.3,f4:68.7,title:31.4},
-  'IowasSt': {seed:2,region:'Midwest',r32:89.5,s16:69.9,e8:39.2,f4:14.4,title:0.8},
-  'Virginia':{seed:3,region:'Midwest',r32:95.5,s16:52.6,e8:23.4,f4:6.0, title:0.4},
-  'Alabama': {seed:4,region:'Midwest',r32:87.1,s16:49.2,e8:18.2,f4:2.3, title:0.8},
-  'Wisconsin':{seed:5,region:'West',  r32:73.6,s16:28.8,e8:5.1, f4:1.5, title:0.0},
+  // kp=KenPom rank, net=NetRtg, path_s16/e8/f4=avg KenPom rank of opponents on path
+  'Duke':    {seed:1,region:'East',   r32:99.7,s16:88.5,e8:71.4,f4:55.9,title:18.8, kp:1, net:38.90, path_s16:109.0,path_e8:79.7, path_f4:62.5},
+  'UConn':   {seed:2,region:'East',   r32:97.2,s16:73.5,e8:41.6,f4:18.5,title:1.6,  kp:11,net:27.87, path_s16:109.0,path_e8:75.7, path_f4:57.0},
+  'MichSt':  {seed:3,region:'East',   r32:94.2,s16:63.7,e8:26.8,f4:12.7,title:1.8,  kp:9, net:28.31, path_s16:66.0, path_e8:47.7, path_f4:36.0},
+  'Kansas':  {seed:4,region:'East',   r32:92.9,s16:40.3,e8:7.8, f4:3.0, title:0.2,  kp:21,net:24.44, path_s16:61.5, path_e8:41.3, path_f4:33.8},
+  'Arizona': {seed:1,region:'West',   r32:99.5,s16:90.8,e8:77.1,f4:58.5,title:17.4, kp:2, net:37.66, path_s16:124.5,path_e8:88.0, path_f4:68.0},
+  'Purdue':  {seed:2,region:'West',   r32:99.8,s16:88.6,e8:57.4,f4:44.5,title:8.8,  kp:8, net:31.90, path_s16:106.0,path_e8:74.0, path_f4:56.0},
+  'Gonzaga': {seed:3,region:'West',   r32:95.3,s16:65.7,e8:32.4,f4:14.5,title:1.2,  kp:10,net:28.06, path_s16:93.0, path_e8:64.7, path_f4:49.0},
+  'Arkansas':{seed:4,region:'West',   r32:87.0,s16:29.0,e8:5.1, f4:1.5, title:0.0,  kp:16,net:26.05, path_s16:65.0, path_e8:44.0, path_f4:35.0},
+  'Florida': {seed:1,region:'South',  r32:99.8,s16:86.4,e8:65.6,f4:39.9,title:10.6, kp:4, net:33.79, path_s16:160.0,path_e8:111.3,path_f4:84.8},
+  'Houston': {seed:2,region:'South',  r32:96.2,s16:54.2,e8:31.0,f4:15.8,title:3.5,  kp:5, net:33.43, path_s16:84.5, path_e8:58.7, path_f4:45.0},
+  'Illinois':{seed:3,region:'South',  r32:98.6,s16:66.5,e8:38.0,f4:17.0,title:2.2,  kp:7, net:32.10, path_s16:89.5, path_e8:61.3, path_f4:47.0},
+  'Nebraska':{seed:4,region:'South',  r32:86.7,s16:43.6,e8:11.0,f4:4.6, title:1.2,  kp:14,net:26.06, path_s16:77.5, path_e8:53.0, path_f4:41.0},
+  'Michigan':{seed:1,region:'Midwest',r32:99.7,s16:93.7,e8:86.3,f4:68.7,title:31.4, kp:3, net:37.59, path_s16:108.5,path_e8:78.3, path_f4:60.3},
+  'IowasSt': {seed:2,region:'Midwest',r32:89.5,s16:69.9,e8:39.2,f4:14.4,title:0.8,  kp:6, net:32.44, path_s16:107.5,path_e8:76.0, path_f4:57.8},
+  'Virginia':{seed:3,region:'Midwest',r32:95.5,s16:52.6,e8:23.4,f4:6.0, title:0.4,  kp:13,net:26.71, path_s16:78.0, path_e8:54.0, path_f4:41.3},
+  'Alabama': {seed:4,region:'Midwest',r32:87.1,s16:49.2,e8:18.2,f4:2.3, title:0.8,  kp:18,net:25.91, path_s16:53.5, path_e8:36.7, path_f4:29.0},
+  'Wisconsin':{seed:5,region:'West',  r32:73.6,s16:28.8,e8:5.1, f4:1.5, title:0.0,  kp:22,net:23.35, path_s16:53.5, path_e8:36.3, path_f4:29.3},
+  // Upset candidates
+  'Akron':   {seed:12,region:'Midwest',r32:32.9,s16:8.0, e8:2.0, f4:0.5, title:0.0, kp:63,net:12.97, path_s16:0,    path_e8:0,    path_f4:0},
+  'UCLA':    {seed:7, region:'East',   r32:72.3,s16:21.9,e8:7.1, f4:1.2, title:0.0, kp:27,net:21.48, path_s16:0,    path_e8:0,    path_f4:0},
+  'VCU':     {seed:11,region:'South',  r32:29.0,s16:5.0, e8:1.0, f4:0.2, title:0.0, kp:44,net:17.49, path_s16:0,    path_e8:0,    path_f4:0},
+  'SantaClra':{seed:10,region:'Midwest',r32:45.0,s16:10.0,e8:2.0,f4:0.3, title:0.0, kp:35,net:19.60, path_s16:0,    path_e8:0,    path_f4:0},
+  'NorthIowa':{seed:12,region:'East',  r32:14.2,s16:2.6, e8:0.3, f4:0.0, title:0.0, kp:72,net:11.81, path_s16:0,    path_e8:0,    path_f4:0},
+  'McNeese': {seed:12,region:'South',  r32:13.3,s16:3.0, e8:0.8, f4:0.3, title:0.0, kp:68,net:11.44, path_s16:0,    path_e8:0,    path_f4:0},
+  'StMarys': {seed:7, region:'South',  r32:63.4,s16:13.0,e8:4.5, f4:1.1, title:0.0, kp:24,net:23.07, path_s16:0,    path_e8:0,    path_f4:0},
+  'Kentucky':{seed:7, region:'Midwest',r32:60.6,s16:11.6,e8:4.2, f4:0.5, title:0.0, kp:28,net:21.48, path_s16:0,    path_e8:0,    path_f4:0},
 };
+
+// FOUR FACTORS DATA: [AdjTempo, AdjOE, O_eFG, O_TO_rank, O_OR, O_FTRate, AdjDE, D_eFG, D_TO_rank, D_OR, D_FTRate, key_insight]
+var FF = {
+  'Duke':      [65.3,128.0,56,38, 15.7,18.3,89.1, 47.1,18,24.8,23.7, 'Best team overall (#1 KP), but TO-prone offense (rank 38)'],
+  'Arizona':   [69.8,127.7,55,41, 15.2,38.1,90.0, 45.0,17,26.9,27.7, 'High tempo, balanced elite offense and defense, easiest 1-seed path'],
+  'Michigan':  [70.9,122.6,58,58, 17.9,35.4,89.0, 44.7,15,27.7,26.3, 'Best O-eFG% in field (58%), elite rebounding (17.9% OR), best title odds'],
+  'Florida':   [70.5,125.9,54,84, 16.5,43.1,91.7, 46.3,15,24.8,34.0, 'High D-FTRate allowed (34.0) — fouls a lot, weakest 1-seed defense'],
+  'Houston':   [63.3,124.9,52,41, 13.0, 6.0,91.4, 46.6,17,20.9,39.1, 'Slowest pace (63.3), elite D-eFG% (46.6%), grinds games down'],
+  'IowasSt':   [66.5,123.8,56,48, 12.4,21.1,91.3, 44.9,17,22.4,27.9, 'Efficient offense, stingy defense, easiest 2-seed path'],
+  'Illinois':  [66.4,131.2,56,13, 12.3,38.9,99.1, 47.2,17,20.8,20.6, 'Explosive offense (2nd best ORtg 131.2), but defense is weak (99.1)'],
+  'Purdue':    [64.4,131.6,57,11, 13.5,36.2,100.4,52.3,16,26.4,26.0, 'Best ORtg in field (131.6), D-eFG% is mediocre (52.3)'],
+  'MichSt':    [63.0,123.0,56,82, 17.1,38.4,94.7, 48.6,15,22.3,36.0, 'Solid all-around, draws fouls well, TO issues (rank 82)'],
+  'Gonzaga':   [68.6,122.0,52,24, 17.2,34.0,93.9, 46.2,15,20.8,23.3, 'Big offensive rebounder, efficient defense, WCC SOS concern'],
+  'Virginia':  [65.2,122.5,56,19, 19.3,23.7,95.8, 45.3,19,22.2,28.7, 'Best offensive rebounding rate (19.3%), methodical pace, low FT drawn'],
+  'UConn':     [64.4,122.0,55,34, 16.8,18.9,94.1, 45.7,18,28.7,40.2, 'High D-FTRate (40.2) fouls a lot, good overall balance'],
+  'Nebraska':  [72.1,118.5,55,40, 26.3,27.3,92.4, 47.8,19,22.7, 7.6, 'Fastest pace (72.1), monster OR% (26.3!), almost never fouls on D'],
+  'Arkansas':  [71.0,127.7,56, 8, 12.3,32.2,101.6,41.4,16,24.4,31.3, 'ELITE D-eFG% (41.4 — best in field!), great O efficiency'],
+  'Alabama':   [73.1,129.0,55,41, 13.0,31.8,103.5,49.2,13,32.8,32.7, 'Fastest tempo (73.1+), strong offense, weak defense (103.5 AdjDE)'],
+  'Kansas':    [67.6,118.3,51,172,15.0,29.5,93.9, 45.2,23,31.3,27.7, 'TERRIBLE TO rate (rank 172!) — biggest vulnerability in bracket'],
+  'Wisconsin': [68.9,125.3,54,51, 13.3,31.9,101.9,50.3,17,19.5,30.7, 'Solid offense, average defense, beat top-10 teams all year'],
+  'Vanderbilt':[68.8,126.8,55,36, 13.3,31.2,99.3, 51.4,18,15.8,24.7, 'Strong offense, but D-eFG% (51.4) is a real weakness'],
+  'Akron':     [70.3,118.8,54,118, 8.5,15.9,105.8,50.5,14,18.4,13.0, 'Wants up-tempo game, weak OR% (8.5) and D (105.8 AdjDE)'],
+  'UCLA':      [64.3,123.7,54,318,13.4,31.2,102.1,50.4,13,34.2,34.8, 'WORST TO rate in field (rank 318!) — catastrophic ball security'],
+  'VCU':       [68.5,119.9,45,67, 15.2,74.0,102.7,48.9,16,29.9,13.5, 'Elite pressure defense, draws tons of fouls, low O-eFG% (45)'],
+  'NCarolina': [75.0,121.4,56,50, 17.2,37.4,100.5,47.2,14,22.8,28.7, 'Fast pace, decent offense, inconsistent defense'],
+  'SantaClra': [69.2,123.6,54,51, 15.6,36.7,104.0,51.0,20,22.3,38.3, 'Better than 10-seed — #35 KenPom, solid offense, shaky defense'],
+  'Kentucky':  [68.3,120.5,53,102,10.0,33.8,99.1, 48.8,16,29.0,37.0, 'TO problems (rank 102), LOW OR% (10.0!), high D-FTRate allowed (37)'],
+  'NorthIowa': [62.3,110.0,53,153,14.6,22.0,98.2, 47.2,23,18.1,29.5, 'ELITE defense (98.2 AdjDE — best of any upset team), slow grinder'],
+  'StJohns':   [69.6,120.1,54,193,15.7,31.2,94.2, 47.4,19,21.0,31.8, 'Good defense, but turnover issues (rank 193)'],
+  'McNeese':   [67.8,114.9,54,91, 14.6,22.3,103.5,48.5,17,21.0,22.1, 'Limited offensive upside, decent defense for a 12-seed'],
+  'Vanderbilt':[68.8,126.8,55,36, 13.3,31.2,99.3, 51.4,18,15.8,24.7, 'Strong offense, but D-eFG% (51.4) is a real weakness'],
+  'StMarys':   [60.5,125.0,56,15, 15.6,36.4,97.2, 49.0,15,25.8,26.3, 'Elite TO% (rank 15!), slowest pace (60.5), great shooter'],
+  'TexasAM':   [70.5,124.8,52,41, 15.6,37.4,105.8,51.4,11,26.0,36.7, 'Fast tempo, shaky defense (105.8 AdjDE) — beatable'],
+  'TexasTech': [66.2,125.0,49,16, 15.9,22.5,99.8, 49.4,15,30.1,31.6, 'Mediocre O-eFG% (49), elite TO protection (rank 16), average defense'],
+  'UCF':       [66.0,120.5,52,97, 12.4,35.2,104.0,50.4,17,26.0,35.2, 'Average all-around, weak defense (104.0 AdjDE), TO issues (97)'],
+  'HighPoint': [69.9,116.6,50,45, 21.2,37.4,107.8,51.6,9, 23.9,13.0, 'Elite TO protection (rank 9!), but weak overall (AdjDE 107.8)'],
+  'NDSU':      [63.3,111.8,53,363,14.6,33.6,77.0, 30.0,22,17.0,29.1, 'Worst TO rate in tournament (363!), decent defense'],
+  'Penn':      [67.4,104.5,47,30, 15.4,35.1,105.1,49.7,15,28.8,30.5, 'Strong TO protection, weak offense (47 eFG%), mediocre defense'],
+  'Kennesaw':  [71.9,110.6,57,143,22.5,39.0,45.1, 0.4, 0, 0.0, 0.0, 'High tempo, limited overall — significant gap vs Gonzaga'],
+  'Hawaii':    [69.7,107.1,52,11, 51.0,42.9,101.2,46.1,46, 0.0, 0.0, 'Elite TO protection (rank 11), high OR%, weak defense overall'],
+  'Troy':      [66.0,108.5,49,100,16.0,28.5,103.5,49.5,15,22.0,25.0, 'Average all-around, limited upside against Nebraska'],
+};
+
+
+// Matchup analyzer
+function analyzeMatchup(uKey, fKey) {
+  var u = FF[uKey], f = FF[fKey];
+  if (!u || !f) return null;
+  var edges = [], risks = [], neutral = [];
+  // [0]=Tempo [1]=AdjOE [2]=O-eFG [3]=O-TO rank [4]=O-OR [5]=O-FTRate
+  // [6]=AdjDE [7]=D-eFG [8]=D-TO rank [9]=D-OR [10]=D-FTRate [11]=insight
+
+  // Tempo: who controls the pace
+  var tempoDiff = u[0] - f[0];
+  if (Math.abs(tempoDiff) > 3) {
+    if (tempoDiff > 0) edges.push('Tempo: ' + uKey + ' plays faster (' + u[0] + ' vs ' + f[0] + ') — keeps game open');
+    else risks.push('Tempo: ' + fKey + ' plays faster (' + f[0] + ' vs ' + u[0] + ') — may not suit ' + uKey);
+  }
+  // O-eFG vs D-eFG matchup
+  var shootingEdge = u[2] - f[7];
+  if (shootingEdge > 4) edges.push('Shooting: ' + uKey + ' eFG% (' + u[2] + '%) vs ' + fKey + ' D-eFG% (' + f[7] + '%) — shooting edge');
+  else if (shootingEdge < -4) risks.push('Shooting: ' + fKey + ' D-eFG% (' + f[7] + '%) limits ' + uKey + ' offense (' + u[2] + '%)');
+  // Opponent shooting
+  var oppShootingRisk = f[2] - u[7];
+  if (oppShootingRisk > 5) risks.push('Defense: ' + fKey + ' eFG% (' + f[2] + '%) vs ' + uKey + ' D-eFG% (' + u[7] + '%) — opponent scores easily');
+  else if (oppShootingRisk < -3) edges.push('Defense: ' + uKey + ' D-eFG% (' + u[7] + '%) limits ' + fKey + ' (' + f[2] + '%)');
+  // Turnovers
+  if (f[3] > 100) edges.push('Turnovers: ' + fKey + ' is turnover-prone (rank ' + f[3] + ') — pressure creates chances');
+  if (u[3] > 100) risks.push('Turnovers: ' + uKey + ' is turnover-prone (rank ' + u[3] + ') — self-inflicted losses likely');
+  if (u[3] < 25) edges.push('Ball security: ' + uKey + ' protects the ball well (rank ' + u[3] + ')');
+  // Offensive rebounding vs defensive rebounding
+  if (u[4] > 18) edges.push('Offensive rebounding: ' + uKey + ' OR% (' + u[4] + '%) creates extra possessions');
+  if (f[9] < 18) edges.push('Defensive rebounding: ' + fKey + ' gives up offensive boards (D-OR% ' + f[9] + '%) — extra chances');
+  // Free throws
+  if (f[10] > 35) edges.push('Foul trouble: ' + fKey + ' allows high FTRate (' + f[10] + ') — get to the line');
+  if (u[5] > 35) neutral.push('FT rate: ' + uKey + ' draws fouls well (' + u[5] + ' FTRate)');
+  // AdjDE comparison
+  var defGap = u[6] - f[6];
+  if (defGap > 8) risks.push('Defense gap: ' + fKey + ' AdjDE (' + f[6] + ') significantly better than ' + uKey + ' (' + u[6] + ')');
+  else if (defGap < -5) edges.push('Defense: ' + uKey + ' AdjDE (' + u[6] + ') better than ' + fKey + ' (' + f[6] + ')');
+
+  return {edges: edges, risks: risks, neutral: neutral, u: u, f: f, uKey: uKey, fKey: fKey};
+}
+
 var LANE = [
   {n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},
   {n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},
@@ -735,10 +877,11 @@ var DP = [
   ['Michigan','Alabama','Arizona','Duke','Purdue','Florida','IowasSt','Houston','Arizona','UConn'],
 ];
 var SIM = {
-  'East':    [['Duke',1,99.7,88.5,71.4,55.9,18.8],['UConn',2,97.2,73.5,41.6,18.5,1.6],['MichSt',3,94.2,63.7,26.8,12.7,1.8],['Kansas',4,92.9,40.3,7.8,3.0,0.2]],
-  'West':    [['Arizona',1,99.5,90.8,77.1,58.5,17.4],['Purdue',2,99.8,88.6,57.4,44.5,8.8],['Gonzaga',3,95.3,65.7,32.4,14.5,1.2],['Arkansas',4,87.0,29.0,5.1,1.5,0.0]],
-  'South':   [['Florida',1,99.8,86.4,65.6,39.9,10.6],['Houston',2,96.2,54.2,31.0,15.8,3.5],['Illinois',3,98.6,66.5,38.0,17.0,2.2],['Nebraska',4,86.7,43.6,11.0,4.6,1.2]],
-  'Midwest': [['Michigan',1,99.7,93.7,86.3,68.7,31.4],['IowasSt',2,89.5,69.9,39.2,14.4,0.8],['Virginia',3,95.5,52.6,23.4,6.0,0.4],['Alabama',4,87.1,49.2,18.2,2.3,0.8]],
+  // [team, seed, r32%, s16%, e8%, f4%, title%, kp_rank, net_rtg, path_s16, path_e8, path_f4]
+  'East':    [['Duke',1,99.7,88.5,71.4,55.9,18.8,1,38.90,109.0,79.7,62.5],['UConn',2,97.2,73.5,41.6,18.5,1.6,11,27.87,109.0,75.7,57.0],['MichSt',3,94.2,63.7,26.8,12.7,1.8,9,28.31,66.0,47.7,36.0],['Kansas',4,92.9,40.3,7.8,3.0,0.2,21,24.44,61.5,41.3,33.8]],
+  'West':    [['Arizona',1,99.5,90.8,77.1,58.5,17.4,2,37.66,124.5,88.0,68.0],['Purdue',2,99.8,88.6,57.4,44.5,8.8,8,31.90,106.0,74.0,56.0],['Gonzaga',3,95.3,65.7,32.4,14.5,1.2,10,28.06,93.0,64.7,49.0],['Arkansas',4,87.0,29.0,5.1,1.5,0.0,16,26.05,65.0,44.0,35.0]],
+  'South':   [['Florida',1,99.8,86.4,65.6,39.9,10.6,4,33.79,160.0,111.3,84.8],['Houston',2,96.2,54.2,31.0,15.8,3.5,5,33.43,84.5,58.7,45.0],['Illinois',3,98.6,66.5,38.0,17.0,2.2,7,32.10,89.5,61.3,47.0],['Nebraska',4,86.7,43.6,11.0,4.6,1.2,14,26.06,77.5,53.0,41.0]],
+  'Midwest': [['Michigan',1,99.7,93.7,86.3,68.7,31.4,3,37.59,108.5,78.3,60.3],['IowasSt',2,89.5,69.9,39.2,14.4,0.8,6,32.44,107.5,76.0,57.8],['Virginia',3,95.5,52.6,23.4,6.0,0.4,13,26.71,78.0,54.0,41.3],['Alabama',4,87.1,49.2,18.2,2.3,0.8,18,25.91,53.5,36.7,29.0]],
 };
 var DAY_NAMES = ['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 (Sun 3/22)','Day 5 (Thu 3/26)','Day 6 (Fri 3/27)','Day 7a (Sat 3/28)','Day 7b (Sun 3/29)','Day 9 (Sat 4/4)','Day 10 (Mon 4/6)'];
 
@@ -789,6 +932,7 @@ document.querySelector('nav').addEventListener('click', function(e){
   if(name==='scenarios') renderSim();
   if(name==='schedule') renderSchedDL();
   if(name==='fieldintel'){ renderFieldIntel(); }
+  if(name==='bracket'){ renderBracketPanel(); }
   if(name==='probs') renderProbs();
 });
 
@@ -959,11 +1103,40 @@ function renderSim(){
   Object.keys(SIM).forEach(function(region){
     var rows=SIM[region].map(function(r){
       var tc=r[6]>15?'var(--gn)':r[6]>5?'var(--gd)':'var(--t2)';
-      return '<tr><td style="font-weight:500">'+r[0]+'</td><td style="color:var(--t3)">S'+r[1]+'</td><td>'+r[2]+'%</td><td>'+r[3]+'%</td><td>'+r[4]+'%</td><td>'+r[5]+'%</td><td style="color:'+tc+';font-weight:600">'+r[6]+'%</td></tr>';
+      // Path difficulty color - higher number = easier path (weaker opponents)
+      var pc_s16=r[9]>120?'var(--gn)':r[9]>90?'var(--gd)':r[9]>70?'var(--t2)':'var(--rd)';
+      var pc_f4=r[11]>70?'var(--gn)':r[11]>55?'var(--gd)':r[11]>45?'var(--t2)':'var(--rd)';
+      return '<tr>'
+        +'<td style="font-weight:500">'+r[0]+'</td>'
+        +'<td style="color:var(--t3)">S'+r[1]+'</td>'
+        +'<td style="color:var(--t3)">#'+r[7]+'</td>'
+        +'<td style="color:var(--t3)">'+r[8]+'</td>'
+        +'<td>'+r[2]+'%</td><td>'+r[3]+'%</td><td>'+r[4]+'%</td><td>'+r[5]+'%</td>'
+        +'<td style="color:'+tc+';font-weight:600">'+r[6]+'%</td>'
+        +'<td style="color:'+pc_s16+'">'+r[9]+'</td>'
+        +'<td style="color:'+pc_f4+'">'+r[11]+'</td>'
+        +'</tr>';
     }).join('');
     html+='<div class="sim-r"><div class="sim-rh">'+region+' Region</div>'
-      +'<table class="sim-tbl"><thead><tr><th>TEAM</th><th>SEED</th><th>R32</th><th>S16</th><th>E8</th><th>F4</th><th>TITLE</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+      +'<table class="sim-tbl"><thead><tr>'
+      +'<th>TEAM</th><th>SEED</th><th>KP#</th><th>NET</th>'
+      +'<th>R32</th><th>S16</th><th>E8</th><th>F4</th><th>TITLE</th>'
+      +'<th>PATH S16</th><th>PATH F4</th>'
+      +'</tr></thead><tbody>'+rows+'</tbody></table></div>';
   });
+  // Add upset candidates table
+  html += '<div class="sim-r" style="grid-column:1/-1"><div class="sim-rh" style="color:var(--or)">UPSET CANDIDATES + HIDDEN GEMS</div>'
+    +'<table class="sim-tbl"><thead><tr>'
+    +'<th>TEAM</th><th>SEED</th><th>KP#</th><th>NET</th><th>OPPONENT</th><th>OPP KP#</th><th>KP GAP</th><th>R32 WIN%</th><th>TB VALUE</th><th>VERDICT</th>'
+    +'</tr></thead><tbody>'
+    +'<tr><td style="color:var(--gn);font-weight:600">Santa Clara</td><td>10</td><td>#35</td><td>+19.60</td><td>Kentucky (7)</td><td>#28</td><td style="color:var(--gn)">7 spots</td><td style="color:var(--gn)">~45%</td><td style="color:var(--gn)">+10</td><td style="color:var(--gn)">BEST VALUE</td></tr>'
+    +'<tr><td style="color:var(--gn);font-weight:600">UCLA</td><td>7</td><td>#27</td><td>+21.48</td><td>UCF (10)</td><td>~#55</td><td style="color:var(--gn)">28 spots</td><td style="color:var(--gn)">72.3%</td><td>+7</td><td style="color:var(--gn)">HIGH PROB</td></tr>'
+    +'<tr><td style="color:var(--gd)">Akron</td><td>12</td><td>#63</td><td>+12.97</td><td>Texas Tech (5)</td><td>#20</td><td style="color:var(--gd)">43 spots</td><td style="color:var(--gd)">32.9%</td><td style="color:var(--gd)">+12</td><td style="color:var(--gd)">STRONG 12</td></tr>'
+    +'<tr><td style="color:var(--gd)">VCU</td><td>11</td><td>#44</td><td>+17.49</td><td>N. Carolina (6)</td><td>#29</td><td style="color:var(--gd)">15 spots</td><td style="color:var(--gd)">~30%</td><td style="color:var(--gd)">+11</td><td style="color:var(--gd)">CLOSE GAME</td></tr>'
+    +'<tr><td>St. Marys</td><td>7</td><td>#24</td><td>+23.07</td><td>Texas A&M (10)</td><td>#39</td><td>15 spots</td><td>63.4%</td><td>+7</td><td>SOLID</td></tr>'
+    +'<tr><td style="color:var(--t3)">N Iowa</td><td>12</td><td>#72</td><td>+11.81</td><td>St. Johns (5)</td><td>#18</td><td style="color:var(--rd)">54 spots</td><td style="color:var(--rd)">14.2%</td><td>+12</td><td style="color:var(--t3)">LONG SHOT</td></tr>'
+    +'<tr><td style="color:var(--t3)">McNeese</td><td>12</td><td>#68</td><td>+11.44</td><td>Vanderbilt (5)</td><td>#12</td><td style="color:var(--rd)">56 spots</td><td style="color:var(--rd)">13.3%</td><td>+12</td><td style="color:var(--t3)">LONG SHOT</td></tr>'
+    +'</tbody></table></div>';
   el.innerHTML=html;
 }
 
@@ -1179,6 +1352,490 @@ setInterval(function(){
   });
 },30000);
 
+
+// ═══ FOUR FACTORS MATCHUP ANALYZER ═══
+document.getElementById('ff-analyze').addEventListener('click', function() {
+  var matchup = document.getElementById('ff-matchup').value;
+  var parts = matchup.split('|');
+  var uTeam = parts[0];
+  var fTeam = parts[1];
+  var result = analyzeMatchup(uTeam, fTeam);
+  var el = document.getElementById('ff-result');
+  if (typeof result === 'string') { el.innerHTML = '<div style="color:var(--rd)">'+result+'</div>'; return; }
+
+  // Get display names from the selected option
+  var sel = document.getElementById('ff-matchup');
+  var selTxt = sel.options[sel.selectedIndex].text;
+  var teamParts = selTxt.split(' vs ');
+  var uName = teamParts[0] || uTeam;
+  var fName = teamParts[1] || fTeam;
+
+  var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">'
+    + '<div style="padding:10px;background:var(--or-d);border:1px solid rgba(249,115,22,0.3);border-radius:5px">'
+    + '<div style="color:var(--or);font-size:8px;letter-spacing:1px;margin-bottom:4px">UPSET CANDIDATE</div>'
+    + '<div style="font-size:11px;color:var(--t1);margin-bottom:4px">'+uName+'</div>'
+    + '<div style="color:var(--t3);font-size:8px;line-height:1.6">'+result.insight_u+'</div>'
+    + '</div>'
+    + '<div style="padding:10px;background:var(--bl-d);border:1px solid rgba(59,130,246,0.3);border-radius:5px">'
+    + '<div style="color:var(--bl);font-size:8px;letter-spacing:1px;margin-bottom:4px">FAVORITE</div>'
+    + '<div style="font-size:11px;color:var(--t1);margin-bottom:4px">'+fName+'</div>'
+    + '<div style="color:var(--t3);font-size:8px;line-height:1.6">'+result.insight_f+'</div>'
+    + '</div>'
+    + '</div>';
+
+  if (result.edges.length > 0) {
+    html += '<div style="margin-bottom:10px;padding:10px;background:var(--gn-d);border:1px solid rgba(34,197,94,0.3);border-radius:5px">'
+      + '<div style="color:var(--gn);font-size:8px;letter-spacing:1px;margin-bottom:6px">EDGES FOR UPSET</div>'
+      + result.edges.map(function(e) {
+          return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--gn)">+</span><span style="color:var(--t2);font-size:9px">'+e+'</span></div>';
+        }).join('')
+      + '</div>';
+  } else {
+    html += '<div style="margin-bottom:10px;padding:10px;background:var(--s3);border:1px solid var(--b1);border-radius:5px;color:var(--t3);font-size:9px">No significant four-factor edges detected for the upset.</div>';
+  }
+
+  if (result.risks.length > 0) {
+    html += '<div style="padding:10px;background:var(--rd-d);border:1px solid rgba(239,68,68,0.3);border-radius:5px">'
+      + '<div style="color:var(--rd);font-size:8px;letter-spacing:1px;margin-bottom:6px">RISKS FOR UPSET</div>'
+      + result.risks.map(function(r) {
+          return '<div style="display:flex;gap:6px;padding:2px 0"><span style="color:var(--rd)">-</span><span style="color:var(--t2);font-size:9px">'+r+'</span></div>';
+        }).join('')
+      + '</div>';
+  }
+
+  el.innerHTML = html;
+});
+
+
+// ═══════════════════════════════════════════════════════
+// COMPLETE BRACKET ENGINE - ALL 63 GAMES, ALL 6 ROUNDS
+// Encoded once, auto-populates forever based on results
+// ═══════════════════════════════════════════════════════
+
+// BRACKET STRUCTURE
+// Each game: {id, round, region, slot, teamA, teamB, winner, gameAid, gameBid}
+// gameAid/gameBid = the game IDs whose winners feed into this game
+// Slot numbers follow the standard NCAA bracket structure
+
+var BRACKET = {
+  // ── EAST REGION ──────────────────────────────────────
+  // Round of 64
+  g1:  {id:'g1',  round:1, region:'East',    slot:1,  teamA:'Duke',    teamB:'Siena',     winner:null, feed:[]},
+  g2:  {id:'g2',  round:1, region:'East',    slot:2,  teamA:'OhioSt',  teamB:'TCU',       winner:null, feed:[]},
+  g3:  {id:'g3',  round:1, region:'East',    slot:3,  teamA:'StJohns', teamB:'NorthIowa', winner:null, feed:[]},
+  g4:  {id:'g4',  round:1, region:'East',    slot:4,  teamA:'Kansas',  teamB:'CalBapt',   winner:null, feed:[]},
+  g5:  {id:'g5',  round:1, region:'East',    slot:5,  teamA:'Louisville',teamB:'SoFla',   winner:null, feed:[]},
+  g6:  {id:'g6',  round:1, region:'East',    slot:6,  teamA:'MichSt',  teamB:'NDSU',      winner:null, feed:[]},
+  g7:  {id:'g7',  round:1, region:'East',    slot:7,  teamA:'UCLA',    teamB:'UCF',       winner:null, feed:[]},
+  g8:  {id:'g8',  round:1, region:'East',    slot:8,  teamA:'UConn',   teamB:'Furman',    winner:null, feed:[]},
+  // Round of 32
+  g33: {id:'g33', round:2, region:'East',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g1','g2']},
+  g34: {id:'g34', round:2, region:'East',    slot:2,  teamA:null, teamB:null, winner:null, feed:['g3','g4']},
+  g35: {id:'g35', round:2, region:'East',    slot:3,  teamA:null, teamB:null, winner:null, feed:['g5','g6']},
+  g36: {id:'g36', round:2, region:'East',    slot:4,  teamA:null, teamB:null, winner:null, feed:['g7','g8']},
+  // Sweet 16
+  g49: {id:'g49', round:3, region:'East',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g33','g34']},
+  g50: {id:'g50', round:3, region:'East',    slot:2,  teamA:null, teamB:null, winner:null, feed:['g35','g36']},
+  // Elite 8
+  g57: {id:'g57', round:4, region:'East',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g49','g50']},
+
+  // ── WEST REGION ──────────────────────────────────────
+  g9:  {id:'g9',  round:1, region:'West',    slot:1,  teamA:'Arizona', teamB:'LIU',       winner:null, feed:[]},
+  g10: {id:'g10', round:1, region:'West',    slot:2,  teamA:'Villanova',teamB:'UtahSt',   winner:null, feed:[]},
+  g11: {id:'g11', round:1, region:'West',    slot:3,  teamA:'Wisconsin',teamB:'HighPt',   winner:null, feed:[]},
+  g12: {id:'g12', round:1, region:'West',    slot:4,  teamA:'Arkansas', teamB:'Hawaii',   winner:null, feed:[]},
+  g13: {id:'g13', round:1, region:'West',    slot:5,  teamA:'BYU',     teamB:'TxNCSt',   winner:null, feed:[]},
+  g14: {id:'g14', round:1, region:'West',    slot:6,  teamA:'Gonzaga', teamB:'KennesawSt',winner:null, feed:[]},
+  g15: {id:'g15', round:1, region:'West',    slot:7,  teamA:'MiamiFL', teamB:'Missouri',  winner:null, feed:[]},
+  g16: {id:'g16', round:1, region:'West',    slot:8,  teamA:'Purdue',  teamB:'Queens',    winner:null, feed:[]},
+  g37: {id:'g37', round:2, region:'West',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g9','g10']},
+  g38: {id:'g38', round:2, region:'West',    slot:2,  teamA:null, teamB:null, winner:null, feed:['g11','g12']},
+  g39: {id:'g39', round:2, region:'West',    slot:3,  teamA:null, teamB:null, winner:null, feed:['g13','g14']},
+  g40: {id:'g40', round:2, region:'West',    slot:4,  teamA:null, teamB:null, winner:null, feed:['g15','g16']},
+  g51: {id:'g51', round:3, region:'West',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g37','g38']},
+  g52: {id:'g52', round:3, region:'West',    slot:2,  teamA:null, teamB:null, winner:null, feed:['g39','g40']},
+  g58: {id:'g58', round:4, region:'West',    slot:1,  teamA:null, teamB:null, winner:null, feed:['g51','g52']},
+
+  // ── SOUTH REGION ─────────────────────────────────────
+  g17: {id:'g17', round:1, region:'South',   slot:1,  teamA:'Florida',  teamB:'PV_Lehigh', winner:null, feed:[]},
+  g18: {id:'g18', round:1, region:'South',   slot:2,  teamA:'Clemson',  teamB:'Iowa',       winner:null, feed:[]},
+  g19: {id:'g19', round:1, region:'South',   slot:3,  teamA:'Vanderbilt',teamB:'McNeese',   winner:null, feed:[]},
+  g20: {id:'g20', round:1, region:'South',   slot:4,  teamA:'Nebraska', teamB:'Troy',       winner:null, feed:[]},
+  g21: {id:'g21', round:1, region:'South',   slot:5,  teamA:'NCarolina',teamB:'VCU',        winner:null, feed:[]},
+  g22: {id:'g22', round:1, region:'South',   slot:6,  teamA:'Illinois', teamB:'Penn',       winner:null, feed:[]},
+  g23: {id:'g23', round:1, region:'South',   slot:7,  teamA:'StMarys',  teamB:'TexasAM',    winner:null, feed:[]},
+  g24: {id:'g24', round:1, region:'South',   slot:8,  teamA:'Houston',  teamB:'Idaho',      winner:null, feed:[]},
+  g41: {id:'g41', round:2, region:'South',   slot:1,  teamA:null, teamB:null, winner:null, feed:['g17','g18']},
+  g42: {id:'g42', round:2, region:'South',   slot:2,  teamA:null, teamB:null, winner:null, feed:['g19','g20']},
+  g43: {id:'g43', round:2, region:'South',   slot:3,  teamA:null, teamB:null, winner:null, feed:['g21','g22']},
+  g44: {id:'g44', round:2, region:'South',   slot:4,  teamA:null, teamB:null, winner:null, feed:['g23','g24']},
+  g53: {id:'g53', round:3, region:'South',   slot:1,  teamA:null, teamB:null, winner:null, feed:['g41','g42']},
+  g54: {id:'g54', round:3, region:'South',   slot:2,  teamA:null, teamB:null, winner:null, feed:['g43','g44']},
+  g59: {id:'g59', round:4, region:'South',   slot:1,  teamA:null, teamB:null, winner:null, feed:['g53','g54']},
+
+  // ── MIDWEST REGION ───────────────────────────────────
+  g25: {id:'g25', round:1, region:'Midwest',  slot:1,  teamA:'Michigan', teamB:'UMBC_How',  winner:null, feed:[]},
+  g26: {id:'g26', round:1, region:'Midwest',  slot:2,  teamA:'Georgia',  teamB:'StLouis',   winner:null, feed:[]},
+  g27: {id:'g27', round:1, region:'Midwest',  slot:3,  teamA:'TexasTech',teamB:'Akron',     winner:null, feed:[]},
+  g28: {id:'g28', round:1, region:'Midwest',  slot:4,  teamA:'Alabama',  teamB:'Hofstra',   winner:null, feed:[]},
+  g29: {id:'g29', round:1, region:'Midwest',  slot:5,  teamA:'Tennessee',teamB:'MiamiOH_SMU',winner:null, feed:[]},
+  g30: {id:'g30', round:1, region:'Midwest',  slot:6,  teamA:'Virginia', teamB:'WrightSt',  winner:null, feed:[]},
+  g31: {id:'g31', round:1, region:'Midwest',  slot:7,  teamA:'Kentucky', teamB:'SantaClra', winner:null, feed:[]},
+  g32: {id:'g32', round:1, region:'Midwest',  slot:8,  teamA:'IowasSt',  teamB:'TennSt',    winner:null, feed:[]},
+  g45: {id:'g45', round:2, region:'Midwest',  slot:1,  teamA:null, teamB:null, winner:null, feed:['g25','g26']},
+  g46: {id:'g46', round:2, region:'Midwest',  slot:2,  teamA:null, teamB:null, winner:null, feed:['g27','g28']},
+  g47: {id:'g47', round:2, region:'Midwest',  slot:3,  teamA:null, teamB:null, winner:null, feed:['g29','g30']},
+  g48: {id:'g48', round:2, region:'Midwest',  slot:4,  teamA:null, teamB:null, winner:null, feed:['g31','g32']},
+  g55: {id:'g55', round:3, region:'Midwest',  slot:1,  teamA:null, teamB:null, winner:null, feed:['g45','g46']},
+  g56: {id:'g56', round:3, region:'Midwest',  slot:2,  teamA:null, teamB:null, winner:null, feed:['g47','g48']},
+  g60: {id:'g60', round:4, region:'Midwest',  slot:1,  teamA:null, teamB:null, winner:null, feed:['g55','g56']},
+
+  // ── FINAL FOUR ───────────────────────────────────────
+  // East vs South (1 seed bracket sides per NCAA structure)
+  g61: {id:'g61', round:5, region:'Final Four', slot:1, teamA:null, teamB:null, winner:null, feed:['g57','g60']},
+  // West vs Midwest
+  g62: {id:'g62', round:5, region:'Final Four', slot:2, teamA:null, teamB:null, winner:null, feed:['g58','g59']},
+
+  // ── NATIONAL CHAMPIONSHIP ────────────────────────────
+  g63: {id:'g63', round:6, region:'Championship', slot:1, teamA:null, teamB:null, winner:null, feed:['g61','g62']},
+};
+
+// Team display names for bracket
+var TEAM_NAMES = {
+  'Duke':'Duke','Siena':'Siena','OhioSt':'Ohio St','TCU':'TCU',
+  'StJohns':'St. Johns','NorthIowa':'N. Iowa','Kansas':'Kansas','CalBapt':'Cal Baptist',
+  'Louisville':'Louisville','SoFla':'South Fla','MichSt':'Mich St','NDSU':'NDSU',
+  'UCLA':'UCLA','UCF':'UCF','UConn':'UConn','Furman':'Furman',
+  'Arizona':'Arizona','LIU':'LIU','Villanova':'Villanova','UtahSt':'Utah St',
+  'Wisconsin':'Wisconsin','HighPt':'High Point','Arkansas':'Arkansas','Hawaii':'Hawaii',
+  'BYU':'BYU','TxNCSt':'TX/NC St','Gonzaga':'Gonzaga','KennesawSt':'Kennesaw St',
+  'MiamiFL':'Miami FL','Missouri':'Missouri','Purdue':'Purdue','Queens':'Queens',
+  'Florida':'Florida','PV_Lehigh':'PV/Lehigh','Clemson':'Clemson','Iowa':'Iowa',
+  'Vanderbilt':'Vanderbilt','McNeese':'McNeese','Nebraska':'Nebraska','Troy':'Troy',
+  'NCarolina':'N. Carolina','VCU':'VCU','Illinois':'Illinois','Penn':'Penn',
+  'StMarys':'St. Marys','TexasAM':'Texas A&M','Houston':'Houston','Idaho':'Idaho',
+  'Michigan':'Michigan','UMBC_How':'UMBC/How','Georgia':'Georgia','StLouis':'St. Louis',
+  'TexasTech':'Tex Tech','Akron':'Akron','Alabama':'Alabama','Hofstra':'Hofstra',
+  'Tennessee':'Tennessee','MiamiOH_SMU':'MIA/SMU','Virginia':'Virginia','WrightSt':'Wright St',
+  'Kentucky':'Kentucky','SantaClra':'Santa Clara','IowasSt':'Iowa St','TennSt':'Tenn St',
+};
+
+// Map bracket team IDs to FF data keys
+var TEAM_FF_MAP = {
+  'Duke':'Duke','Arizona':'Arizona','Michigan':'Michigan','Florida':'Florida',
+  'Houston':'Houston','IowasSt':'IowasSt','Illinois':'Illinois','Purdue':'Purdue',
+  'MichSt':'MichSt','Gonzaga':'Gonzaga','Virginia':'Virginia','UConn':'UConn',
+  'Nebraska':'Nebraska','Arkansas':'Arkansas','Alabama':'Alabama','Kansas':'Kansas',
+  'Wisconsin':'Wisconsin','Vanderbilt':'Vanderbilt','TexasTech':'Texas Tech',
+  'Akron':'Akron','UCLA':'UCLA','VCU':'VCU','SantaClra':'SantaClra',
+  'NorthIowa':'NorthIowa','McNeese':'McNeese','StMarys':'StMarys','Kentucky':'Kentucky',
+  'NCarolina':'North Carolina','BYU':'BYU','StJohns':'St. Johns',
+};
+
+// Load/save bracket state
+function loadBracket() {
+  try {
+    var saved = localStorage.getItem('tr26-bracket');
+    if (saved) {
+      var winners = JSON.parse(saved);
+      Object.keys(winners).forEach(function(gid) {
+        if (BRACKET[gid]) BRACKET[gid].winner = winners[gid];
+      });
+    }
+  } catch(e) {}
+  propagateBracket();
+}
+
+function saveBracket() {
+  var winners = {};
+  Object.keys(BRACKET).forEach(function(gid) {
+    if (BRACKET[gid].winner) winners[gid] = BRACKET[gid].winner;
+  });
+  try { localStorage.setItem('tr26-bracket', JSON.stringify(winners)); } catch(e) {}
+}
+
+// Propagate winners forward through the bracket
+function propagateBracket() {
+  // Process games in order (g1-g63)
+  for (var round = 2; round <= 6; round++) {
+    Object.keys(BRACKET).forEach(function(gid) {
+      var g = BRACKET[gid];
+      if (g.round !== round || g.feed.length === 0) return;
+      var feedA = BRACKET[g.feed[0]], feedB = BRACKET[g.feed[1]];
+      if (feedA && feedA.winner) g.teamA = feedA.winner;
+      if (feedB && feedB.winner) g.teamB = feedB.winner;
+    });
+  }
+}
+
+// Get current live games for a given round
+function getLiveGames(round) {
+  var games = [];
+  Object.keys(BRACKET).forEach(function(gid) {
+    var g = BRACKET[gid];
+    if (g.round === round && g.teamA && g.teamB && !g.winner) {
+      games.push(g);
+    }
+  });
+  return games;
+}
+
+// Get current round (lowest round with unwon games that have both teams set)
+function getCurrentRound() {
+  for (var r = 1; r <= 6; r++) {
+    var live = getLiveGames(r);
+    if (live.length > 0) return r;
+  }
+  return 6;
+}
+
+// Render the full bracket updater panel
+function renderBracketPanel() {
+  var el = document.getElementById('bracket-games'); if (!el) return;
+  propagateBracket();
+  var currentRound = getCurrentRound();
+  var roundNames = ['','Round of 64','Round of 32','Sweet 16','Elite Eight','Final Four','Championship'];
+  var html = '';
+
+  // Round tabs
+  html += '<div style="display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap">';
+  for (var r = 1; r <= 6; r++) {
+    var hasGames = Object.keys(BRACKET).some(function(gid) {
+      return BRACKET[gid].round === r && BRACKET[gid].teamA && BRACKET[gid].teamB;
+    });
+    var allDone = hasGames && !Object.keys(BRACKET).some(function(gid) {
+      return BRACKET[gid].round === r && BRACKET[gid].teamA && BRACKET[gid].teamB && !BRACKET[gid].winner;
+    });
+    var isCurrent = (r === currentRound);
+    var btnStyle = isCurrent
+      ? 'background:var(--or);border-color:var(--or);color:#fff'
+      : allDone ? 'border-color:var(--gn);color:var(--gn)' : 'border-color:var(--b2);color:var(--t3)';
+    html += '<button class="cfb" data-round="'+r+'" style="'+btnStyle+';font-size:8px;padding:5px 10px">'
+      + roundNames[r] + (allDone ? ' ✓' : '') + '</button>';
+  }
+  html += '</div>';
+
+  // Show games for selected round (default current)
+  var showRound = parseInt(el.dataset.showRound || currentRound);
+  var games = [];
+  var regions = ['East','West','South','Midwest','Final Four','Championship'];
+  var regions_for_round = showRound <= 4 ? ['East','West','South','Midwest'] : showRound === 5 ? ['Final Four'] : ['Championship'];
+
+  regions_for_round.forEach(function(region) {
+    var regionGames = Object.keys(BRACKET).filter(function(gid) {
+      return BRACKET[gid].round === showRound && BRACKET[gid].region === region;
+    }).map(function(gid) { return BRACKET[gid]; });
+    if (regionGames.length === 0) return;
+
+    html += '<div style="margin-bottom:16px">';
+    if (showRound <= 4) {
+      html += '<div style="font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:2px;color:var(--t3);margin-bottom:8px">'+region+'</div>';
+    }
+    regionGames.forEach(function(g) {
+      var tA = g.teamA ? (TEAM_NAMES[g.teamA] || g.teamA) : 'TBD';
+      var tB = g.teamB ? (TEAM_NAMES[g.teamB] || g.teamB) : 'TBD';
+      var hasTeams = g.teamA && g.teamB;
+      html += '<div style="display:flex;align-items:center;gap:8px;padding:8px;background:var(--s3);border:1px solid '+(g.winner?'var(--gn)':'var(--b1)')+';border-radius:5px;margin-bottom:5px">';
+      // Team A button
+      html += '<button class="bracket-pick" data-gid="'+g.id+'" data-winner="'+(g.teamA||'')+'" style="flex:1;padding:6px 8px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;cursor:'+(hasTeams?'pointer':'default')+';border:1px solid '+(g.winner===g.teamA?'var(--gn)':'var(--b2)')+';background:'+(g.winner===g.teamA?'var(--gn-d)':'var(--s2)')+';color:'+(g.winner===g.teamA?'var(--gn)':'var(--t2)')+';text-align:left">'
+        + tA + '</button>';
+      html += '<div style="font-family:Bebas Neue,sans-serif;font-size:11px;color:var(--t4)">VS</div>';
+      // Team B button
+      html += '<button class="bracket-pick" data-gid="'+g.id+'" data-winner="'+(g.teamB||'')+'" style="flex:1;padding:6px 8px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;cursor:'+(hasTeams?'pointer':'default')+';border:1px solid '+(g.winner===g.teamB?'var(--gn)':'var(--b2)')+';background:'+(g.winner===g.teamB?'var(--gn-d)':'var(--s2)')+';color:'+(g.winner===g.teamB?'var(--gn)':'var(--t2)')+';text-align:right">'
+        + tB + '</button>';
+      // Winner indicator
+      if (g.winner) {
+        html += '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--gn);white-space:nowrap">'+( TEAM_NAMES[g.winner]||g.winner)+' ✓</div>';
+      }
+      html += '</div>';
+
+      // Four factors matchup if both teams have data and game is live
+      if (hasTeams && !g.winner) {
+        var ffA = FF[TEAM_FF_MAP[g.teamA] || g.teamA];
+        var ffB = FF[TEAM_FF_MAP[g.teamB] || g.teamB];
+        if (ffA && ffB) {
+          var edges = [];
+          if (ffA[0] > ffB[0] + 3) edges.push(tA+' faster pace');
+          else if (ffB[0] > ffA[0] + 3) edges.push(tB+' faster pace');
+          if (ffA[2] > ffB[7] + 5) edges.push(tA+' shooting edge');
+          if (ffB[2] > ffA[7] + 5) edges.push(tB+' shooting edge');
+          if (ffB[3] > 80) edges.push(tB+' TO-prone (rank '+ffB[3]+')');
+          if (ffA[3] > 80) edges.push(tA+' TO-prone (rank '+ffA[3]+')');
+          if (edges.length > 0) {
+            html += '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);padding:3px 8px;margin-bottom:3px">'
+              + edges.join(' · ') + '</div>';
+          }
+        }
+      }
+    });
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+
+  // Round tab click handlers
+  el.querySelectorAll('[data-round]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      el.dataset.showRound = this.dataset.round;
+      renderBracketPanel();
+      // Also update the matchup analyzer dropdowns
+      updateMatchupDropdowns(parseInt(this.dataset.round));
+    });
+  });
+
+  // Bracket pick click handlers
+  el.querySelectorAll('.bracket-pick').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var gid = this.dataset.gid;
+      var winner = this.dataset.winner;
+      if (!winner || winner === 'TBD') return;
+      // Toggle - click again to unset
+      if (BRACKET[gid].winner === winner) {
+        BRACKET[gid].winner = null;
+        // Clear all downstream results
+        clearDownstream(gid);
+      } else {
+        BRACKET[gid].winner = winner;
+      }
+      saveBracket();
+      propagateBracket();
+      renderBracketPanel();
+      updateMatchupDropdowns(parseInt(el.dataset.showRound || getCurrentRound()));
+    });
+  });
+}
+
+// Clear all games downstream of a given game
+function clearDownstream(gid) {
+  Object.keys(BRACKET).forEach(function(id) {
+    if (BRACKET[id].feed && BRACKET[id].feed.indexOf(gid) >= 0) {
+      BRACKET[id].winner = null;
+      clearDownstream(id);
+    }
+  });
+}
+
+// Update the matchup analyzer dropdowns based on current live games
+function updateMatchupDropdowns(round) {
+  var liveGames = getLiveGames(round);
+  if (liveGames.length === 0) {
+    // Try next round
+    for (var r = round; r <= 6; r++) {
+      liveGames = getLiveGames(r);
+      if (liveGames.length > 0) { round = r; break; }
+    }
+  }
+
+  var upsetSel = document.getElementById('ff-upset');
+  var favSel = document.getElementById('ff-fav');
+  if (!upsetSel || !favSel) return;
+
+  var prevUpset = upsetSel.value;
+  var prevFav = favSel.value;
+
+  // Build options from live games
+  var gamesHtml = liveGames.map(function(g) {
+    var tA = TEAM_NAMES[g.teamA] || g.teamA || 'TBD';
+    var tB = TEAM_NAMES[g.teamB] || g.teamB || 'TBD';
+    return '<option value="'+g.id+'">'+tA+' vs '+tB+'</option>';
+  }).join('');
+
+  if (gamesHtml === '') {
+    gamesHtml = '<option value="">No live games — log results first</option>';
+  }
+
+  upsetSel.innerHTML = gamesHtml;
+  favSel.innerHTML = gamesHtml;
+
+  // Store game reference for analysis
+  upsetSel.dataset.type = 'game';
+  favSel.dataset.type = 'game';
+}
+
+// Enhanced analyzer that works with live game IDs
+function runMatchupAnalysis() {
+  var upsetSel = document.getElementById('ff-upset');
+  var el = document.getElementById('ff-result');
+  if (!upsetSel || !el) return;
+
+  var gid = upsetSel.value;
+  var g = BRACKET[gid];
+  if (!g || !g.teamA || !g.teamB) {
+    el.innerHTML = '<span style="color:var(--t3)">Select a live game to analyze.</span>';
+    return;
+  }
+
+  var tA = TEAM_NAMES[g.teamA] || g.teamA;
+  var tB = TEAM_NAMES[g.teamB] || g.teamB;
+  var ffA = FF[TEAM_FF_MAP[g.teamA] || g.teamA];
+  var ffB = FF[TEAM_FF_MAP[g.teamB] || g.teamB];
+
+  var html = '<div style="font-family:Bebas Neue,sans-serif;font-size:14px;letter-spacing:2px;margin-bottom:12px">'
+    + tA + ' <span style="color:var(--t3)">vs</span> ' + tB + '</div>';
+
+  if (!ffA && !ffB) {
+    html += '<div style="color:var(--t3)">No Four Factors data for these teams yet.</div>';
+    el.innerHTML = html; return;
+  }
+
+  // Team profiles
+  if (ffA) html += '<div style="padding:8px;background:var(--s3);border-radius:4px;margin-bottom:6px"><span style="color:var(--or)">'+tA+':</span> '+ffA[11]+'</div>';
+  if (ffB) html += '<div style="padding:8px;background:var(--s3);border-radius:4px;margin-bottom:10px"><span style="color:var(--bl)">'+tB+':</span> '+ffB[11]+'</div>';
+
+  if (!ffA || !ffB) { el.innerHTML = html; return; }
+
+  var edges_A = [], edges_B = [], neutral = [];
+
+  // Tempo
+  var tempoDiff = ffA[0] - ffB[0];
+  if (Math.abs(tempoDiff) > 3) {
+    if (tempoDiff > 0) edges_A.push('Faster pace ('+ffA[0]+' vs '+ffB[0]+') — suits '+tA);
+    else edges_B.push('Faster pace ('+ffB[0]+' vs '+ffA[0]+') — suits '+tB);
+  } else neutral.push('Similar tempo ('+ffA[0]+' vs '+ffB[0]+')');
+
+  // eFG% offense vs defense
+  if (ffA[2] > ffB[7] + 4) edges_A.push(tA+' shooting ('+ffA[2]+'%) > '+tB+' D-eFG ('+ffB[7]+'%)');
+  else if (ffB[7] > ffA[2] + 4) edges_B.push(tB+' defense smothers '+tA+' shooting ('+ffB[7]+'% D vs '+ffA[2]+'% O)');
+
+  if (ffB[2] > ffA[7] + 4) edges_B.push(tB+' shooting ('+ffB[2]+'%) > '+tA+' D-eFG ('+ffA[7]+'%)');
+  else if (ffA[7] > ffB[2] + 4) edges_A.push(tA+' defense smothers '+tB+' shooting ('+ffA[7]+'% D vs '+ffB[2]+'% O)');
+
+  // Turnovers
+  if (ffA[3] > 100) edges_B.push(tA+' turnover problems (rank '+ffA[3]+') — '+tB+' can capitalize');
+  else if (ffA[3] < 30) edges_A.push(tA+' elite ball security (rank '+ffA[3]+')');
+  if (ffB[3] > 100) edges_A.push(tB+' turnover problems (rank '+ffB[3]+') — '+tA+' can capitalize');
+  else if (ffB[3] < 30) edges_B.push(tB+' elite ball security (rank '+ffB[3]+')');
+
+  // Rebounding
+  if (ffA[4] > ffB[9] + 5) edges_A.push(tA+' offensive rebounding ('+ffA[4]+'% OR vs '+ffB[9]+'% DOR)');
+  if (ffB[4] > ffA[9] + 5) edges_B.push(tB+' offensive rebounding ('+ffB[4]+'% OR vs '+ffA[9]+'% DOR)');
+
+  // Free throws
+  if (ffA[5] > 35 && ffB[10] > 30) edges_A.push(tA+' draws fouls ('+ffA[5]+' FTRate) and '+tB+' allows them ('+ffB[10]+')');
+  if (ffB[5] > 35 && ffA[10] > 30) edges_B.push(tB+' draws fouls ('+ffB[5]+' FTRate) and '+tA+' allows them ('+ffA[10]+')');
+
+  // Render
+  if (edges_A.length > 0) {
+    html += '<div style="margin-bottom:10px"><div style="color:var(--or);font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1px;margin-bottom:4px">EDGES: '+tA.toUpperCase()+'</div>'
+      + edges_A.map(function(e){return '<div style="color:var(--t2);padding:2px 0;font-size:9px">+ '+e+'</div>';}).join('') + '</div>';
+  }
+  if (edges_B.length > 0) {
+    html += '<div style="margin-bottom:10px"><div style="color:var(--bl);font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1px;margin-bottom:4px">EDGES: '+tB.toUpperCase()+'</div>'
+      + edges_B.map(function(e){return '<div style="color:var(--t2);padding:2px 0;font-size:9px">+ '+e+'</div>';}).join('') + '</div>';
+  }
+  if (neutral.length > 0) {
+    html += '<div style="color:var(--t3);font-size:8px">'+neutral.join(' · ')+'</div>';
+  }
+  if (edges_A.length === 0 && edges_B.length === 0) {
+    html += '<div style="color:var(--t3)">No significant Four Factor edges. This is a toss-up — trust the seed and sim data.</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+// Load bracket on init
+loadBracket();
+
 // ═══ INIT ═══
 // Clear any corrupt old state from previous versions
 var stateVersion = '3';
@@ -1193,6 +1850,7 @@ renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
 document.getElementById('s-live').textContent=liveCt();
+updateMatchupDropdowns(1);
 
 // Add reset button to header for debugging
 var resetBtn = document.createElement('button');
@@ -1208,6 +1866,7 @@ resetBtn.addEventListener('click', function(){
     renderBoard();
     renderCmdCards();
     document.getElementById('s-live').textContent=liveCt();
+updateMatchupDropdowns(1);
     alert('State reset. Picks preserved, results cleared.');
   }
 });
