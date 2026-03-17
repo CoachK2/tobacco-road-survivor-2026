@@ -293,6 +293,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   <div class="tab" data-panel="probs">Live Probs</div>
   <div class="tab" data-panel="scenarios">Scenarios</div>
   <div class="tab" data-panel="tiebreaker">Tiebreaker</div>
+  <div class="tab" data-panel="fieldintel">Field Intel</div>
   <div class="tab" data-panel="schedule">Schedule</div>
 </nav>
 
@@ -453,6 +454,95 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
       <div class="rule"><span class="rule-ic">✓</span>Tiebreaker includes your final losing pick</div>
       <div class="rule"><span class="rule-ic">✓</span>Winner takes $39,800 · 4-way split = ~$9,950</div>
       <div class="warn-box">⚡ Set auto-pick CHALK before Thu 3/19<br>⚡ D7+8 = 2 picks required<br>⚡ Check War Room before every lock</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- FIELD INTEL -->
+<div class="panel" id="panel-fieldintel">
+  <div class="sec"><div class="sec-t">FIELD INTELLIGENCE</div><div class="sec-b">UPDATE AFTER EACH ROUND</div></div>
+
+  <!-- WHAT TO SCREENSHOT REMINDER -->
+  <div style="background:var(--or-d);border:1px solid rgba(249,115,22,0.35);border-radius:7px;padding:16px;margin-bottom:18px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:14px;letter-spacing:2px;color:var(--or);margin-bottom:10px">WHAT TO CAPTURE AFTER EACH ROUND</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="capture-guide"></div>
+  </div>
+
+  <!-- INPUT FORM -->
+  <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:16px;margin-bottom:18px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:14px;letter-spacing:2px;margin-bottom:3px">INPUT ROUND DATA</div>
+    <div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:14px">Enter after Splash Sports reveals pick data for that round</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+      <div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:3px;letter-spacing:1px">ROUND / DAY</div>
+        <select id="fi-round" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:7px 9px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+          <option value="0">After D1 (Thu 3/19)</option>
+          <option value="1">After D2 (Fri 3/20)</option>
+          <option value="2">After D3 (Sat 3/21)</option>
+          <option value="3">After D4 (Sun 3/22)</option>
+          <option value="4">After D5 (Thu 3/26)</option>
+          <option value="5">After D6 (Fri 3/27)</option>
+          <option value="6">After D7+8 (Elite 8)</option>
+          <option value="7">After D9 (Final Four)</option>
+        </select>
+      </div>
+      <div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:3px;letter-spacing:1px">ENTRIES STILL ALIVE IN POOL</div>
+        <input id="fi-alive" type="number" placeholder="e.g. 412" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:7px 9px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+      </div>
+      <div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:3px;letter-spacing:1px">TIEBREAKER RANGE (e.g. 4-22)</div>
+        <input id="fi-tbrange" type="text" placeholder="e.g. 4-22" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:7px 9px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+      </div>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:3px;letter-spacing:1px">PICK DISTRIBUTION (paste from Splash Stats — e.g. "Michigan:340, Duke:280, Arizona:95")</div>
+      <textarea id="fi-picks" rows="3" placeholder="Michigan:340, Duke:280, Arizona:95, Iowa St:210, Purdue:180..." style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:7px 9px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px;resize:vertical"></textarea>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:3px;letter-spacing:1px">NOTABLE ELIMINATED TEAMS (comma separated)</div>
+      <input id="fi-elim" type="text" placeholder="e.g. Purdue, Iowa St, Virginia" style="width:100%;background:var(--s3);border:1px solid var(--b1);color:var(--t1);padding:7px 9px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:10px">
+    </div>
+    <button id="fi-save" style="background:var(--or);border:none;color:#fff;padding:8px 18px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">SAVE + RECALCULATE</button>
+  </div>
+
+  <!-- COMPETITIVE PICTURE -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px">
+
+    <!-- Pool Health -->
+    <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2);margin-bottom:12px">POOL HEALTH</div>
+      <div id="pool-health"></div>
+    </div>
+
+    <!-- Our TB vs Field -->
+    <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px">
+      <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2);margin-bottom:12px">OUR TB vs FIELD</div>
+      <div id="tb-vs-field"></div>
+    </div>
+  </div>
+
+  <!-- Pick Crowding Meter -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px;margin-bottom:14px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2);margin-bottom:4px">PICK CROWDING METER</div>
+    <div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:12px">Higher % = more of the field is using that team = more entries die if they lose</div>
+    <div id="crowding-meter"></div>
+  </div>
+
+  <!-- Strategy Recommendation -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:16px;margin-bottom:14px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2);margin-bottom:12px">ROUND RECOMMENDATION</div>
+    <div id="round-rec" style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--t3);line-height:1.8">
+      Enter round data above to generate recommendations.
+    </div>
+  </div>
+
+  <!-- Round History -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden">
+    <div style="padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--b1);font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2)">ROUND HISTORY LOG</div>
+    <div id="round-history" style="padding:14px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3);line-height:2">
+      No rounds logged yet.
     </div>
   </div>
 </div>
@@ -622,6 +712,7 @@ document.querySelector('nav').addEventListener('click', function(e){
   if(name==='tiebreaker') renderTB();
   if(name==='scenarios') renderSim();
   if(name==='schedule') renderSchedDL();
+  if(name==='fieldintel'){ renderFieldIntel(); }
   if(name==='probs') renderProbs();
 });
 
@@ -1046,6 +1137,285 @@ resetBtn.addEventListener('click', function(){
 });
 document.querySelector('.hdr-btns .hbtn:last-child')?.after(resetBtn);
 
+
+
+// =======================================
+// FIELD INTEL
+// =======================================
+
+var FI_ROUNDS = [
+  'After D1 (Thu 3/19 night)',
+  'After D2 (Fri 3/20 night)',
+  'After D3 (Sat 3/21 night)',
+  'After D4 (Sun 3/22 night)',
+  'After D5 (Thu 3/26 night)',
+  'After D6 (Fri 3/27 night)',
+  'After D7+8 (Elite 8)',
+  'After D9 (Final Four)',
+];
+
+var CAPTURE_GUIDE = [
+  {
+    step: '1',
+    title: 'ENTRIES TAB',
+    color: 'var(--or)',
+    when: 'After all games each day',
+    what: 'Screenshot the Entries tab showing how many entries remain alive',
+    key: 'Total survivors in pool',
+  },
+  {
+    step: '2',
+    title: 'STATS TAB',
+    color: 'var(--bl)',
+    when: 'After picks are revealed (~1hr after last game)',
+    what: 'Screenshot the Stats/Pick Distribution showing which teams were picked and how many times',
+    key: 'Pick crowding data',
+  },
+  {
+    step: '3',
+    title: 'AVAILABILITY TAB',
+    color: 'var(--gn)',
+    when: 'Before each new pick deadline',
+    what: 'Screenshot which teams are still available across the remaining field',
+    key: 'What ammo competitors still have',
+  },
+];
+
+function renderCaptureGuide() {
+  var el = document.getElementById('capture-guide');
+  if (!el) return;
+  el.innerHTML = CAPTURE_GUIDE.map(function(g) {
+    return '<div style="background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:12px">'
+      + '<div style="display:flex;align-items:center;gap:7px;margin-bottom:7px">'
+      + '<div style="width:20px;height:20px;border-radius:50%;background:'+g.color+';display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;font-size:12px;color:#fff;flex-shrink:0">'+g.step+'</div>'
+      + '<div style="font-family:Bebas Neue,sans-serif;font-size:12px;letter-spacing:1px;color:'+g.color+'">'+g.title+'</div>'
+      + '</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px">WHEN: '+g.when+'</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t2);margin-bottom:5px;line-height:1.5">'+g.what+'</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:'+g.color+'">Key data: '+g.key+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function loadFI() {
+  try { var f = localStorage.getItem('tr26-fi'); return f ? JSON.parse(f) : {rounds:[], lastAlive:796, tbRange:'—', pickDist:{}}; }
+  catch(e) { return {rounds:[], lastAlive:796, tbRange:'—', pickDist:{}}; }
+}
+function saveFI(fi) { try { localStorage.setItem('tr26-fi', JSON.stringify(fi)); } catch(e){} }
+var FI = loadFI();
+
+document.getElementById('fi-save').addEventListener('click', function() {
+  var round = parseInt(document.getElementById('fi-round').value);
+  var alive = parseInt(document.getElementById('fi-alive').value) || FI.lastAlive;
+  var tbRange = document.getElementById('fi-tbrange').value.trim() || '—';
+  var picksRaw = document.getElementById('fi-picks').value.trim();
+  var elimRaw = document.getElementById('fi-elim').value.trim();
+
+  // Parse pick distribution
+  var pickDist = {};
+  if (picksRaw) {
+    picksRaw.split(',').forEach(function(p) {
+      var parts = p.trim().split(':');
+      if (parts.length === 2) {
+        var team = parts[0].trim();
+        var count = parseInt(parts[1].trim()) || 0;
+        pickDist[team] = count;
+      }
+    });
+  }
+
+  // Store round data
+  var roundData = {
+    round: round,
+    roundName: FI_ROUNDS[round],
+    alive: alive,
+    tbRange: tbRange,
+    pickDist: pickDist,
+    eliminated: elimRaw,
+    timestamp: new Date().toLocaleString(),
+  };
+
+  // Remove existing entry for this round if present
+  FI.rounds = FI.rounds.filter(function(r) { return r.round !== round; });
+  FI.rounds.push(roundData);
+  FI.rounds.sort(function(a,b) { return a.round - b.round; });
+  FI.lastAlive = alive;
+  FI.tbRange = tbRange;
+  FI.pickDist = pickDist;
+  saveFI(FI);
+  renderFieldIntel();
+});
+
+function renderFieldIntel() {
+  renderCaptureGuide();
+  renderPoolHealth();
+  renderTBvsField();
+  renderCrowding();
+  renderRec();
+  renderHistory();
+}
+
+function renderPoolHealth() {
+  var el = document.getElementById('pool-health'); if (!el) return;
+  var alive = FI.lastAlive || 796;
+  var pct = Math.round((alive / 796) * 100);
+  var ourAlive = liveCt();
+  var ourPct = alive > 0 ? Math.round((ourAlive / alive) * 100) : 0;
+  el.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+    + mkStat('Pool Survivors', alive + ' / 796', pct < 20 ? 'var(--rd)' : pct < 50 ? 'var(--gd)' : 'var(--gn)')
+    + mkStat('Our Entries Alive', ourAlive + ' / 20', ourAlive > 10 ? 'var(--gn)' : ourAlive > 5 ? 'var(--gd)' : 'var(--or)')
+    + mkStat('Our Pool Share', ourPct + '%', ourPct > 5 ? 'var(--gn)' : 'var(--gd)')
+    + mkStat('TB Range (Field)', FI.tbRange || '—', 'var(--bl)')
+    + '</div>';
+}
+
+function mkStat(label, val, color) {
+  return '<div style="background:var(--s2);border:1px solid var(--b1);border-radius:5px;padding:10px">'
+    + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);letter-spacing:1px;margin-bottom:3px;text-transform:uppercase">'+label+'</div>'
+    + '<div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:'+color+';line-height:1">'+val+'</div>'
+    + '</div>';
+}
+
+function renderTBvsField() {
+  var el = document.getElementById('tb-vs-field'); if (!el) return;
+  var tbParts = (FI.tbRange || '').split('-');
+  var tbMin = parseInt(tbParts[0]) || 0;
+  var tbMax = parseInt(tbParts[1]) || 30;
+
+  // Get our entries TB totals
+  var ourTBs = [];
+  for (var i = 0; i < S.picks.length; i++) {
+    if (!S.eliminated[i]) ourTBs.push({i:i, tb:getTB(i), name:cName(i)});
+  }
+  ourTBs.sort(function(a,b) { return b.tb - a.tb; });
+
+  var html = '<div style="margin-bottom:10px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3)">Field TB range: <span style="color:var(--t1)">' + (FI.tbRange || 'Not set') + '</span></div>';
+  html += ourTBs.slice(0, 8).map(function(e) {
+    var pct = tbMax > 0 ? Math.round((e.tb / tbMax) * 100) : 0;
+    var color = e.tb >= tbMax * 0.8 ? 'var(--gn)' : e.tb >= tbMax * 0.5 ? 'var(--gd)' : 'var(--or)';
+    var position = e.tb > tbMax ? 'LEADS FIELD' : e.tb > tbMax * 0.75 ? 'TOP 25%' : e.tb > tbMax * 0.5 ? 'MID FIELD' : 'BELOW MID';
+    return '<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid rgba(37,45,58,0.4)">'
+      + '<div style="font-family:Bebas Neue,sans-serif;font-size:13px;color:var(--' + ['kerry','whopper','dustin','george'][CMD_MAP[e.i]] + ');width:24px">E'+(e.i+1)+'</div>'
+      + '<div style="flex:1;height:4px;background:var(--s3);border-radius:2px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+color+';border-radius:2px"></div></div>'
+      + '<div style="font-family:Bebas Neue,sans-serif;font-size:16px;color:'+color+';width:24px;text-align:right">'+e.tb+'</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:'+color+';width:60px;text-align:right">'+position+'</div>'
+      + '</div>';
+  }).join('');
+  el.innerHTML = html;
+}
+
+function renderCrowding() {
+  var el = document.getElementById('crowding-meter'); if (!el) return;
+  var dist = FI.pickDist || {};
+  var teams = Object.keys(dist);
+  if (teams.length === 0) {
+    el.innerHTML = '<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t3)">No pick distribution data yet. Enter after Splash reveals picks.</div>';
+    return;
+  }
+  var alive = FI.lastAlive || 796;
+  var sorted = teams.sort(function(a,b) { return dist[b]-dist[a]; });
+  el.innerHTML = sorted.slice(0, 12).map(function(team) {
+    var count = dist[team];
+    var pct = Math.round((count / alive) * 100);
+    var crowdColor = pct > 60 ? 'var(--rd)' : pct > 35 ? 'var(--gd)' : pct > 15 ? 'var(--or)' : 'var(--gn)';
+    var crowdLabel = pct > 60 ? 'CROWDED' : pct > 35 ? 'POPULAR' : pct > 15 ? 'MODERATE' : 'OPEN';
+    // Check if any of our entries are using this team
+    var ourEntries = [];
+    for (var i = 0; i < S.picks.length; i++) {
+      if (!S.eliminated[i] && S.picks[i].indexOf(team) >= 0) ourEntries.push('E'+(i+1));
+    }
+    return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(37,45,58,0.4)">'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t1);width:70px">'+team+'</div>'
+      + '<div style="flex:1;height:5px;background:var(--s3);border-radius:3px;overflow:hidden"><div style="width:'+pct+'%;height:100%;background:'+crowdColor+';border-radius:3px"></div></div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:'+crowdColor+';width:50px;text-align:right">'+pct+'%</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:'+crowdColor+';width:55px;text-align:right">'+crowdLabel+'</div>'
+      + '<div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);width:80px;text-align:right">'+(ourEntries.length ? 'Ours: '+ourEntries.join(',') : '')+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function renderRec() {
+  var el = document.getElementById('round-rec'); if (!el) return;
+  var alive = FI.lastAlive || 796;
+  var ourAlive = liveCt();
+  var dist = FI.pickDist || {};
+  var teams = Object.keys(dist);
+  var rec = [];
+
+  if (alive === 796) {
+    el.innerHTML = '<span style="color:var(--t3)">Enter round data above to generate recommendations.</span>';
+    return;
+  }
+
+  // Survival position
+  var share = alive > 0 ? (ourAlive / alive * 100).toFixed(1) : 0;
+  rec.push('<span style="color:var(--gn)">POSITION:</span> We have ' + ourAlive + ' of ' + alive + ' surviving entries (' + share + '% of the field).');
+
+  // Crowding analysis
+  if (teams.length > 0) {
+    var mostCrowded = teams.sort(function(a,b){return dist[b]-dist[a];})[0];
+    var crowdPct = Math.round((dist[mostCrowded] / alive) * 100);
+    if (crowdPct > 50) {
+      rec.push('<span style="color:var(--rd)">WARNING:</span> ' + mostCrowded + ' is picked by ' + crowdPct + '% of remaining entries. If ' + mostCrowded + ' loses, over half the field is eliminated at once. This is either a huge opportunity (if we are NOT on ' + mostCrowded + ') or a major risk (if we are).');
+    }
+    var leastCrowded = teams.sort(function(a,b){return dist[a]-dist[b];})[0];
+    var openPct = Math.round((dist[leastCrowded] / alive) * 100);
+    if (openPct < 15) {
+      rec.push('<span style="color:var(--gn)">OPPORTUNITY:</span> ' + leastCrowded + ' is only picked by ' + openPct + '% of the field. If you can pick them and they win, you immediately separate from the crowd.');
+    }
+  }
+
+  // TB position
+  var tbParts = (FI.tbRange || '').split('-');
+  var tbMax = parseInt(tbParts[1]) || 0;
+  if (tbMax > 0) {
+    var ourBestTB = Math.max.apply(null, S.picks.map(function(_,i){return S.eliminated[i]?0:getTB(i);}));
+    if (ourBestTB >= tbMax * 0.8) {
+      rec.push('<span style="color:var(--gn)">TB EDGE:</span> Our best entry TB (' + ourBestTB + ') is in the top 20% of the field. We can afford to play chalk and win any tiebreaker battle.');
+    } else if (ourBestTB < tbMax * 0.5) {
+      rec.push('<span style="color:var(--rd)">TB DEFICIT:</span> Our best TB (' + ourBestTB + ') is below the field median (' + tbMax + ' max). Consider a contrarian pick on the next available entry to build tiebreaker equity.');
+    }
+  }
+
+  // Pool size strategy
+  if (alive < 20) {
+    rec.push('<span style="color:var(--pu)">ENDGAME:</span> Pool is down to ' + alive + ' entries. Every pick is now a head-to-head TB battle. Check each competitors past picks to calculate exact tiebreaker positions.');
+  } else if (alive < 100) {
+    rec.push('<span style="color:var(--gd)">LATE GAME:</span> Field is thinning fast. Start tracking individual competitor TB totals. The winner will likely be decided by tiebreaker not survival.');
+  }
+
+  el.innerHTML = rec.map(function(r) {
+    return '<div style="padding:4px 0;border-bottom:1px solid rgba(37,45,58,0.3)">' + r + '</div>';
+  }).join('') || '<span style="color:var(--t3)">No significant signals detected yet.</span>';
+}
+
+function renderHistory() {
+  var el = document.getElementById('round-history'); if (!el) return;
+  if (!FI.rounds || FI.rounds.length === 0) {
+    el.innerHTML = '<span style="color:var(--t3)">No rounds logged yet.</span>';
+    return;
+  }
+  el.innerHTML = FI.rounds.slice().reverse().map(function(r) {
+    return '<div style="padding:8px 0;border-bottom:1px solid rgba(37,45,58,0.4)">'
+      + '<div style="color:var(--or);margin-bottom:3px">' + r.roundName + ' <span style="color:var(--t4);font-size:7px">' + r.timestamp + '</span></div>'
+      + '<div>Pool alive: <span style="color:var(--t1)">' + r.alive + '</span>'
+      + ' &nbsp;|&nbsp; TB range: <span style="color:var(--bl)">' + r.tbRange + '</span>'
+      + (r.eliminated ? ' &nbsp;|&nbsp; Eliminated: <span style="color:var(--rd)">' + r.eliminated + '</span>' : '')
+      + '</div>'
+      + (Object.keys(r.pickDist||{}).length > 0 ? '<div style="color:var(--t3);font-size:8px;margin-top:3px">Picks: ' + Object.entries(r.pickDist).slice(0,6).map(function(e){return e[0]+':'+e[1];}).join(', ') + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+// Render Field Intel when tab is activated
+// (already handled in the nav click handler via name==='fieldintel')
+// Initial render on load
+renderCaptureGuide();
+renderPoolHealth();
+renderTBvsField();
+renderCrowding();
+renderRec();
+renderHistory();
 
 })(); // end IIFE
 </script>
