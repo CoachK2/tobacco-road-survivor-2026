@@ -1650,6 +1650,8 @@ setInterval(function(){
 },30000);
 
 
+var ff_current_round = 1;
+
 // ═══ FOUR FACTORS MATCHUP ANALYZER ═══
 // Simple two-dropdown system — you pick both teams, works all tournament
 document.getElementById('ff-analyze').addEventListener('click', function() {
@@ -2023,8 +2025,6 @@ function renderBracketPanel() {
       el.dataset.showRound = this.dataset.round;
       ff_current_round = parseInt(this.dataset.round);
       renderBracketPanel();
-      buildAnalyzerRoundBtns();
-      populateAnalyzerDropdown(ff_current_round);
     });
   });
 
@@ -2046,7 +2046,6 @@ function renderBracketPanel() {
       propagateBracket();
       renderBracketPanel();
       // Refresh analyzer dropdown for current round
-      populateAnalyzerDropdown(ff_current_round);
     });
   });
 }
@@ -2072,8 +2071,7 @@ function updateMatchupDropdowns(round) {
     }
   }
 
-  // Dropdowns now handled by populateAnalyzerDropdown()
-}
+  }
 
 // Enhanced analyzer that works with live game IDs
 function runMatchupAnalysis() {
@@ -2398,143 +2396,240 @@ function renderScheduleTable() {
 
 function renderTrackBalance() {
   var el = document.getElementById('track-balance-table'); if (!el) return;
-  var html = '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:10px;line-height:1.7">'
-    + 'For each entry, this shows how many Thu-track vs Fri-track teams are in the pick plan. '
-    + 'You need at least 1 Thu-track team available for D7 (Sat E8) and 1 Fri-track team for D8 (Sun E8).'
+
+  // For each entry — show current picks broken into SAT/SUN groups
+  // plus projection: what rounds can they still pick for
+
+  var ROUND_DAYS = [
+    {label:'D1',  date:'Thu 3/19', group:'any'},
+    {label:'D2',  date:'Fri 3/20', group:'any'},
+    {label:'D3',  date:'Sat 3/21', group:'any'},
+    {label:'D4',  date:'Sun 3/22', group:'any'},
+    {label:'D5',  date:'Thu 3/26', group:'sat', note:'S16 West+South'},
+    {label:'D6',  date:'Fri 3/27', group:'sun', note:'S16 East+Midwest'},
+    {label:'D7',  date:'Sat 3/28', group:'sat', note:'E8 West+South'},
+    {label:'D8',  date:'Sun 3/29', group:'sun', note:'E8 East+Midwest'},
+    {label:'D9',  date:'Sat 4/4',  group:'any', note:'F4'},
+    {label:'D10', date:'Mon 4/6',  group:'any', note:'Champ'},
+  ];
+
+  var html = '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:12px;line-height:1.8">'
+    + '<span style="color:var(--or)">★ SAT 3/28 pick (D7)</span> = must use West or South team &nbsp;·&nbsp; '
+    + '<span style="color:var(--bl)">★ SUN 3/29 pick (D8)</span> = must use East or Midwest team &nbsp;·&nbsp; '
+    + 'Updates live as picks are added to entries'
     + '</div>';
 
-  html += '<table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px">';
+  // Build the table
+  html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px">';
   html += '<thead><tr>'
-    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">ENTRY</th>'
-    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">CMD</th>'
-    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--or);font-size:7px">THU TRACK PICKS</th>'
-    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--bl);font-size:7px">FRI TRACK PICKS</th>'
-    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">E8 READY?</th>'
-    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">PICKS</th>'
+    + '<th style="padding:6px 8px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;white-space:nowrap">ENTRY</th>'
+    + '<th style="padding:6px 8px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">CMD</th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--or);font-size:7px;font-weight:700">W+S TEAMS<br><span style="font-size:6px;color:var(--t4)">D5+D7 SAT</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--bl);font-size:7px;font-weight:700">E+M TEAMS<br><span style="font-size:6px;color:var(--t4)">D6+D8 SUN</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">D5 OK?<br><span style="font-size:6px">Thu S16</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">D6 OK?<br><span style="font-size:6px">Fri S16</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--or);font-size:7px;font-weight:700">D7 OK?<br><span style="font-size:6px">Sat E8</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--bl);font-size:7px;font-weight:700">D8 OK?<br><span style="font-size:6px">Sun E8</span></th>'
+    + '<th style="padding:6px 8px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--gn);font-size:7px;font-weight:700">E8 READY?</th>'
+    + '<th style="padding:6px 8px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">REMAINING TEAMS</th>'
     + '</tr></thead><tbody>';
 
   for (var i = 0; i < S.picks.length; i++) {
+    if (S.eliminated[i]) continue; // skip dead entries
+
     var picks = S.picks[i];
-    var thuPicks = [], friPicks = [], unknownPicks = [];
+    var used = new Set();
+    var results = S.results[i];
+
+    // Teams already used (won) in past rounds
+    picks.forEach(function(t, d) {
+      if (results[d] === 'win' || results[d] === 'loss') used.add(t);
+    });
+
+    // All teams in this entry's plan
+    var satTeams = [], sunTeams = [], unknownTeams = [];
     picks.forEach(function(t) {
       if (!t) return;
       var sched = TEAM_SCHEDULE[t];
-      if (!sched) { unknownPicks.push(t); return; }
-      if (sched.r64 === 'D1') thuPicks.push(t);
-      else friPicks.push(t);
+      if (!sched) { unknownTeams.push(t); return; }
+      if (sched.e8 === 'D7') satTeams.push(t);
+      else sunTeams.push(t);
     });
-    var e8Ready = thuPicks.length >= 1 && friPicks.length >= 1;
+
+    // Remaining (not yet used) teams by group
+    var satRemaining = satTeams.filter(function(t) { return !used.has(t); });
+    var sunRemaining = sunTeams.filter(function(t) { return !used.has(t); });
+
+    // Round availability checks
+    var d5ok = satRemaining.length >= 1;  // need W+S for Thu S16
+    var d6ok = sunRemaining.length >= 1;  // need E+M for Fri S16
+    var d7ok = satRemaining.length >= 1;  // need W+S for Sat E8
+    var d8ok = sunRemaining.length >= 1;  // need E+M for Sun E8
+    var e8ok = d7ok && d8ok;
+
+    // If some sat teams already used, check if enough remain
+    // (need separate teams for D5 and D7 — can't use same team twice)
+    var satStillNeeded = 2; // need one for D5 + one for D7 (different teams)
+    var sunStillNeeded = 2; // need one for D6 + one for D8 (different teams)
+    // Actually in survivor you use ONE team per day, so:
+    // For D5 S16 — need 1 W+S team available
+    // For D7 E8 — need a DIFFERENT W+S team (can't reuse)
+    // So need at least 2 distinct W+S teams total if not yet used either
+    var satForD5D7 = satRemaining.length >= 2; // ideal
+    var sunForD6D8 = sunRemaining.length >= 2; // ideal
+
     var c = cCls(i);
-    var statusColor = e8Ready ? 'var(--gn)' : 'var(--rd)';
-    var statusTxt = e8Ready ? 'YES' : 'RISK';
-    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4)">'
-      + '<td style="padding:6px 9px"><span style="font-family:Bebas Neue,sans-serif;font-size:14px;color:var(--' + c + ')">E' + (i+1) + '</span></td>'
-      + '<td style="padding:6px 9px;color:var(--t3)">' + cName(i) + '</td>'
-      + '<td style="padding:6px 9px;text-align:center;color:var(--or);font-weight:600">' + thuPicks.length + '</td>'
-      + '<td style="padding:6px 9px;text-align:center;color:var(--bl);font-weight:600">' + friPicks.length + '</td>'
-      + '<td style="padding:6px 9px;text-align:center;color:' + statusColor + ';font-weight:600">' + statusTxt + '</td>'
-      + '<td style="padding:6px 9px;color:var(--t3);font-size:8px">' 
-        + '<span style="color:var(--or)">' + thuPicks.join(' · ') + '</span>'
-        + (friPicks.length ? ' <span style="color:var(--t4)">|</span> <span style="color:var(--bl)">' + friPicks.join(' · ') + '</span>' : '')
-      + '</td>'
+    var rowBg = e8ok ? 'transparent' : 'rgba(239,68,68,0.04)';
+
+    function okCell(ok, strong) {
+      var col = ok ? 'var(--gn)' : 'var(--rd)';
+      var txt = ok ? (strong ? '✓ YES' : '✓') : '✗ RISK';
+      var bg = ok ? '' : 'background:rgba(239,68,68,0.08);';
+      return '<td style="padding:6px 8px;text-align:center;' + bg + 'color:' + col + ';font-weight:600;font-size:' + (strong?'9':'8') + 'px">' + txt + '</td>';
+    }
+
+    // Format team lists with color coding
+    var satTxt = satTeams.map(function(t) {
+      var isUsed = used.has(t);
+      return '<span style="color:' + (isUsed?'var(--t4)':'var(--or)') + ';text-decoration:' + (isUsed?'line-through':'none') + '">' + t + '</span>';
+    }).join(' ');
+
+    var sunTxt = sunTeams.map(function(t) {
+      var isUsed = used.has(t);
+      return '<span style="color:' + (isUsed?'var(--t4)':'var(--bl)') + ';text-decoration:' + (isUsed?'line-through':'none') + '">' + t + '</span>';
+    }).join(' ');
+
+    // Remaining available teams
+    var remainingTxt = picks.filter(function(t,d) {
+      return t && !used.has(t);
+    }).map(function(t) {
+      var sched = TEAM_SCHEDULE[t];
+      var col = sched ? (sched.e8==='D7'?'var(--or)':'var(--bl)') : 'var(--t3)';
+      return '<span style="color:'+col+'">'+t+'</span>';
+    }).join(' · ');
+
+    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.5);background:' + rowBg + '">'
+      + '<td style="padding:6px 8px"><span style="font-family:Bebas Neue,sans-serif;font-size:15px;color:var(--' + c + ')">E' + (i+1) + '</span></td>'
+      + '<td style="padding:6px 8px;color:var(--t3);font-size:8px">' + cName(i) + '</td>'
+      + '<td style="padding:6px 8px;text-align:center;color:var(--or);font-weight:600">' + satRemaining.length + '<span style="color:var(--t4);font-size:7px">/' + satTeams.length + '</span></td>'
+      + '<td style="padding:6px 8px;text-align:center;color:var(--bl);font-weight:600">' + sunRemaining.length + '<span style="color:var(--t4);font-size:7px">/' + sunTeams.length + '</span></td>'
+      + okCell(d5ok, false)
+      + okCell(d6ok, false)
+      + okCell(d7ok, true)
+      + okCell(d8ok, true)
+      + '<td style="padding:6px 8px;text-align:center;color:' + (e8ok?'var(--gn)':'var(--rd)') + ';font-weight:700;font-size:10px">' + (e8ok ? '✓ YES' : '✗ NO') + '</td>'
+      + '<td style="padding:6px 8px;font-size:8px;max-width:200px">' + remainingTxt + '</td>'
       + '</tr>';
   }
-  html += '</tbody></table>';
+
+  html += '</tbody></table></div>';
+
+  // Add a refresh hint
+  html += '<div style="margin-top:10px;font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t4)">'
+    + 'Updates automatically as picks are added/changed on the Board tab · Orange = West+South (D5/D7) · Blue = East+Midwest (D6/D8) · Strikethrough = already used'
+    + '</div>';
+
   el.innerHTML = html;
 }
+
+
+// ═══ SCHEDULE INTEL RENDERER ═══
 
 
 // ═══════════════════════════════════════════════════════
 // EVANMIYA PROBABILITIES — FULL 68-TEAM TABLE
 // Updated: March 17, 2026 (pre-tournament)
-// Source: EvanMiya.com simulation
-// Kerry uploads fresh screenshot after each round
-// Claude reads it and updates this data
+// Send new screenshot to Claude after each round to update
 // ═══════════════════════════════════════════════════════
 
 var EM_LAST_UPDATED = 'March 17, 2026 — Pre-Tournament';
-var EM_ROUND_LABELS = ['R32%','S16%','E8%','F4%','Title%','Champ%'];
 
-// [team, seed, r32, s16, e8, f4, title_game, champ]
+// [team, seed, r32%, s16%, e8%, f4%, title%, champ%]
 var EM_DATA = [
-  ['Michigan',       1,  99.7, 92.0, 62.8, 41.0, 35.0, 26.5],
-  ['Duke',           1,  99.6, 88.1, 71.4, 56.1, 35.0, 19.0],
-  ['Arizona',        1,  99.3, 89.0, 74.2, 53.3, 30.0, 18.0],
-  ['Florida',        1,  99.6, 85.7, 65.6, 41.0, 22.7, 11.2],
-  ['Houston',        2,  99.4, 82.2, 54.5, 29.6, 15.6,  6.7],
-  ['Purdue',         2,  99.7, 84.3, 58.8, 26.0, 11.2,  4.8],
-  ['Iowa State',     2,  98.6, 80.2, 53.2, 19.2,  8.0,  3.2],
-  ['Illinois',       3,  99.1, 85.1, 37.9, 17.4,  7.5,  2.6],
-  ['Connecticut',    2,  96.4, 74.0, 42.6, 14.4,  5.0,  1.7],
-  ['Michigan State', 3,  80.3, 62.7, 34.7,  4.3,  1.4,  0.5],
-  ['St. Johns',      5,  85.3, 55.1, 15.7,  8.9,  3.6,  1.0],
-  ['Gonzaga',        3,  96.8, 74.4, 30.6, 10.2,  2.9,  0.9],
-  ['Virginia',       3,  94.9, 55.1, 23.6,  6.7,  2.3,  0.8],
-  ['Vanderbilt',     5,  85.7, 51.0, 16.3,  5.8,  1.7,  0.5],
-  ['Arkansas',       4,  55.3, 67.0, 16.2,  3.9,  1.0,  0.3],
-  ['Alabama',        4,  75.2, 64.1, 10.4,  3.9,  1.0,  0.3],
-  ['Tennessee',      6,  76.9, 38.1, 14.9,  3.3,  0.9,  0.2],
-  ['Nebraska',       4,  86.9, 43.2, 11.8,  3.5,  0.9,  0.2],
-  ['Kansas',         4,  92.4, 40.4,  8.0,  3.7,  0.9,  0.2],
-  ['Wisconsin',      5,  74.4, 27.7,  5.2,  1.7,  0.3,  0.1],
-  ['Ohio State',     8,  63.9,  7.9,  3.4,  1.3,  0.3,  0.1],
-  ['Louisville',     6,  70.6, 27.8, 11.8,  2.2,  0.4,  0.1],
-  ['Saint Marys',    7,  62.7, 13.5,  4.5,  1.2,  0.3,  0.1],
-  ['Miami FL',       7,  66.7, 12.2,  4.5,  0.8,  0.1,  0.0],
-  ['Kentucky',       7,  61.7, 13.0,  5.0,  0.6,  0.1,  0.0],
-  ['Utah State',     9,  50.4,  7.2,  3.0,  0.3,  0.0,  0.0],
-  ['Texas Tech',     5,  67.0, 24.1,  2.9,  0.9,  0.2,  0.0],
-  ['UCLA',           7,  71.2, 21.0,  7.1,  1.0,  0.2,  0.0],
-  ['Georgia',        8,  51.7,  4.0,  1.8,  0.5,  0.1,  0.0],
-  ['Texas',         11,  60.3,  8.5,  3.4,  0.2,  0.0,  0.0],
-  ['Texas A&M',     10,  37.3,  4.3,  0.9,  0.2,  0.0,  0.0],
-  ['South Florida', 11,  29.4,  8.9,  2.9,  0.4,  0.0,  0.0],
-  ['VCU',           11,  53.4,  8.7,  1.5,  0.2,  0.0,  0.0],
-  ['Akron',         12,  33.0,  6.4,  0.4,  0.0,  0.0,  0.0],
-  ['Santa Clara',   10,  38.3,  6.1,  1.9,  0.0,  0.0,  0.0],
-  ['North Carolina', 6,  46.6,  6.1,  0.6,  0.1,  0.0,  0.0],
-  ['SMU',           11,  19.8,  6.0,  1.4,  0.2,  0.1,  0.0],
-  ['NC State',      11,  24.8,  5.5,  1.0,  0.1,  0.0,  0.0],
-  ['Hofstra',       13,  14.1,  5.4,  0.2,  0.0,  0.0,  0.0],
-  ['Clemson',        8,  30.8,  4.6,  1.6,  0.0,  0.0,  0.0],
-  ['UCF',           10,  28.8,  4.6,  0.8,  0.1,  0.0,  0.0],
-  ['High Point',    12,  25.6,  4.2,  0.3,  0.0,  0.0,  0.0],
-  ['Saint Louis',    9,  48.3,  4.0,  1.5,  0.4,  0.0,  0.0],
-  ['TCU',            9,  36.1,  3.9,  1.2,  0.4,  0.1,  0.0],
-  ['Midtennessee',  12,  14.3,  3.9,  0.3,  0.0,  0.0,  0.0],
-  ['Northern Iowa', 12,  14.7,  3.9,  0.2,  0.0,  0.0,  0.0],
-  ['Missouri',      10,  33.3,  3.4,  0.7,  0.1,  0.0,  0.0],
-  ['Villanova',      8,  41.6,  3.0,  1.0,  0.2,  0.0,  0.0],
-  ['Troy',          13,  13.1,  1.4,  0.1,  0.0,  0.0,  0.0],
-  ['Hawaii',        13,  16.0,  1.2,  0.0,  0.0,  0.0,  0.0],
-  ['Cal Baptist',   13,   4.7,  0.6,  0.0,  0.0,  0.0,  0.0],
-  ['North Dakota St',14,  6.7,  0.6,  0.0,  0.0,  0.0,  0.0],
-  ['Miami OH',      11,   3.3,  0.6,  0.0,  0.0,  0.0,  0.0],
-  ['Furman',        15,   3.6,  0.5,  0.0,  0.0,  0.0,  0.0],
-  ['Kennesaw St',   14,   3.2,  0.4,  0.0,  0.0,  0.0,  0.0],
-  ['Wright State',  14,   5.1,  0.3,  0.0,  0.0,  0.0,  0.0],
-  ['Penn',          14,   0.9,  0.1,  0.0,  0.0,  0.0,  0.0],
-  ['Long Island',   16,   0.7,  0.1,  0.0,  0.0,  0.0,  0.0],
-  ['Tennessee St',  15,   1.4,  0.1,  0.0,  0.0,  0.0,  0.0],
-  ['Siena',         16,   0.4,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['Queens NC',     15,   0.3,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['Idaho',         15,   0.6,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['Lehigh',        16,   0.3,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['Howard',        16,   0.1,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['Prairie View',  16,   0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
-  ['UMBC',          16,   0.2,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Michigan',1,99.7,92.0,62.8,41.0,35.0,26.5],
+  ['Duke',1,99.6,88.1,71.4,56.1,35.0,19.0],
+  ['Arizona',1,99.3,89.0,74.2,53.3,30.0,18.0],
+  ['Florida',1,99.6,85.7,65.6,41.0,22.7,11.2],
+  ['Houston',2,99.4,82.2,54.5,29.6,15.6,6.7],
+  ['Purdue',2,99.7,84.3,58.8,26.0,11.2,4.8],
+  ['Iowa State',2,98.6,80.2,53.2,19.2,8.0,3.2],
+  ['Illinois',3,99.1,85.1,37.9,17.4,7.5,2.6],
+  ['Connecticut',2,96.4,74.0,42.6,14.4,5.0,1.7],
+  ['Michigan State',3,80.3,62.7,34.7,4.3,1.4,0.5],
+  ['St. Johns',5,85.3,55.1,15.7,8.9,3.6,1.0],
+  ['Gonzaga',3,96.8,74.4,30.6,10.2,2.9,0.9],
+  ['Virginia',3,94.9,55.1,23.6,6.7,2.3,0.8],
+  ['Vanderbilt',5,85.7,51.0,16.3,5.8,1.7,0.5],
+  ['Arkansas',4,55.3,67.0,16.2,3.9,1.0,0.3],
+  ['Alabama',4,75.2,64.1,10.4,3.9,1.0,0.3],
+  ['Tennessee',6,76.9,38.1,14.9,3.3,0.9,0.2],
+  ['Nebraska',4,86.9,43.2,11.8,3.5,0.9,0.2],
+  ['Kansas',4,92.4,40.4,8.0,3.7,0.9,0.2],
+  ['Wisconsin',5,74.4,27.7,5.2,1.7,0.3,0.1],
+  ['Ohio State',8,63.9,7.9,3.4,1.3,0.3,0.1],
+  ['Louisville',6,70.6,27.8,11.8,2.2,0.4,0.1],
+  ['Saint Marys',7,62.7,13.5,4.5,1.2,0.3,0.1],
+  ['Miami FL',7,66.7,12.2,4.5,0.8,0.1,0.0],
+  ['Kentucky',7,61.7,13.0,5.0,0.6,0.1,0.0],
+  ['Utah State',9,50.4,7.2,3.0,0.3,0.0,0.0],
+  ['Texas Tech',5,67.0,24.1,2.9,0.9,0.2,0.0],
+  ['UCLA',7,71.2,21.0,7.1,1.0,0.2,0.0],
+  ['Georgia',8,51.7,4.0,1.8,0.5,0.1,0.0],
+  ['Texas',11,60.3,8.5,3.4,0.2,0.0,0.0],
+  ['Texas A&M',10,37.3,4.3,0.9,0.2,0.0,0.0],
+  ['South Florida',11,29.4,8.9,2.9,0.4,0.0,0.0],
+  ['VCU',11,53.4,8.7,1.5,0.2,0.0,0.0],
+  ['Akron',12,33.0,6.4,0.4,0.0,0.0,0.0],
+  ['Santa Clara',10,38.3,6.1,1.9,0.0,0.0,0.0],
+  ['North Carolina',6,46.6,6.1,0.6,0.1,0.0,0.0],
+  ['SMU',11,19.8,6.0,1.4,0.2,0.1,0.0],
+  ['NC State',11,24.8,5.5,1.0,0.1,0.0,0.0],
+  ['Hofstra',13,14.1,5.4,0.2,0.0,0.0,0.0],
+  ['Clemson',8,30.8,4.6,1.6,0.0,0.0,0.0],
+  ['UCF',10,28.8,4.6,0.8,0.1,0.0,0.0],
+  ['High Point',12,25.6,4.2,0.3,0.0,0.0,0.0],
+  ['Saint Louis',9,48.3,4.0,1.5,0.4,0.0,0.0],
+  ['TCU',9,36.1,3.9,1.2,0.4,0.1,0.0],
+  ['Mid Tennessee',12,14.3,3.9,0.3,0.0,0.0,0.0],
+  ['Northern Iowa',12,14.7,3.9,0.2,0.0,0.0,0.0],
+  ['Missouri',10,33.3,3.4,0.7,0.1,0.0,0.0],
+  ['Villanova',8,41.6,3.0,1.0,0.2,0.0,0.0],
+  ['Troy',13,13.1,1.4,0.1,0.0,0.0,0.0],
+  ['Hawaii',13,16.0,1.2,0.0,0.0,0.0,0.0],
+  ['Cal Baptist',13,4.7,0.6,0.0,0.0,0.0,0.0],
+  ['North Dakota St',14,6.7,0.6,0.0,0.0,0.0,0.0],
+  ['Miami OH',11,3.3,0.6,0.0,0.0,0.0,0.0],
+  ['Furman',15,3.6,0.5,0.0,0.0,0.0,0.0],
+  ['Kennesaw St',14,3.2,0.4,0.0,0.0,0.0,0.0],
+  ['Wright State',14,5.1,0.3,0.0,0.0,0.0,0.0],
+  ['Penn',14,0.9,0.1,0.0,0.0,0.0,0.0],
+  ['Long Island',16,0.7,0.1,0.0,0.0,0.0,0.0],
+  ['Tennessee St',15,1.4,0.1,0.0,0.0,0.0,0.0],
+  ['Siena',16,0.4,0.0,0.0,0.0,0.0,0.0],
+  ['Queens NC',15,0.3,0.0,0.0,0.0,0.0,0.0],
+  ['Idaho',15,0.6,0.0,0.0,0.0,0.0,0.0],
+  ['Lehigh',16,0.3,0.0,0.0,0.0,0.0,0.0],
+  ['Howard',16,0.1,0.0,0.0,0.0,0.0,0.0],
+  ['Prairie View',16,0.0,0.0,0.0,0.0,0.0,0.0],
+  ['UMBC',16,0.2,0.0,0.0,0.0,0.0,0.0],
 ];
 
-// Lookup by display name (flexible)
+var OUR_TEAMS = ['Duke','Michigan','Michigan State','Illinois','Gonzaga',
+  'Arizona','Purdue','Houston','Iowa State','Virginia','UConn','Connecticut',
+  'Nebraska','Arkansas','Alabama','Wisconsin','Vanderbilt','Saint Marys','VCU',
+  'Florida','Santa Clara','Akron','Kentucky','Texas Tech','UCLA','North Carolina'];
+
+var UPSET_TEAMS = ['VCU','Akron','Santa Clara','Northern Iowa','McNeese','UCLA',
+  'Saint Marys','North Carolina'];
+
 function getEMRow(teamName) {
   var n = teamName.toLowerCase().replace(/[^a-z0-9]/g,'');
   for (var i=0;i<EM_DATA.length;i++) {
     var t = EM_DATA[i][0].toLowerCase().replace(/[^a-z0-9]/g,'');
-    if (t === n || t.indexOf(n) === 0 || n.indexOf(t) === 0) return EM_DATA[i];
+    if(t===n||t.indexOf(n)===0||n.indexOf(t)===0) return EM_DATA[i];
   }
   return null;
 }
-
 
 // ═══ EVANMIYA TABLE RENDERER ═══
 var EM_ROUND_IDX = 1; // 0=r32,1=s16,2=e8,3=f4,4=title,5=champ
