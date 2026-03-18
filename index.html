@@ -471,7 +471,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     <button id="em-elim-save" style="background:var(--rd);border:none;color:#fff;padding:6px 14px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">Mark Eliminated + Recalculate</button>
   </div>
 </div>
-<div id="prob-update-form" style="margin-top:14px"></div>
+<div id="prob-update-form" style="margin-top:14px"><div id="prob-last-updated" style="margin-bottom:8px"></div><div id="prob-body"></div></div>
 
 
 <!-- SCENARIOS -->
@@ -568,6 +568,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   <div style="background:var(--or-d);border:1px solid rgba(249,115,22,0.3);border-radius:6px;padding:10px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--or)">
     <span style="font-weight:700">SAFE SWAP OPTION:</span> If group wants less Day 1 risk — swap E19 (VCU) to North Carolina/Arizona and E20 (Texas) to BYU/Iowa State. Same anchor structure, higher survival rate.
   </div>
+<div id="sim-grid" style="margin-top:14px"></div>
 
 <!-- TIEBREAKER -->
 <div class="panel" id="panel-tiebreaker">
@@ -784,7 +785,12 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     <button id="fi-save" style="background:var(--gn);border:none;color:#fff;padding:8px 18px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;font-weight:700">SAVE INTEL</button>
   </div>
 
-  <div id="fi-history" style="margin-top:14px"></div>
+  <div id="fi-tbrange" style="margin-bottom:8px"></div>
+<div id="fi-picks" style="margin-bottom:8px"></div>  
+<div id="fi-elim" style="margin-bottom:8px"></div>
+<div id="round-rec" style="margin-bottom:8px"></div>
+<div id="round-history" style="margin-bottom:8px"></div>
+<div id="fi-history" style="margin-top:14px"></div>
 </div>
 
 <!-- SCHEDULE PANEL -->
@@ -823,16 +829,17 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end">
       <div>
         <label style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);display:block;margin-bottom:4px">TEAM 1</label>
-        <select id="ff-team1" style="width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);padding:7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px"></select>
+        <select id="ff-team-a" style="width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);padding:7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px"></select>
       </div>
       <div>
         <label style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--t3);display:block;margin-bottom:4px">TEAM 2</label>
-        <select id="ff-team2" style="width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);padding:7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px"></select>
+        <select id="ff-team-b" style="width:100%;background:var(--s2);border:1px solid var(--b1);color:var(--t1);padding:7px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px"></select>
       </div>
       <button id="ff-analyze" style="background:var(--or);border:none;color:#fff;padding:8px 16px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;font-weight:700">ANALYZE</button>
     </div>
   </div>
   <div id="ff-result" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--t3)">Select two teams to compare matchup factors.</div>
+<div id="ff-upset" style="margin-top:8px"></div>
 </div>
 
 </div><!-- /content -->
@@ -1017,14 +1024,26 @@ function analyzeMatchup(uKey, fKey) {
 }
 
 var LANE = [
-  {n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},{n:'Michigan',d:'ld-mich',s:1},
-  {n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},{n:'Arizona', d:'ld-ariz',s:1},
-  {n:'Duke',    d:'ld-duke',s:1},{n:'Duke',    d:'ld-duke',s:1},{n:'Duke',    d:'ld-duke',s:1},
-  {n:'Florida', d:'ld-flor',s:1},{n:'Florida', d:'ld-flor',s:1},
-  {n:'Purdue',  d:'ld-purd',s:2},{n:'Purdue',  d:'ld-purd',s:2},
-  {n:'Houston', d:'ld-hous',s:2},{n:'Houston', d:'ld-hous',s:2},
-  {n:'IowasSt', d:'ld-iowa',s:2},{n:'IowasSt', d:'ld-iowa',s:2},
-  {n:'UConn',   d:'ld-conn',s:2},{n:'UConn',   d:'ld-conn',s:2},{n:'UConn',d:'ld-conn',s:2},
+  {n:'Duke',    d:'ld-duke',s:1},  // E1  Nebraska→Duke
+  {n:'Michigan',d:'ld-mich',s:1},  // E2  Nebraska→Michigan
+  {n:'Arizona', d:'ld-ariz',s:1},  // E3  Nebraska→Arizona
+  {n:'Florida', d:'ld-flor',s:1},  // E4  Nebraska→Florida
+  {n:'Duke',    d:'ld-duke',s:1},  // E5  Arkansas→Duke
+  {n:'Michigan',d:'ld-mich',s:1},  // E6  Arkansas→Michigan
+  {n:'Arizona', d:'ld-ariz',s:1},  // E7  Arkansas→Arizona
+  {n:'Houston', d:'ld-hous',s:2},  // E8  Arkansas→Houston
+  {n:'Duke',    d:'ld-duke',s:1},  // E9  Vanderbilt→Duke
+  {n:'Michigan',d:'ld-mich',s:1},  // E10 Vanderbilt→Michigan
+  {n:'UConn',   d:'ld-conn',s:2},  // E11 Vanderbilt→UConn
+  {n:'Duke',    d:'ld-duke',s:1},  // E12 Wisconsin→Duke
+  {n:'Michigan',d:'ld-mich',s:1},  // E13 Wisconsin→Michigan
+  {n:'Purdue',  d:'ld-purd',s:2},  // E14 Wisconsin→Purdue
+  {n:'Arizona', d:'ld-ariz',s:1},  // E15 NCarolina→Arizona
+  {n:'Illinois',d:'ld-ill', s:3},  // E16 NCarolina→Illinois
+  {n:'Florida', d:'ld-flor',s:1},  // E17 BYU→Florida
+  {n:'Houston', d:'ld-hous',s:2},  // E18 BYU→Houston
+  {n:'Arizona', d:'ld-ariz',s:1},  // E19 VCU→Arizona
+  {n:'IowasSt', d:'ld-iowa',s:2},  // E20 Texas→Iowa State
 ];
 var DP = [
   // E1:  D1=Nebraska     D10=Duke      (Kerry)
@@ -1144,6 +1163,7 @@ function renderCmdCards(){
   var el=document.getElementById('cmd-cards'); if(!el) return;
   el.innerHTML='';
   CMDS.forEach(function(c){
+    if(!c.entries||!c.entries.map) return;
     var chips=c.entries.map(function(i){
       var cls=S.eliminated[i]?'dead':'alive';
       return '<span class="chip '+cls+'">E'+(i+1)+'</span>';
@@ -1296,6 +1316,7 @@ function renderSim(){
   var el=document.getElementById('sim-grid'); if(!el) return;
   var html='';
   Object.keys(SIM).forEach(function(region){
+    if(!SIM[region] || !Array.isArray(SIM[region])) return;
     var rows=SIM[region].map(function(r){
       var tc=r[6]>15?'var(--gn)':r[6]>5?'var(--gd)':'var(--t2)';
       // Path difficulty color - higher number = easier path (weaker opponents)
@@ -2682,25 +2703,20 @@ var LANES = [
 ];
 
 // ═══ INIT ═══
+try {
 // Clear any corrupt old state from previous versions
-var stateVersion = '3';
+var stateVersion = '4';
 if(localStorage.getItem('tr26-version') !== stateVersion) {
   localStorage.removeItem('tr26');
   localStorage.removeItem('tr26-fired');
   localStorage.setItem('tr26-version', stateVersion);
 }
 
+// Wait for DOM to be fully ready before rendering
 renderFunnel();
 renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
-// Pre-render all panels so they have content on first click
-renderTB();
-renderSim();
-renderSchedDL();
-renderBracketPanel();
-renderScheduleIntel();
-renderFieldIntel();
 document.getElementById('s-live').textContent=liveCt();
 // Init EvanMiya table
 initEM(); renderEMTable();
@@ -2727,6 +2743,8 @@ initEM(); renderEMTable();
 document.querySelector('.hdr-btns .hbtn:last-child')?.after(resetBtn);
 
 
+
+} catch(e) { console.warn('Init error:', e.message); }
 
 // =======================================
 // FIELD INTEL
