@@ -471,6 +471,11 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     <button id="em-elim-save" style="background:var(--rd);border:none;color:#fff;padding:6px 14px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">Mark Eliminated + Recalculate</button>
   </div>
 </div>
+<div id="prob-update-form" style="margin-top:14px"></div>
+
+
+<!-- SCENARIOS -->
+</div>
 
 <!-- SCENARIOS -->
 <div class="panel" id="panel-scenarios">
@@ -603,7 +608,9 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 
   <!-- RUNNING TB TRACKER - rendered live -->
   <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2);margin-bottom:8px">RUNNING TIEBREAKER TOTALS (updates as picks are logged)</div>
-  <div id="tb-live-table"></div>
+  <div id="tb-live-table">
+  <div id="tb-ladder" style="margin-top:14px"></div>
+</div>
 
 <!-- BRACKET PANEL -->
 <div class="panel" id="panel-bracket">
@@ -708,6 +715,13 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 <!-- FIELD INTEL PANEL -->
 <div class="panel" id="panel-fieldintel">
   <div class="sec"><div class="sec-t">FIELD INTEL</div><div class="sec-b">POST-ROUND DATA ENTRY</div></div>
+  <div id="capture-guide" style="margin-bottom:14px"></div>
+  <div id="pool-health" style="margin-bottom:14px"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <div id="tb-vs-field"></div>
+    <div id="crowding-meter"></div>
+  </div>
+  <div id="rec-box" style="margin-bottom:14px"></div>
 
   <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;padding:14px;margin-bottom:14px">
     <div style="font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);margin-bottom:10px">AFTER EACH ROUND — SEND CLAUDE:</div>
@@ -776,6 +790,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 <!-- SCHEDULE PANEL -->
 <div class="panel" id="panel-schedule">
   <div class="sec"><div class="sec-t">PICK SCHEDULE</div><div class="sec-b">DEADLINES + TRACK REQUIREMENTS</div></div>
+  <div id="sched-dl" style="display:grid;gap:8px;margin-bottom:16px"></div>
   <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden">
     <table style="width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:9px">
       <thead><tr>
@@ -2679,6 +2694,13 @@ renderFunnel();
 renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
+// Pre-render all panels so they have content on first click
+renderTB();
+renderSim();
+renderSchedDL();
+renderBracketPanel();
+renderScheduleIntel();
+renderFieldIntel();
 document.getElementById('s-live').textContent=liveCt();
 // Init EvanMiya table
 initEM(); renderEMTable();
