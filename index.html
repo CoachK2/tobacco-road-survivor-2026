@@ -370,6 +370,7 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   <div class="tab" data-panel="scenarios">Scenarios</div>
   <div class="tab" data-panel="tiebreaker">Tiebreaker</div>
   <div class="tab" data-panel="bracket">Bracket</div>
+  <div class="tab" data-panel="sched-intel">Game Days</div>
   <div class="tab" data-panel="fieldintel">Field Intel</div>
   <div class="tab" data-panel="schedule">Schedule</div>
 </nav>
@@ -432,18 +433,42 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 
 <!-- LIVE PROBS -->
 <div class="panel" id="panel-probs">
-  <div class="sec"><div class="sec-t">LIVE PROBABILITY UPDATER</div><div class="sec-b">UPDATE AFTER EACH ROUND</div></div>
-  <div class="prob-update" id="prob-update-form"></div>
-  <div class="sec" style="margin-top:16px"><div class="sec-t">CURRENT PROJECTIONS</div><div class="sec-b" id="prob-last-updated">NOT YET UPDATED</div></div>
-  <div class="prob-section">
-    <div class="prob-hdr">
-      <div class="prob-title">ENTRY SURVIVAL PROJECTIONS</div>
-      <div class="prob-note">Updates when you log results · Sorted by projected win %</div>
+  <div class="sec"><div class="sec-t">EVANMIYA PROBABILITIES</div><div class="sec-b" id="em-last-updated">UPDATED: MARCH 17 PRE-TOURNAMENT</div></div>
+
+  <!-- UPDATE INSTRUCTIONS -->
+  <div style="background:var(--bl-d);border:1px solid rgba(59,130,246,0.3);border-radius:7px;padding:12px;margin-bottom:16px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--bl);line-height:1.8">
+    After each round: screenshot the EvanMiya table → send to Kerry → Kerry sends to Claude → Claude reads new numbers → updated file pushed to GitHub → hard refresh. Eliminated teams drop off automatically.
+  </div>
+
+  <!-- ROUND FILTER -->
+  <div style="display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap" id="em-round-btns"></div>
+
+  <!-- SORT + FILTER BAR -->
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+    <div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3)">SHOW:</div>
+    <button class="cfb a-all" id="em-filter-all" style="font-size:8px;padding:4px 10px">All 68</button>
+    <button class="cfb" id="em-filter-top20" style="font-size:8px;padding:4px 10px">Top 20</button>
+    <button class="cfb" id="em-filter-ours" style="font-size:8px;padding:4px 10px">Our Picks Only</button>
+    <button class="cfb" id="em-filter-upsets" style="font-size:8px;padding:4px 10px">Upset Candidates</button>
+  </div>
+
+  <!-- MAIN TABLE -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden;margin-bottom:16px">
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px" id="em-table">
+        <thead id="em-thead"></thead>
+        <tbody id="em-tbody"></tbody>
+      </table>
     </div>
-    <table class="ptable" id="prob-table">
-      <thead><tr><th>ENTRY</th><th>CMD</th><th>LANE</th><th>PICKS LEFT</th><th>TEAMS AVAILABLE</th><th>PROJ WIN %</th><th>TB SO FAR</th><th>STATUS</th></tr></thead>
-      <tbody id="prob-body"></tbody>
-    </table>
+  </div>
+
+  <!-- LIVE PROB UPDATE FORM -->
+  <div style="background:var(--s2);border:1px solid var(--b1);border-radius:7px;padding:14px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;margin-bottom:4px">ROUND UPDATE</div>
+    <div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:10px">After each round Kerry sends Claude the new EvanMiya screenshot. Claude updates the data and pushes a new file. Below you can manually mark teams eliminated to immediately recalculate.</div>
+    <div style="margin-bottom:8px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3)">MARK TEAMS ELIMINATED (quick update between file pushes):</div>
+    <div id="em-elim-checkboxes" style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:10px"></div>
+    <button id="em-elim-save" style="background:var(--rd);border:none;color:#fff;padding:6px 14px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:1px;cursor:pointer">Mark Eliminated + Recalculate</button>
   </div>
 </div>
 
@@ -855,6 +880,43 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
   <div id="bracket-games"></div>
 </div>
 
+
+<!-- GAME DAY SCHEDULE INTEL PANEL -->
+<div class="panel" id="panel-sched-intel">
+  <div class="sec"><div class="sec-t">TEAM GAME-DAY SCHEDULE</div><div class="sec-b">WHICH DAY EACH TEAM PLAYS EACH ROUND</div></div>
+
+  <div style="background:var(--or-d);border:1px solid rgba(249,115,22,0.35);border-radius:7px;padding:14px;margin-bottom:16px">
+    <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);margin-bottom:8px">WHY THIS MATTERS FOR SURVIVOR</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.8">
+      <div>
+        <div style="color:var(--or);margin-bottom:4px">THE THURSDAY TRACK</div>
+        Teams that play Thursday R64 always play: Sat R32 → Thu S16 → <span style="color:var(--gn)">Sat E8</span> → Sat F4 → Mon Champ<br>
+        <span style="color:var(--t3)">Duke · Michigan St · Wisconsin · Arkansas · Gonzaga · BYU · Nebraska · Vanderbilt · VCU · Illinois · Houston · Michigan</span>
+      </div>
+      <div>
+        <div style="color:var(--bl);margin-bottom:4px">THE FRIDAY TRACK</div>
+        Teams that play Friday R64 always play: Sun R32 → Fri S16 → <span style="color:var(--gn)">Sun E8</span> → Sat F4 → Mon Champ<br>
+        <span style="color:var(--t3)">Arizona · Iowa St · Purdue · UConn · UCLA · Florida · Akron · Santa Clara · Virginia · Alabama · Tennessee · Kentucky</span>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding:8px;background:var(--rd-d);border:1px solid rgba(239,68,68,0.3);border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--rd)">
+      ⚠️ ELITE EIGHT DOUBLE PICK: D7 (Sat 3/28) requires a Thursday-track team still available. D8 (Sun 3/29) requires a Friday-track team still available. If you burned all your Thursday teams before the Elite Eight, you cannot make a D7 pick and will be eliminated or forced into a weak option.
+    </div>
+  </div>
+
+  <!-- FULL SCHEDULE TABLE -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden;margin-bottom:16px">
+    <div style="padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--b1);font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2)">FULL TEAM SCHEDULE — ALL ROUNDS</div>
+    <div id="schedule-intel-table" style="overflow-x:auto"></div>
+  </div>
+
+  <!-- ENTRY CONFLICT CHECKER -->
+  <div style="background:var(--s1);border:1px solid var(--b1);border-radius:7px;overflow:hidden">
+    <div style="padding:10px 14px;background:var(--s2);border-bottom:1px solid var(--b1);font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--t2)">ENTRY TRACK BALANCE CHECKER</div>
+    <div style="padding:14px" id="track-balance-table"></div>
+  </div>
+</div>
+
 </div><!-- /content -->
 
 <!-- PICK MODAL -->
@@ -906,7 +968,7 @@ var ENTRY_NAMES = [
   'Stephortless','Onions','Send It In Jerome','Batista With The Catch','There Goes That Man',
   'Whackupable the OG','Whackupable II','Whackupable III','Whackupable IV','Cinco de Whackupable',
   'Dustin E11','Dustin E12','Dustin E13','Dustin E14','Dustin E15',
-  'George E16','George E17','George E18','George E19','George E20',
+  'George-Baker-1','George-Baker-2','George-Baker-3','George-Baker-4','George-Baker-5',
 ];
 var CMD_MAP = [0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3];
 var DLS = [
@@ -1124,6 +1186,7 @@ document.querySelector('nav').addEventListener('click', function(e){
   if(name==='scenarios') renderSim();
   if(name==='schedule') renderSchedDL();
   if(name==='fieldintel'){ renderFieldIntel(); }
+  if(name==='sched-intel'){ renderScheduleIntel(); }
   if(name==='bracket'){ renderBracketPanel(); }
   if(name==='probs') renderProbs();
 });
@@ -2056,6 +2119,496 @@ function runMatchupAnalysis() {
 // Load bracket on init
 loadBracket();
 
+
+// ═══════════════════════════════════════════════════════
+// FULL TEAM GAME-DAY SCHEDULE — ALL 6 ROUNDS
+// Key insight: Thu R64 teams → Sat R32 → Thu S16 → Sat E8
+//              Fri R64 teams → Sun R32 → Fri S16 → Sun E8
+// This matters for survivor — you need a live team on each pick day
+// ═══════════════════════════════════════════════════════
+
+var TEAM_SCHEDULE = {
+  // Format: {r64, r32, s16, e8, f4, champ}
+  // Days: 'D1'=Thu3/19, 'D2'=Fri3/20, 'D3'=Sat3/21, 'D4'=Sun3/22,
+  //       'D5'=Thu3/26, 'D6'=Fri3/27, 'D7'=Sat3/28, 'D8'=Sun3/29,
+  //       'D9'=Sat4/4, 'D10'=Mon4/6
+
+  // ── EAST REGION (Regional: Washington DC) ──
+  // Thu pod: Greenville (1/8/9/16 seeds) + Buffalo (3/6/11/14)
+  'Duke':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 1-seed Thu
+  'OhioSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 8-seed Thu
+  'MichSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 3-seed Thu
+  'Louisville':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu
+  // Fri pod: San Diego (2/7/10/15) + Philadelphia (4/5/12/13) — wait these are West/South
+  // East Fri pod: San Diego (5/12) + Philadelphia (4/13) — actually:
+  // Looking at bracket: StJohns(5)/NorthIowa(12) play Fri San Diego
+  //                     Kansas(4)/CalBapt(13) play Fri San Diego  
+  //                     UCLA(7)/UCF(10) play Fri Philadelphia
+  //                     UConn(2)/Furman(15) play Fri Philadelphia
+  'StJohns':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
+  'NorthIowa':{r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
+  'Kansas':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
+  'UCLA':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
+  'UConn':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
+
+  // ── WEST REGION (Regional: San Jose) ──
+  // Thu pod: Portland (3/6/11/14 + 5/12/13/4)
+  'Wisconsin': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5-seed Thu Portland
+  'Arkansas':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4-seed Thu Portland
+  'Gonzaga':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3-seed Thu Portland
+  'BYU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu Portland
+  // Fri pod: San Diego (1/8/9/16) + St Louis (2/7/10/15)
+  'Arizona':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1-seed Fri San Diego
+  'Villanova': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8-seed Fri San Diego
+  'Purdue':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2-seed Fri St Louis
+  'MiamiFL':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7-seed Fri St Louis
+
+  // ── SOUTH REGION (Regional: Houston) ──
+  // Thu pod: Greenville (1/8/9/16) + Oklahoma City (4/5/12/13)
+  'Florida':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1-seed Fri Tampa
+  'Clemson':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8-seed Fri Tampa
+  'Nebraska':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4-seed Thu OKC
+  'Vanderbilt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5-seed Thu OKC
+  'McNeese':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12-seed Thu OKC
+  'Troy':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13-seed Thu OKC
+  // Fri pod: Greenville (6/11) + Oklahoma City (7/10)
+  'NCarolina': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu Greenville
+  'VCU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11-seed Thu Greenville
+  'Illinois':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3-seed Thu Greenville
+  'Houston':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 2-seed Thu OKC
+  'StMarys':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 7-seed Thu OKC
+  'Idaho':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 15-seed Thu OKC
+
+  // ── MIDWEST REGION (Regional: Chicago) ──
+  // Thu pod: Buffalo (1/8/9/16)
+  'Michigan':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1-seed Thu Buffalo
+  'Georgia':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8-seed Thu Buffalo
+  // Fri pod: Tampa (2/7/10/15) + Philadelphia (3/6/11/14 — wait)
+  // Actually: Midwest Fri pod: Tampa (4/5/12/13) + Philadelphia (3/6/11/14)?
+  // From our confirmed schedule:
+  // Thu: Michigan(1)/UMBC(16) Buffalo, Georgia(8)/StLouis(9) Buffalo
+  //      TexasTech(5)/Akron(12) Midwest, Alabama(4)/Hofstra(13) Midwest  
+  //      Tennessee(6)/MiamiOH_SMU(11) Midwest, Virginia(3)/WrightSt(14) Philadelphia
+  //      Kentucky(7)/SantaClra(10) Midwest St Louis, IowasSt(2)/TennSt(15) St Louis
+  'TexasTech': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5-seed Fri
+  'Akron':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12-seed Fri
+  'Alabama':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4-seed Fri
+  'Tennessee': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 6-seed Fri
+  'Virginia':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 3-seed Fri Philadelphia
+  'Kentucky':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7-seed Fri
+  'SantaClra': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10-seed Fri
+  'IowasSt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2-seed Fri
+
+  // ── KEY SURVIVOR INSIGHT ──
+  // Thu teams (D1,D3,D5,D7): Duke,MichSt,Wisconsin,Arkansas,Gonzaga,BYU,
+  //   Nebraska,Vanderbilt,NCarolina,VCU,Illinois,Houston,StMarys,Michigan,Georgia
+  // Fri teams (D2,D4,D6,D8): StJohns,Kansas,UCLA,UConn,Arizona,Purdue,
+  //   Florida,TexasTech,Akron,Alabama,Virginia,Kentucky,SantaClra,IowasSt
+  //
+  // CRITICAL: In the Elite Eight, if you have used all your Thu teams,
+  // you MUST have a Fri team available or you cannot pick on D7 (Sat 3/28).
+  // If you have used all your Fri teams, you cannot pick on D8 (Sun 3/29).
+  // Elite Eight = TWO picks = need one Thu team AND one Fri team still available!
+};
+
+// Day display names
+var DAY_NAMES_SCHED = {
+  'D1':'Thu 3/19','D2':'Fri 3/20','D3':'Sat 3/21','D4':'Sun 3/22',
+  'D5':'Thu 3/26','D6':'Fri 3/27','D7':'Sat 3/28','D8':'Sun 3/29',
+  'D9':'Sat 4/4','D10':'Mon 4/6',
+};
+
+var ROUND_NAMES = ['R64','R32','S16','E8','F4','Champ'];
+var ROUND_KEYS = ['r64','r32','s16','e8','f4','champ'];
+
+// Get which survivor pick day a team plays in each round
+function getTeamDay(teamKey, roundKey) {
+  var sched = TEAM_SCHEDULE[teamKey];
+  if (!sched) return '?';
+  return DAY_NAMES_SCHED[sched[roundKey]] || '?';
+}
+
+// Check if entry has a scheduling conflict — e.g. needs D7 pick but all D7 teams used
+function checkSchedulingConflicts(entryIdx) {
+  var picks = S.picks[entryIdx];
+  var usedThu = [], usedFri = [];
+  var thursdayTeams = ['Duke','MichSt','Wisconsin','Arkansas','Gonzaga','BYU',
+    'Nebraska','Vanderbilt','NCarolina','VCU','Illinois','Houston','StMarys',
+    'Michigan','Georgia','Florida','NCarolina'];
+  picks.forEach(function(t) {
+    if (!t) return;
+    var sched = TEAM_SCHEDULE[t] || TEAM_SCHEDULE[t.replace('Iowa St','IowasSt')];
+    if (!sched) return;
+    if (sched.r64 === 'D1') usedThu.push(t);
+    else usedFri.push(t);
+  });
+  return {usedThu: usedThu.length, usedFri: usedFri.length};
+}
+
+
+// ═══ SCHEDULE INTEL RENDERER ═══
+function renderScheduleIntel() {
+  renderScheduleTable();
+  renderTrackBalance();
+}
+
+function renderScheduleTable() {
+  var el = document.getElementById('schedule-intel-table'); if (!el) return;
+  var thuColor = 'var(--or)';
+  var friColor = 'var(--bl)';
+  var rounds = [
+    {key:'r64',  label:'R64',   days:'Thu 3/19 or Fri 3/20'},
+    {key:'r32',  label:'R32',   days:'Sat 3/21 or Sun 3/22'},
+    {key:'s16',  label:'S16',   days:'Thu 3/26 or Fri 3/27'},
+    {key:'e8',   label:'E8',    days:'Sat 3/28 or Sun 3/29'},
+    {key:'f4',   label:'F4',    days:'Sat 4/4'},
+    {key:'champ',label:'CHAMP', days:'Mon 4/6'},
+  ];
+
+  var keyTeams = [
+    {key:'Duke',      name:'Duke',       seed:1, region:'East'},
+    {key:'MichSt',    name:'Mich St',    seed:3, region:'East'},
+    {key:'Illinois',  name:'Illinois',   seed:3, region:'South'},
+    {key:'Gonzaga',   name:'Gonzaga',    seed:3, region:'West'},
+    {key:'Michigan',  name:'Michigan',   seed:1, region:'Midwest'},
+    {key:'Nebraska',  name:'Nebraska',   seed:4, region:'South'},
+    {key:'Arkansas',  name:'Arkansas',   seed:4, region:'West'},
+    {key:'Wisconsin', name:'Wisconsin',  seed:5, region:'West'},
+    {key:'VCU',       name:'VCU',        seed:11,region:'South'},
+    {key:'Houston',   name:'Houston',    seed:2, region:'South'},
+    {key:'NCarolina', name:'N Carolina', seed:6, region:'South'},
+    {key:'StMarys',   name:'St. Marys',  seed:7, region:'South'},
+    null, // spacer
+    {key:'Arizona',   name:'Arizona',    seed:1, region:'West'},
+    {key:'IowasSt',   name:'Iowa St',    seed:2, region:'Midwest'},
+    {key:'Purdue',    name:'Purdue',     seed:2, region:'West'},
+    {key:'UConn',     name:'UConn',      seed:2, region:'East'},
+    {key:'UCLA',      name:'UCLA',       seed:7, region:'East'},
+    {key:'Florida',   name:'Florida',    seed:1, region:'South'},
+    {key:'SantaClra', name:'Santa Clara',seed:10,region:'Midwest'},
+    {key:'Akron',     name:'Akron',      seed:12,region:'Midwest'},
+    {key:'Kentucky',  name:'Kentucky',   seed:7, region:'Midwest'},
+    {key:'Virginia',  name:'Virginia',   seed:3, region:'Midwest'},
+    {key:'Alabama',   name:'Alabama',    seed:4, region:'Midwest'},
+    {key:'TexasTech', name:'Tex Tech',   seed:5, region:'Midwest'},
+  ];
+
+  var html = '<table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px">';
+
+  // Header
+  html += '<thead><tr>'
+    + '<th style="padding:7px 10px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:2px">TEAM</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">SEED</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">TRACK</th>';
+  rounds.forEach(function(r) {
+    html += '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">'
+      + r.label + '<br><span style="color:var(--t4);font-size:6px">' + r.days + '</span></th>';
+  });
+  html += '</tr></thead><tbody>';
+
+  var thuTrack = ['D1','D3','D5','D7','D9','D10'];
+  var friTrack = ['D2','D4','D6','D8','D9','D10'];
+
+  var prevWasSpacer = false;
+  keyTeams.forEach(function(t, idx) {
+    if (!t) {
+      html += '<tr><td colspan="9" style="padding:4px;background:var(--s3);border-top:1px solid var(--b2);border-bottom:1px solid var(--b2)">'
+        + '<div style="font-family:Bebas Neue,sans-serif;font-size:9px;letter-spacing:2px;color:var(--bl);padding:0 10px">FRIDAY TRACK TEAMS</div></td></tr>';
+      return;
+    }
+    var sched = TEAM_SCHEDULE[t.key];
+    if (!sched) return;
+    var isThu = (sched.r64 === 'D1');
+    var trackColor = isThu ? 'var(--or)' : 'var(--bl)';
+    var trackLabel = isThu ? 'THU' : 'FRI';
+
+    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4)">';
+    html += '<td style="padding:6px 10px;color:var(--t1)">' + t.name + '</td>';
+    html += '<td style="padding:6px 10px;text-align:center;color:var(--t3)">S' + t.seed + '</td>';
+    html += '<td style="padding:6px 10px;text-align:center"><span style="color:' + trackColor + ';font-weight:600">' + trackLabel + '</span></td>';
+
+    var track = isThu ? thuTrack : friTrack;
+    rounds.forEach(function(r, ri) {
+      var day = sched[r.key];
+      var dayName = DAY_NAMES_SCHED[day] || '—';
+      var isPickDay = true; // every round needs a pick
+      html += '<td style="padding:6px 10px;text-align:center;color:' + trackColor + '">' + dayName + '</td>';
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function renderTrackBalance() {
+  var el = document.getElementById('track-balance-table'); if (!el) return;
+  var html = '<div style="font-family:JetBrains Mono,monospace;font-size:8px;color:var(--t3);margin-bottom:10px;line-height:1.7">'
+    + 'For each entry, this shows how many Thu-track vs Fri-track teams are in the pick plan. '
+    + 'You need at least 1 Thu-track team available for D7 (Sat E8) and 1 Fri-track team for D8 (Sun E8).'
+    + '</div>';
+
+  html += '<table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px">';
+  html += '<thead><tr>'
+    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">ENTRY</th>'
+    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">CMD</th>'
+    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--or);font-size:7px">THU TRACK PICKS</th>'
+    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--bl);font-size:7px">FRI TRACK PICKS</th>'
+    + '<th style="padding:6px 9px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">E8 READY?</th>'
+    + '<th style="padding:6px 9px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px">PICKS</th>'
+    + '</tr></thead><tbody>';
+
+  for (var i = 0; i < S.picks.length; i++) {
+    var picks = S.picks[i];
+    var thuPicks = [], friPicks = [], unknownPicks = [];
+    picks.forEach(function(t) {
+      if (!t) return;
+      var sched = TEAM_SCHEDULE[t];
+      if (!sched) { unknownPicks.push(t); return; }
+      if (sched.r64 === 'D1') thuPicks.push(t);
+      else friPicks.push(t);
+    });
+    var e8Ready = thuPicks.length >= 1 && friPicks.length >= 1;
+    var c = cCls(i);
+    var statusColor = e8Ready ? 'var(--gn)' : 'var(--rd)';
+    var statusTxt = e8Ready ? 'YES' : 'RISK';
+    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4)">'
+      + '<td style="padding:6px 9px"><span style="font-family:Bebas Neue,sans-serif;font-size:14px;color:var(--' + c + ')">E' + (i+1) + '</span></td>'
+      + '<td style="padding:6px 9px;color:var(--t3)">' + cName(i) + '</td>'
+      + '<td style="padding:6px 9px;text-align:center;color:var(--or);font-weight:600">' + thuPicks.length + '</td>'
+      + '<td style="padding:6px 9px;text-align:center;color:var(--bl);font-weight:600">' + friPicks.length + '</td>'
+      + '<td style="padding:6px 9px;text-align:center;color:' + statusColor + ';font-weight:600">' + statusTxt + '</td>'
+      + '<td style="padding:6px 9px;color:var(--t3);font-size:8px">' 
+        + '<span style="color:var(--or)">' + thuPicks.join(' · ') + '</span>'
+        + (friPicks.length ? ' <span style="color:var(--t4)">|</span> <span style="color:var(--bl)">' + friPicks.join(' · ') + '</span>' : '')
+      + '</td>'
+      + '</tr>';
+  }
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+
+// ═══════════════════════════════════════════════════════
+// EVANMIYA PROBABILITIES — FULL 68-TEAM TABLE
+// Updated: March 17, 2026 (pre-tournament)
+// Source: EvanMiya.com simulation
+// Kerry uploads fresh screenshot after each round
+// Claude reads it and updates this data
+// ═══════════════════════════════════════════════════════
+
+var EM_LAST_UPDATED = 'March 17, 2026 — Pre-Tournament';
+var EM_ROUND_LABELS = ['R32%','S16%','E8%','F4%','Title%','Champ%'];
+
+// [team, seed, r32, s16, e8, f4, title_game, champ]
+var EM_DATA = [
+  ['Michigan',       1,  99.7, 92.0, 62.8, 41.0, 35.0, 26.5],
+  ['Duke',           1,  99.6, 88.1, 71.4, 56.1, 35.0, 19.0],
+  ['Arizona',        1,  99.3, 89.0, 74.2, 53.3, 30.0, 18.0],
+  ['Florida',        1,  99.6, 85.7, 65.6, 41.0, 22.7, 11.2],
+  ['Houston',        2,  99.4, 82.2, 54.5, 29.6, 15.6,  6.7],
+  ['Purdue',         2,  99.7, 84.3, 58.8, 26.0, 11.2,  4.8],
+  ['Iowa State',     2,  98.6, 80.2, 53.2, 19.2,  8.0,  3.2],
+  ['Illinois',       3,  99.1, 85.1, 37.9, 17.4,  7.5,  2.6],
+  ['Connecticut',    2,  96.4, 74.0, 42.6, 14.4,  5.0,  1.7],
+  ['Michigan State', 3,  80.3, 62.7, 34.7,  4.3,  1.4,  0.5],
+  ['St. Johns',      5,  85.3, 55.1, 15.7,  8.9,  3.6,  1.0],
+  ['Gonzaga',        3,  96.8, 74.4, 30.6, 10.2,  2.9,  0.9],
+  ['Virginia',       3,  94.9, 55.1, 23.6,  6.7,  2.3,  0.8],
+  ['Vanderbilt',     5,  85.7, 51.0, 16.3,  5.8,  1.7,  0.5],
+  ['Arkansas',       4,  55.3, 67.0, 16.2,  3.9,  1.0,  0.3],
+  ['Alabama',        4,  75.2, 64.1, 10.4,  3.9,  1.0,  0.3],
+  ['Tennessee',      6,  76.9, 38.1, 14.9,  3.3,  0.9,  0.2],
+  ['Nebraska',       4,  86.9, 43.2, 11.8,  3.5,  0.9,  0.2],
+  ['Kansas',         4,  92.4, 40.4,  8.0,  3.7,  0.9,  0.2],
+  ['Wisconsin',      5,  74.4, 27.7,  5.2,  1.7,  0.3,  0.1],
+  ['Ohio State',     8,  63.9,  7.9,  3.4,  1.3,  0.3,  0.1],
+  ['Louisville',     6,  70.6, 27.8, 11.8,  2.2,  0.4,  0.1],
+  ['Saint Marys',    7,  62.7, 13.5,  4.5,  1.2,  0.3,  0.1],
+  ['Miami FL',       7,  66.7, 12.2,  4.5,  0.8,  0.1,  0.0],
+  ['Kentucky',       7,  61.7, 13.0,  5.0,  0.6,  0.1,  0.0],
+  ['Utah State',     9,  50.4,  7.2,  3.0,  0.3,  0.0,  0.0],
+  ['Texas Tech',     5,  67.0, 24.1,  2.9,  0.9,  0.2,  0.0],
+  ['UCLA',           7,  71.2, 21.0,  7.1,  1.0,  0.2,  0.0],
+  ['Georgia',        8,  51.7,  4.0,  1.8,  0.5,  0.1,  0.0],
+  ['Texas',         11,  60.3,  8.5,  3.4,  0.2,  0.0,  0.0],
+  ['Texas A&M',     10,  37.3,  4.3,  0.9,  0.2,  0.0,  0.0],
+  ['South Florida', 11,  29.4,  8.9,  2.9,  0.4,  0.0,  0.0],
+  ['VCU',           11,  53.4,  8.7,  1.5,  0.2,  0.0,  0.0],
+  ['Akron',         12,  33.0,  6.4,  0.4,  0.0,  0.0,  0.0],
+  ['Santa Clara',   10,  38.3,  6.1,  1.9,  0.0,  0.0,  0.0],
+  ['North Carolina', 6,  46.6,  6.1,  0.6,  0.1,  0.0,  0.0],
+  ['SMU',           11,  19.8,  6.0,  1.4,  0.2,  0.1,  0.0],
+  ['NC State',      11,  24.8,  5.5,  1.0,  0.1,  0.0,  0.0],
+  ['Hofstra',       13,  14.1,  5.4,  0.2,  0.0,  0.0,  0.0],
+  ['Clemson',        8,  30.8,  4.6,  1.6,  0.0,  0.0,  0.0],
+  ['UCF',           10,  28.8,  4.6,  0.8,  0.1,  0.0,  0.0],
+  ['High Point',    12,  25.6,  4.2,  0.3,  0.0,  0.0,  0.0],
+  ['Saint Louis',    9,  48.3,  4.0,  1.5,  0.4,  0.0,  0.0],
+  ['TCU',            9,  36.1,  3.9,  1.2,  0.4,  0.1,  0.0],
+  ['Midtennessee',  12,  14.3,  3.9,  0.3,  0.0,  0.0,  0.0],
+  ['Northern Iowa', 12,  14.7,  3.9,  0.2,  0.0,  0.0,  0.0],
+  ['Missouri',      10,  33.3,  3.4,  0.7,  0.1,  0.0,  0.0],
+  ['Villanova',      8,  41.6,  3.0,  1.0,  0.2,  0.0,  0.0],
+  ['Troy',          13,  13.1,  1.4,  0.1,  0.0,  0.0,  0.0],
+  ['Hawaii',        13,  16.0,  1.2,  0.0,  0.0,  0.0,  0.0],
+  ['Cal Baptist',   13,   4.7,  0.6,  0.0,  0.0,  0.0,  0.0],
+  ['North Dakota St',14,  6.7,  0.6,  0.0,  0.0,  0.0,  0.0],
+  ['Miami OH',      11,   3.3,  0.6,  0.0,  0.0,  0.0,  0.0],
+  ['Furman',        15,   3.6,  0.5,  0.0,  0.0,  0.0,  0.0],
+  ['Kennesaw St',   14,   3.2,  0.4,  0.0,  0.0,  0.0,  0.0],
+  ['Wright State',  14,   5.1,  0.3,  0.0,  0.0,  0.0,  0.0],
+  ['Penn',          14,   0.9,  0.1,  0.0,  0.0,  0.0,  0.0],
+  ['Long Island',   16,   0.7,  0.1,  0.0,  0.0,  0.0,  0.0],
+  ['Tennessee St',  15,   1.4,  0.1,  0.0,  0.0,  0.0,  0.0],
+  ['Siena',         16,   0.4,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Queens NC',     15,   0.3,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Idaho',         15,   0.6,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Lehigh',        16,   0.3,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Howard',        16,   0.1,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['Prairie View',  16,   0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
+  ['UMBC',          16,   0.2,  0.0,  0.0,  0.0,  0.0,  0.0],
+];
+
+// Lookup by display name (flexible)
+function getEMRow(teamName) {
+  var n = teamName.toLowerCase().replace(/[^a-z0-9]/g,'');
+  for (var i=0;i<EM_DATA.length;i++) {
+    var t = EM_DATA[i][0].toLowerCase().replace(/[^a-z0-9]/g,'');
+    if (t === n || t.indexOf(n) === 0 || n.indexOf(t) === 0) return EM_DATA[i];
+  }
+  return null;
+}
+
+
+// ═══ EVANMIYA TABLE RENDERER ═══
+var EM_ROUND_IDX = 1; // 0=r32,1=s16,2=e8,3=f4,4=title,5=champ
+var EM_FILTER = 'all';
+var EM_ELIMINATED = {};
+try { EM_ELIMINATED = JSON.parse(localStorage.getItem('tr26-elim')||'{}'); } catch(e){}
+
+var OUR_TEAMS = ['Duke','Michigan','Michigan State','Michigan St','Illinois','Gonzaga',
+  'Arizona','Purdue','Houston','Iowa State','Virginia','UConn','Connecticut',
+  'Nebraska','Arkansas','Alabama','Wisconsin','Vanderbilt','Saint Marys','VCU',
+  'Florida','Santa Clara','Akron','Kentucky','Texas Tech','UCLA','North Carolina'];
+
+var UPSET_TEAMS = ['VCU','Akron','Santa Clara','Northern Iowa','McNeese','UCLA',
+  'Saint Marys','North Carolina','Texas','Texas A&M'];
+
+function initEM() {
+  // Round buttons
+  var rbtns = document.getElementById('em-round-btns'); if(!rbtns) return;
+  var rnames = ['R32','Sweet 16','Elite Eight','Final Four','Title Game','Champion'];
+  rbtns.innerHTML = rnames.map(function(n,i){
+    return '<button class="cfb'+(i===EM_ROUND_IDX?' a-all':'')+'" data-ridx="'+i+'" style="font-size:8px;padding:4px 10px">'+n+'</button>';
+  }).join('');
+  rbtns.querySelectorAll('[data-ridx]').forEach(function(b){
+    b.addEventListener('click', function(){
+      EM_ROUND_IDX = parseInt(this.dataset.ridx);
+      initEM();
+      renderEMTable();
+    });
+  });
+
+  // Filter buttons
+  ['all','top20','ours','upsets'].forEach(function(f){
+    var btn = document.getElementById('em-filter-'+f); if(!btn) return;
+    btn.className = 'cfb' + (EM_FILTER===f?' a-all':'');
+    btn.onclick = function(){ EM_FILTER=f; initEM(); renderEMTable(); };
+  });
+
+  // Eliminated checkboxes
+  var ecb = document.getElementById('em-elim-checkboxes'); if(!ecb) return;
+  ecb.innerHTML = EM_DATA.slice(0,32).map(function(row){
+    var key = row[0];
+    var chk = EM_ELIMINATED[key] ? 'checked' : '';
+    return '<label style="display:flex;align-items:center;gap:4px;font-family:JetBrains Mono,monospace;font-size:7px;color:var(--t3);cursor:pointer">'
+      +'<input type="checkbox" data-team="'+key+'" '+chk+' style="accent-color:var(--rd)">'
+      +key+'</label>';
+  }).join('');
+
+  // Elim save
+  var esave = document.getElementById('em-elim-save'); if(!esave) return;
+  esave.onclick = function(){
+    document.querySelectorAll('#em-elim-checkboxes input').forEach(function(cb){
+      EM_ELIMINATED[cb.dataset.team] = cb.checked;
+    });
+    try { localStorage.setItem('tr26-elim', JSON.stringify(EM_ELIMINATED)); } catch(e){}
+    renderEMTable();
+  };
+
+  // Update label
+  var lbl = document.getElementById('em-last-updated');
+  if(lbl) lbl.textContent = 'UPDATED: ' + EM_LAST_UPDATED;
+}
+
+function renderEMTable() {
+  var thead = document.getElementById('em-thead');
+  var tbody = document.getElementById('em-tbody');
+  if(!thead||!tbody) return;
+
+  var roundLabels = ['R32%','S16%','E8%','F4%','Title%','Champ%'];
+  var roundColors = ['var(--t2)','var(--t2)','var(--gd)','var(--or)','var(--bl)','var(--gn)'];
+
+  // Header
+  var hCols = ['#','TEAM','SEED'];
+  roundLabels.forEach(function(l,i){
+    hCols.push('<span style="color:'+roundColors[i]+'">'+l+'</span>'+(i===EM_ROUND_IDX?' ▲':''));
+  });
+  hCols.push('STATUS');
+  thead.innerHTML = '<tr>'+hCols.map(function(h){
+    return '<th style="padding:7px 10px;text-align:'+(h==='#'||h==='SEED'?'center':'left')+';background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1.5px;white-space:nowrap">'+h+'</th>';
+  }).join('')+'</tr>';
+
+  // Filter data
+  var data = EM_DATA.slice();
+
+  // Sort by selected round column descending
+  data.sort(function(a,b){ return b[EM_ROUND_IDX+2] - a[EM_ROUND_IDX+2]; });
+
+  if(EM_FILTER==='top20') data = data.slice(0,20);
+  else if(EM_FILTER==='ours') data = data.filter(function(r){
+    return OUR_TEAMS.some(function(t){ return r[0].toLowerCase().indexOf(t.toLowerCase())>=0||t.toLowerCase().indexOf(r[0].toLowerCase())>=0; });
+  });
+  else if(EM_FILTER==='upsets') data = data.filter(function(r){
+    return r[1] >= 7 && r[1] <= 13;
+  });
+
+  // Rows
+  var html = '';
+  data.forEach(function(row, idx) {
+    var name=row[0], seed=row[1];
+    var probs = [row[2],row[3],row[4],row[5],row[6],row[7]];
+    var isElim = EM_ELIMINATED[name];
+    var isOurs = OUR_TEAMS.some(function(t){ return name.toLowerCase().indexOf(t.toLowerCase())>=0||t.toLowerCase().indexOf(name.toLowerCase())>=0; });
+    var isUpset = seed>=7&&seed<=12;
+
+    var rowBg = isElim?'rgba(239,68,68,0.05)':isOurs?'rgba(34,197,94,0.04)':'transparent';
+    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4);background:'+rowBg+';'+(isElim?'opacity:0.4;':'')+';">';
+    html += '<td style="padding:5px 10px;text-align:center;color:var(--t4);font-size:8px">'+(idx+1)+'</td>';
+    html += '<td style="padding:5px 10px;color:'+(isOurs?'var(--gn)':'var(--t1)')+';font-weight:'+(isOurs?'600':'400')+'">'
+      +name+(isOurs?' ★':'')+'</td>';
+    html += '<td style="padding:5px 10px;text-align:center;color:var(--t3)">'+seed+'</td>';
+
+    probs.forEach(function(p,pi){
+      var isSelected = (pi === EM_ROUND_IDX);
+      var pColor = p>=20?'var(--gn)':p>=10?'var(--gd)':p>=3?'var(--or)':p>=0.5?'var(--t2)':'var(--t4)';
+      var bgHighlight = isSelected?'rgba(59,130,246,0.08)':'transparent';
+      html += '<td style="padding:5px 10px;text-align:center;background:'+bgHighlight+';color:'+(isSelected?roundColors[pi]:pColor)+';font-weight:'+(isSelected?'600':'400')+'">'
+        +p.toFixed(1)+'%</td>';
+    });
+
+    var status = isElim ? '<span style="color:var(--rd)">ELIM</span>'
+      : isOurs ? '<span style="color:var(--gn)">★ OURS</span>'
+      : isUpset ? '<span style="color:var(--gd)">UPSET</span>'
+      : '<span style="color:var(--t4)">FIELD</span>';
+    html += '<td style="padding:5px 10px">'+status+'</td>';
+    html += '</tr>';
+  });
+
+  tbody.innerHTML = html;
+}
+
 // ═══ INIT ═══
 // Clear any corrupt old state from previous versions
 var stateVersion = '3';
@@ -2070,6 +2623,8 @@ renderCmdCards();
 renderDL('dl-strip');
 renderBoard();
 document.getElementById('s-live').textContent=liveCt();
+// Init EvanMiya table
+initEM(); renderEMTable();
 
 // Add reset button to header for debugging
 var resetBtn = document.createElement('button');
@@ -2085,6 +2640,8 @@ resetBtn.addEventListener('click', function(){
     renderBoard();
     renderCmdCards();
     document.getElementById('s-live').textContent=liveCt();
+// Init EvanMiya table
+initEM(); renderEMTable();
     alert('State reset. Picks preserved, results cleared.');
   }
 });
