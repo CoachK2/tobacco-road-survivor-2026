@@ -889,18 +889,21 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
     <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);margin-bottom:8px">WHY THIS MATTERS FOR SURVIVOR</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.8">
       <div>
-        <div style="color:var(--or);margin-bottom:4px">THE THURSDAY TRACK</div>
-        Teams that play Thursday R64 always play: Sat R32 → Thu S16 → <span style="color:var(--gn)">Sat E8</span> → Sat F4 → Mon Champ<br>
-        <span style="color:var(--t3)">Duke · Michigan St · Wisconsin · Arkansas · Gonzaga · BYU · Nebraska · Vanderbilt · VCU · Illinois · Houston · Michigan</span>
+        <div style="color:var(--or);margin-bottom:4px">THE THURSDAY TRACK → SAT E8</div>
+        Thu R64 → Sat R32 → Thu S16 → <span style="color:var(--gn)">SAT 3/28 E8</span> → Sat 4/4 F4 → Mon Champ<br>
+        <span style="color:var(--t3)">Duke · MichSt · Wisconsin · Arkansas · Gonzaga · BYU</span><br>
+        <span style="color:var(--t3)">Nebraska · Vanderbilt · VCU · Illinois · Houston · StMarys</span><br>
+        <span style="color:var(--or)">Michigan</span><span style="color:var(--t3)"> (only Midwest 1-seed on Thu track)</span>
       </div>
       <div>
-        <div style="color:var(--bl);margin-bottom:4px">THE FRIDAY TRACK</div>
-        Teams that play Friday R64 always play: Sun R32 → Fri S16 → <span style="color:var(--gn)">Sun E8</span> → Sat F4 → Mon Champ<br>
-        <span style="color:var(--t3)">Arizona · Iowa St · Purdue · UConn · UCLA · Florida · Akron · Santa Clara · Virginia · Alabama · Tennessee · Kentucky</span>
+        <div style="color:var(--bl);margin-bottom:4px">THE FRIDAY TRACK → SUN E8</div>
+        Fri R64 → Sun R32 → Fri S16 → <span style="color:var(--gn)">SUN 3/29 E8</span> → Sat 4/4 F4 → Mon Champ<br>
+        <span style="color:var(--bl)">Arizona · Iowa St · Purdue · UConn</span><span style="color:var(--t3)"> (1 &amp; 2-seeds)</span><br>
+        <span style="color:var(--t3)">UCLA · Akron · Santa Clara · Kentucky · Virginia · Alabama · Florida · TexasTech</span>
       </div>
     </div>
     <div style="margin-top:10px;padding:8px;background:var(--rd-d);border:1px solid rgba(239,68,68,0.3);border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--rd)">
-      ⚠️ ELITE EIGHT DOUBLE PICK: D7 (Sat 3/28) requires a Thursday-track team still available. D8 (Sun 3/29) requires a Friday-track team still available. If you burned all your Thursday teams before the Elite Eight, you cannot make a D7 pick and will be eliminated or forced into a weak option.
+      ⚠️ ELITE EIGHT DOUBLE PICK: D7 (Sat 3/28) requires a Thursday-track team still available. D8 (Sun 3/29) requires a Friday-track team still available. SOUTH region is MOSTLY THU track. MIDWEST is MOSTLY FRI track. Michigan is the only Midwest 1-seed on the Thu track. Arizona and Iowa State are FRI track. Plan accordingly — if your entry uses Michigan+Illinois+Houston all early, you have no Thu-track teams for D7 (Sat E8).
     </div>
   </div>
 
@@ -2128,88 +2131,116 @@ loadBracket();
 // ═══════════════════════════════════════════════════════
 
 var TEAM_SCHEDULE = {
-  // Format: {r64, r32, s16, e8, f4, champ}
-  // Days: 'D1'=Thu3/19, 'D2'=Fri3/20, 'D3'=Sat3/21, 'D4'=Sun3/22,
-  //       'D5'=Thu3/26, 'D6'=Fri3/27, 'D7'=Sat3/28, 'D8'=Sun3/29,
-  //       'D9'=Sat4/4, 'D10'=Mon4/6
-
-  // ── EAST REGION (Regional: Washington DC) ──
-  // Thu pod: Greenville (1/8/9/16 seeds) + Buffalo (3/6/11/14)
-  'Duke':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 1-seed Thu
-  'OhioSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 8-seed Thu
-  'MichSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'},  // 3-seed Thu
-  'Louisville':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu
-  // Fri pod: San Diego (2/7/10/15) + Philadelphia (4/5/12/13) — wait these are West/South
-  // East Fri pod: San Diego (5/12) + Philadelphia (4/13) — actually:
-  // Looking at bracket: StJohns(5)/NorthIowa(12) play Fri San Diego
-  //                     Kansas(4)/CalBapt(13) play Fri San Diego  
-  //                     UCLA(7)/UCF(10) play Fri Philadelphia
-  //                     UConn(2)/Furman(15) play Fri Philadelphia
-  'StJohns':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
-  'NorthIowa':{r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
-  'Kansas':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
-  'UCLA':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
-  'UConn':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'},
-
-  // ── WEST REGION (Regional: San Jose) ──
-  // Thu pod: Portland (3/6/11/14 + 5/12/13/4)
-  'Wisconsin': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5-seed Thu Portland
-  'Arkansas':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4-seed Thu Portland
-  'Gonzaga':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3-seed Thu Portland
-  'BYU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu Portland
-  // Fri pod: San Diego (1/8/9/16) + St Louis (2/7/10/15)
-  'Arizona':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1-seed Fri San Diego
-  'Villanova': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8-seed Fri San Diego
-  'Purdue':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2-seed Fri St Louis
-  'MiamiFL':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7-seed Fri St Louis
-
-  // ── SOUTH REGION (Regional: Houston) ──
-  // Thu pod: Greenville (1/8/9/16) + Oklahoma City (4/5/12/13)
-  'Florida':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1-seed Fri Tampa
-  'Clemson':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8-seed Fri Tampa
-  'Nebraska':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4-seed Thu OKC
-  'Vanderbilt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5-seed Thu OKC
-  'McNeese':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12-seed Thu OKC
-  'Troy':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13-seed Thu OKC
-  // Fri pod: Greenville (6/11) + Oklahoma City (7/10)
-  'NCarolina': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6-seed Thu Greenville
-  'VCU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11-seed Thu Greenville
-  'Illinois':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3-seed Thu Greenville
-  'Houston':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 2-seed Thu OKC
-  'StMarys':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 7-seed Thu OKC
-  'Idaho':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 15-seed Thu OKC
-
-  // ── MIDWEST REGION (Regional: Chicago) ──
-  // Thu pod: Buffalo (1/8/9/16)
-  'Michigan':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1-seed Thu Buffalo
-  'Georgia':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8-seed Thu Buffalo
-  // Fri pod: Tampa (2/7/10/15) + Philadelphia (3/6/11/14 — wait)
-  // Actually: Midwest Fri pod: Tampa (4/5/12/13) + Philadelphia (3/6/11/14)?
-  // From our confirmed schedule:
-  // Thu: Michigan(1)/UMBC(16) Buffalo, Georgia(8)/StLouis(9) Buffalo
-  //      TexasTech(5)/Akron(12) Midwest, Alabama(4)/Hofstra(13) Midwest  
-  //      Tennessee(6)/MiamiOH_SMU(11) Midwest, Virginia(3)/WrightSt(14) Philadelphia
-  //      Kentucky(7)/SantaClra(10) Midwest St Louis, IowasSt(2)/TennSt(15) St Louis
-  'TexasTech': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5-seed Fri
-  'Akron':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12-seed Fri
-  'Alabama':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4-seed Fri
-  'Tennessee': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 6-seed Fri
-  'Virginia':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 3-seed Fri Philadelphia
-  'Kentucky':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7-seed Fri
-  'SantaClra': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10-seed Fri
-  'IowasSt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2-seed Fri
-
-  // ── KEY SURVIVOR INSIGHT ──
-  // Thu teams (D1,D3,D5,D7): Duke,MichSt,Wisconsin,Arkansas,Gonzaga,BYU,
-  //   Nebraska,Vanderbilt,NCarolina,VCU,Illinois,Houston,StMarys,Michigan,Georgia
-  // Fri teams (D2,D4,D6,D8): StJohns,Kansas,UCLA,UConn,Arizona,Purdue,
-  //   Florida,TexasTech,Akron,Alabama,Virginia,Kentucky,SantaClra,IowasSt
+  // CORRECTED FROM OFFICIAL BRACKET IMAGE
+  // THU sites: Greenville, Buffalo, Oklahoma City, Portland
+  // FRI sites: San Diego, Philadelphia, Tampa, St. Louis
   //
-  // CRITICAL: In the Elite Eight, if you have used all your Thu teams,
-  // you MUST have a Fri team available or you cannot pick on D7 (Sat 3/28).
-  // If you have used all your Fri teams, you cannot pick on D8 (Sun 3/29).
-  // Elite Eight = TWO picks = need one Thu team AND one Fri team still available!
+  // CRITICAL INSIGHT:
+  // South region = MOSTLY THURSDAY (Nebraska, Vanderbilt, VCU, Illinois, Houston, StMarys)
+  // Midwest region = MOSTLY FRIDAY (IowasSt, Virginia, Kentucky, SantaClra, Akron, Alabama)
+  // Only Michigan/Georgia from Midwest play Thursday
+  // Only Florida/Clemson from South play Friday
+  //
+  // E8 structure: D7=Sat 3/28 (Thu-track teams), D8=Sun 3/29 (Fri-track teams)
+  // Regional finals: East 3/29 Sun, West 3/28 Sat, South 3/28 Sat, Midwest 3/29 Sun
+  // Wait - per bracket: East Regional Washington 3/29, West Regional San Jose 3/28
+  //                     South Regional Houston 3/28, Midwest Regional Chicago 3/29
+
+  // ── EAST REGION ──
+  // Thu pod: Greenville + Buffalo
+  'Duke':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1 Thu Greenville
+  'OhioSt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8 Thu Greenville
+  'MichSt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Buffalo
+  'Louisville': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Buffalo
+  // Fri pod: San Diego + Philadelphia
+  'StJohns':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5 Fri San Diego
+  'NorthIowa': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12 Fri San Diego
+  'Kansas':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4 Fri San Diego
+  'CalBapt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 13 Fri San Diego
+  'UCLA':      {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri Philadelphia
+  'UCF':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri Philadelphia
+  'UConn':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri Philadelphia
+  'Furman':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri Philadelphia
+
+  // ── WEST REGION (Regional: San Jose Sat 3/28 = D7) ──
+  // Thu pod: Portland
+  'Wisconsin': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5 Thu Portland
+  'HighPt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12 Thu Portland
+  'Arkansas':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4 Thu Portland
+  'Hawaii':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13 Thu Portland
+  'BYU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Portland
+  'TxNCSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11 Thu Portland
+  'Gonzaga':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Portland
+  'KennesawSt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 14 Thu Portland
+  // Fri pod: San Diego + St. Louis
+  'Arizona':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1 Fri San Diego
+  'LIU':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 16 Fri San Diego
+  'Villanova': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8 Fri San Diego
+  'UtahSt':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 9 Fri San Diego
+  'Purdue':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri St. Louis
+  'Queens':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri St. Louis
+  'MiamiFL':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri St. Louis
+  'Missouri':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri St. Louis
+
+  // ── SOUTH REGION (Regional: Houston Sat 3/28 = D7) ──
+  // Thu pod: Oklahoma City + Greenville
+  'Nebraska':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4 Thu OKC
+  'Troy':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13 Thu OKC
+  'Vanderbilt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5 Thu OKC
+  'McNeese':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12 Thu OKC
+  'StMarys':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 7 Thu OKC
+  'TexasAM':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 10 Thu OKC
+  'Houston':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 2 Thu OKC
+  'Idaho':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 15 Thu OKC
+  'NCarolina': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Greenville
+  'VCU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11 Thu Greenville
+  'Illinois':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Greenville
+  'Penn':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 14 Thu Greenville
+  // Fri pod: Tampa
+  'Florida':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1 Fri Tampa
+  'PV_Lehigh': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 16 Fri Tampa
+  'Clemson':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8 Fri Tampa
+  'Iowa':      {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 9 Fri Tampa
+
+  // ── MIDWEST REGION (Regional: Chicago Sun 3/29 = D8) ──
+  // Thu pod: Buffalo only
+  'Michigan':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1 Thu Buffalo
+  'UMBC_How':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 16 Thu Buffalo
+  'Georgia':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8 Thu Buffalo
+  'StLouis':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 9 Thu Buffalo
+  // Fri pod: Tampa + Philadelphia + St. Louis
+  'TexasTech': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5 Fri Tampa
+  'Akron':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12 Fri Tampa
+  'Alabama':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4 Fri Tampa
+  'Hofstra':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 13 Fri Tampa
+  'Tennessee': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 6 Fri Philadelphia
+  'MiamiOH':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 11 Fri Philadelphia
+  'Virginia':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 3 Fri Philadelphia
+  'WrightSt':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 14 Fri Philadelphia
+  'Kentucky':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri St. Louis
+  'SantaClra': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri St. Louis
+  'IowasSt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri St. Louis
+  'TennSt':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri St. Louis
 };
+
+// SAT 3/28 E8 teams = South + West regions
+var E8_SAT_TEAMS = ['Nebraska','Vanderbilt','McNeese','NCarolina','VCU','Illinois','Houston',
+  'StMarys','Florida','Clemson','Wisconsin','Arkansas','Gonzaga','BYU','Arizona','Villanova',
+  'Purdue','MiamiFL'];
+
+// SUN 3/29 E8 teams = East + Midwest regions
+var E8_SUN_TEAMS = ['Duke','OhioSt','MichSt','Louisville','SoFla','StJohns','NorthIowa',
+  'Kansas','UCLA','UConn','Michigan','Georgia','TexasTech','Akron','Alabama','Tennessee',
+  'Virginia','Kentucky','SantaClra','IowasSt'];
+
+function checkE8Balance(picks) {
+  var sat=[], sun=[];
+  picks.forEach(function(t){
+    if(E8_SAT_TEAMS.indexOf(t)>=0) sat.push(t);
+    if(E8_SUN_TEAMS.indexOf(t)>=0) sun.push(t);
+  });
+  return {sat:sat, sun:sun, ok:sat.length>=1&&sun.length>=1};
+}
 
 // Day display names
 var DAY_NAMES_SCHED = {
