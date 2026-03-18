@@ -1097,8 +1097,7 @@ var SIM = {
 var DAY_NAMES = ['Day 1 (Thu 3/19)','Day 2 (Fri 3/20)','Day 3 (Sat 3/21)','Day 4 (Sun 3/22)','Day 5 (Thu 3/26)','Day 6 (Fri 3/27)','Day 7a (Sat 3/28)','Day 7b (Sun 3/29)','Day 9 (Sat 4/4)','Day 10 (Mon 4/6)'];
 
 // ═══ STATE ═══
-function loadS() {
-  try { var s=localStorage.getItem('tr26'); if(s) return JSON.parse(s); } catch(e){}
+function makeDefaultS() {
   return {
     picks: DP.map(function(p){return p.slice();}),
     results: DP.map(function(){return ['pending','pending','pending','pending','pending','pending','pending','pending','pending','pending'];}),
@@ -1106,6 +1105,21 @@ function loadS() {
     currentDay: 0,
     lastUpdated: null,
   };
+}
+function loadS() {
+  try {
+    var s = localStorage.getItem('tr26');
+    if (s) {
+      var parsed = JSON.parse(s);
+      // Validate structure — must have picks array of length 20 with array entries
+      if (parsed && Array.isArray(parsed.picks) && parsed.picks.length === 20 &&
+          Array.isArray(parsed.picks[0]) && Array.isArray(parsed.eliminated) &&
+          parsed.eliminated.length === 20) {
+        return parsed;
+      }
+    }
+  } catch(e) {}
+  return makeDefaultS();
 }
 function saveS(){ try{localStorage.setItem('tr26',JSON.stringify(S));}catch(e){} }
 var S = loadS();
