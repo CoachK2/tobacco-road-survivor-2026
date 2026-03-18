@@ -885,26 +885,63 @@ nav{display:flex;gap:1px;padding:0 24px;background:var(--s1);border-bottom:1px s
 <div class="panel" id="panel-sched-intel">
   <div class="sec"><div class="sec-t">TEAM GAME-DAY SCHEDULE</div><div class="sec-b">WHICH DAY EACH TEAM PLAYS EACH ROUND</div></div>
 
-  <div style="background:var(--or-d);border:1px solid rgba(249,115,22,0.35);border-radius:7px;padding:14px;margin-bottom:16px">
-    <div style="font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px;color:var(--or);margin-bottom:8px">WHY THIS MATTERS FOR SURVIVOR</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.8">
-      <div>
-        <div style="color:var(--or);margin-bottom:4px">THE THURSDAY TRACK → SAT E8</div>
-        Thu R64 → Sat R32 → Thu S16 → <span style="color:var(--gn)">SAT 3/28 E8</span> → Sat 4/4 F4 → Mon Champ<br>
-        <span style="color:var(--t3)">Duke · MichSt · Wisconsin · Arkansas · Gonzaga · BYU</span><br>
-        <span style="color:var(--t3)">Nebraska · Vanderbilt · VCU · Illinois · Houston · StMarys</span><br>
-        <span style="color:var(--or)">Michigan</span><span style="color:var(--t3)"> (only Midwest 1-seed on Thu track)</span>
+  <!-- WHY THIS MATTERS BOX -->
+  <div style="margin-bottom:16px">
+
+    <!-- Two column cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+
+      <!-- SAT card -->
+      <div style="background:rgba(249,115,22,0.08);border:2px solid var(--or);border-radius:7px;padding:14px">
+        <div style="font-family:Bebas Neue,sans-serif;font-size:18px;letter-spacing:3px;color:var(--or);margin-bottom:2px">WEST + SOUTH REGIONS</div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--t3);margin-bottom:10px;letter-spacing:1px">SWEET 16 = THU 3/26 &nbsp;·&nbsp; ELITE EIGHT = SAT 3/28</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--or);letter-spacing:1px;margin-bottom:4px">WEST REGION</div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.9">Arizona (1)<br>Purdue (2)<br>Gonzaga (3)<br>Arkansas (4)<br>Wisconsin (5)<br>BYU (6)<br>Miami FL (7)</div>
+          </div>
+          <div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--or);letter-spacing:1px;margin-bottom:4px">SOUTH REGION</div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.9">Florida (1)<br>Houston (2)<br>Illinois (3)<br>Nebraska (4)<br>Vanderbilt (5)<br>N Carolina (6)<br>VCU · McNeese</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:6px 8px;background:rgba(249,115,22,0.12);border-radius:4px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--or)">
+          You need at least one of these teams still available for D5 (Thu S16) and D7 (Sat E8)
+        </div>
       </div>
-      <div>
-        <div style="color:var(--bl);margin-bottom:4px">THE FRIDAY TRACK → SUN E8</div>
-        Fri R64 → Sun R32 → Fri S16 → <span style="color:var(--gn)">SUN 3/29 E8</span> → Sat 4/4 F4 → Mon Champ<br>
-        <span style="color:var(--bl)">Arizona · Iowa St · Purdue · UConn</span><span style="color:var(--t3)"> (1 &amp; 2-seeds)</span><br>
-        <span style="color:var(--t3)">UCLA · Akron · Santa Clara · Kentucky · Virginia · Alabama · Florida · TexasTech</span>
+
+      <!-- SUN card -->
+      <div style="background:rgba(59,130,246,0.08);border:2px solid var(--bl);border-radius:7px;padding:14px">
+        <div style="font-family:Bebas Neue,sans-serif;font-size:18px;letter-spacing:3px;color:var(--bl);margin-bottom:2px">EAST + MIDWEST REGIONS</div>
+        <div style="font-family:JetBrains Mono,monospace;font-size:10px;color:var(--t3);margin-bottom:10px;letter-spacing:1px">SWEET 16 = FRI 3/27 &nbsp;·&nbsp; ELITE EIGHT = SUN 3/29</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--bl);letter-spacing:1px;margin-bottom:4px">EAST REGION</div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.9">Duke (1)<br>UConn (2)<br>Mich St (3)<br>Kansas (4)<br>St Johns (5)<br>Louisville (6)<br>UCLA (7)</div>
+          </div>
+          <div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:7px;color:var(--bl);letter-spacing:1px;margin-bottom:4px">MIDWEST REGION</div>
+            <div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--t2);line-height:1.9">Michigan (1)<br>Iowa St (2)<br>Virginia (3)<br>Alabama (4)<br>Tex Tech (5)<br>Tennessee (6)<br>Akron · S Clara</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;padding:6px 8px;background:rgba(59,130,246,0.12);border-radius:4px;font-family:JetBrains Mono,monospace;font-size:8px;color:var(--bl)">
+          You need at least one of these teams still available for D6 (Fri S16) and D8 (Sun E8)
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Warning row -->
+    <div style="background:var(--rd-d);border:1px solid rgba(239,68,68,0.4);border-radius:6px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start">
+      <div style="font-size:16px;flex-shrink:0">⚠️</div>
+      <div style="font-family:JetBrains Mono,monospace;font-size:9px;color:var(--rd);line-height:1.9">
+        <span style="font-weight:700">ELITE EIGHT DOUBLE PICK (D7 + D8):</span> You must pick twice — once from each group.<br>
+        If your entry has burned all its West+South teams before the Elite Eight → eliminated or forced into a weak D7 pick.<br>
+        If your entry has burned all its East+Midwest teams → no D8 pick available.<br>
+        <span style="color:var(--t2)">Michigan covers D6 + D8 (Midwest). You still need Arizona, Purdue, Illinois, Houston, or Wisconsin alive for D5 + D7.</span>
       </div>
     </div>
-    <div style="margin-top:10px;padding:8px;background:var(--rd-d);border:1px solid rgba(239,68,68,0.3);border-radius:4px;font-family:JetBrains Mono,monospace;font-size:9px;color:var(--rd)">
-      ⚠️ ELITE EIGHT DOUBLE PICK: D7 (Sat 3/28) requires a Thursday-track team still available. D8 (Sun 3/29) requires a Friday-track team still available. SOUTH region is MOSTLY THU track. MIDWEST is MOSTLY FRI track. Michigan is the only Midwest 1-seed on the Thu track. Arizona and Iowa State are FRI track. Plan accordingly — if your entry uses Michigan+Illinois+Houston all early, you have no Thu-track teams for D7 (Sat E8).
-    </div>
+
   </div>
 
   <!-- FULL SCHEDULE TABLE -->
@@ -2131,98 +2168,65 @@ loadBracket();
 // ═══════════════════════════════════════════════════════
 
 var TEAM_SCHEDULE = {
-  // CORRECTED FROM OFFICIAL BRACKET IMAGE
-  // THU sites: Greenville, Buffalo, Oklahoma City, Portland
-  // FRI sites: San Diego, Philadelphia, Tampa, St. Louis
-  //
-  // CRITICAL INSIGHT:
-  // South region = MOSTLY THURSDAY (Nebraska, Vanderbilt, VCU, Illinois, Houston, StMarys)
-  // Midwest region = MOSTLY FRIDAY (IowasSt, Virginia, Kentucky, SantaClra, Akron, Alabama)
-  // Only Michigan/Georgia from Midwest play Thursday
-  // Only Florida/Clemson from South play Friday
-  //
-  // E8 structure: D7=Sat 3/28 (Thu-track teams), D8=Sun 3/29 (Fri-track teams)
-  // Regional finals: East 3/29 Sun, West 3/28 Sat, South 3/28 Sat, Midwest 3/29 Sun
-  // Wait - per bracket: East Regional Washington 3/29, West Regional San Jose 3/28
-  //                     South Regional Houston 3/28, Midwest Regional Chicago 3/29
+  // CORRECTED FROM OFFICIAL 2026 NCAA BRACKET IMAGES
+  // West + South → S16 Thu 3/26, E8 SAT 3/28
+  // East + Midwest → S16 Fri 3/27, E8 SUN 3/29
+  // (S16 day confirmed from bracket: West/South show 26-Mar, East/Midwest show 27-Mar)
 
-  // ── EAST REGION ──
-  // Thu pod: Greenville + Buffalo
-  'Duke':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1 Thu Greenville
-  'OhioSt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8 Thu Greenville
-  'MichSt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Buffalo
-  'Louisville': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Buffalo
-  // Fri pod: San Diego + Philadelphia
-  'StJohns':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5 Fri San Diego
-  'NorthIowa': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12 Fri San Diego
-  'Kansas':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4 Fri San Diego
-  'CalBapt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 13 Fri San Diego
-  'UCLA':      {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri Philadelphia
-  'UCF':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri Philadelphia
-  'UConn':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri Philadelphia
-  'Furman':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri Philadelphia
+  // ══ WEST REGIONAL (San Jose) — S16 Thu 3/26, E8 SAT 3/28 ══
+  // Thu R64 pod (Portland)
+  'Wisconsin':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'Arkansas':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'Gonzaga':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'BYU':         {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  // Fri R64 pod (San Diego + St Louis)
+  'Arizona':     {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'Villanova':   {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'Purdue':      {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
+  'MiamiFL':     {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'West',  e8day:'SAT 3/28'},
 
-  // ── WEST REGION (Regional: San Jose Sat 3/28 = D7) ──
-  // Thu pod: Portland
-  'Wisconsin': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5 Thu Portland
-  'HighPt':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12 Thu Portland
-  'Arkansas':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4 Thu Portland
-  'Hawaii':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13 Thu Portland
-  'BYU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Portland
-  'TxNCSt':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11 Thu Portland
-  'Gonzaga':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Portland
-  'KennesawSt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 14 Thu Portland
-  // Fri pod: San Diego + St. Louis
-  'Arizona':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1 Fri San Diego
-  'LIU':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 16 Fri San Diego
-  'Villanova': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8 Fri San Diego
-  'UtahSt':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 9 Fri San Diego
-  'Purdue':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri St. Louis
-  'Queens':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri St. Louis
-  'MiamiFL':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri St. Louis
-  'Missouri':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri St. Louis
+  // ══ SOUTH REGIONAL (Houston) — S16 Thu 3/26, E8 SAT 3/28 ══
+  // Thu R64 pod (OKC + Greenville)
+  'Nebraska':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'Vanderbilt':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'McNeese':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'NCarolina':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'VCU':         {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'Illinois':    {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'Houston':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'StMarys':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  // Fri R64 pod (Tampa)
+  'Florida':     {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
+  'Clemson':     {r64:'D2',r32:'D4',s16:'D5',e8:'D7',f4:'D9',champ:'D10',region:'South', e8day:'SAT 3/28'},
 
-  // ── SOUTH REGION (Regional: Houston Sat 3/28 = D7) ──
-  // Thu pod: Oklahoma City + Greenville
-  'Nebraska':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 4 Thu OKC
-  'Troy':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 13 Thu OKC
-  'Vanderbilt':{r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 5 Thu OKC
-  'McNeese':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 12 Thu OKC
-  'StMarys':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 7 Thu OKC
-  'TexasAM':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 10 Thu OKC
-  'Houston':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 2 Thu OKC
-  'Idaho':     {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 15 Thu OKC
-  'NCarolina': {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 6 Thu Greenville
-  'VCU':       {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 11 Thu Greenville
-  'Illinois':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 3 Thu Greenville
-  'Penn':      {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 14 Thu Greenville
-  // Fri pod: Tampa
-  'Florida':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 1 Fri Tampa
-  'PV_Lehigh': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 16 Fri Tampa
-  'Clemson':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 8 Fri Tampa
-  'Iowa':      {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 9 Fri Tampa
+  // ══ EAST REGIONAL (Washington DC) — S16 Fri 3/27, E8 SUN 3/29 ══
+  // Thu R64 pod (Greenville + Buffalo)
+  'Duke':        {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'OhioSt':      {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'MichSt':      {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'Louisville':  {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'SoFla':       {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  // Fri R64 pod (San Diego + Philadelphia)
+  'StJohns':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'NorthIowa':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'Kansas':      {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'UCLA':        {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
+  'UConn':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'East',  e8day:'SUN 3/29'},
 
-  // ── MIDWEST REGION (Regional: Chicago Sun 3/29 = D8) ──
-  // Thu pod: Buffalo only
-  'Michigan':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 1 Thu Buffalo
-  'UMBC_How':  {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 16 Thu Buffalo
-  'Georgia':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 8 Thu Buffalo
-  'StLouis':   {r64:'D1',r32:'D3',s16:'D5',e8:'D7',f4:'D9',champ:'D10'}, // 9 Thu Buffalo
-  // Fri pod: Tampa + Philadelphia + St. Louis
-  'TexasTech': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 5 Fri Tampa
-  'Akron':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 12 Fri Tampa
-  'Alabama':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 4 Fri Tampa
-  'Hofstra':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 13 Fri Tampa
-  'Tennessee': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 6 Fri Philadelphia
-  'MiamiOH':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 11 Fri Philadelphia
-  'Virginia':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 3 Fri Philadelphia
-  'WrightSt':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 14 Fri Philadelphia
-  'Kentucky':  {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 7 Fri St. Louis
-  'SantaClra': {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 10 Fri St. Louis
-  'IowasSt':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 2 Fri St. Louis
-  'TennSt':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10'}, // 15 Fri St. Louis
+  // ══ MIDWEST REGIONAL (Chicago) — S16 Fri 3/27, E8 SUN 3/29 ══
+  // Thu R64 pod (Buffalo)
+  'Michigan':    {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Georgia':     {r64:'D1',r32:'D3',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  // Fri R64 pod
+  'TexasTech':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Akron':       {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Alabama':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Tennessee':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Virginia':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'Kentucky':    {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'SantaClra':   {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
+  'IowasSt':     {r64:'D2',r32:'D4',s16:'D6',e8:'D8',f4:'D9',champ:'D10',region:'Midwest',e8day:'SUN 3/29'},
 };
-
 // SAT 3/28 E8 teams = South + West regions
 var E8_SAT_TEAMS = ['Nebraska','Vanderbilt','McNeese','NCarolina','VCU','Illinois','Houston',
   'StMarys','Florida','Clemson','Wisconsin','Arkansas','Gonzaga','BYU','Arizona','Villanova',
@@ -2285,87 +2289,107 @@ function renderScheduleIntel() {
 
 function renderScheduleTable() {
   var el = document.getElementById('schedule-intel-table'); if (!el) return;
-  var thuColor = 'var(--or)';
-  var friColor = 'var(--bl)';
-  var rounds = [
-    {key:'r64',  label:'R64',   days:'Thu 3/19 or Fri 3/20'},
-    {key:'r32',  label:'R32',   days:'Sat 3/21 or Sun 3/22'},
-    {key:'s16',  label:'S16',   days:'Thu 3/26 or Fri 3/27'},
-    {key:'e8',   label:'E8',    days:'Sat 3/28 or Sun 3/29'},
-    {key:'f4',   label:'F4',    days:'Sat 4/4'},
-    {key:'champ',label:'CHAMP', days:'Mon 4/6'},
-  ];
 
-  var keyTeams = [
-    {key:'Duke',      name:'Duke',       seed:1, region:'East'},
-    {key:'MichSt',    name:'Mich St',    seed:3, region:'East'},
-    {key:'Illinois',  name:'Illinois',   seed:3, region:'South'},
-    {key:'Gonzaga',   name:'Gonzaga',    seed:3, region:'West'},
-    {key:'Michigan',  name:'Michigan',   seed:1, region:'Midwest'},
-    {key:'Nebraska',  name:'Nebraska',   seed:4, region:'South'},
-    {key:'Arkansas',  name:'Arkansas',   seed:4, region:'West'},
-    {key:'Wisconsin', name:'Wisconsin',  seed:5, region:'West'},
-    {key:'VCU',       name:'VCU',        seed:11,region:'South'},
-    {key:'Houston',   name:'Houston',    seed:2, region:'South'},
-    {key:'NCarolina', name:'N Carolina', seed:6, region:'South'},
-    {key:'StMarys',   name:'St. Marys',  seed:7, region:'South'},
-    null, // spacer
-    {key:'Arizona',   name:'Arizona',    seed:1, region:'West'},
-    {key:'IowasSt',   name:'Iowa St',    seed:2, region:'Midwest'},
-    {key:'Purdue',    name:'Purdue',     seed:2, region:'West'},
-    {key:'UConn',     name:'UConn',      seed:2, region:'East'},
-    {key:'UCLA',      name:'UCLA',       seed:7, region:'East'},
-    {key:'Florida',   name:'Florida',    seed:1, region:'South'},
-    {key:'SantaClra', name:'Santa Clara',seed:10,region:'Midwest'},
-    {key:'Akron',     name:'Akron',      seed:12,region:'Midwest'},
-    {key:'Kentucky',  name:'Kentucky',   seed:7, region:'Midwest'},
-    {key:'Virginia',  name:'Virginia',   seed:3, region:'Midwest'},
-    {key:'Alabama',   name:'Alabama',    seed:4, region:'Midwest'},
-    {key:'TexasTech', name:'Tex Tech',   seed:5, region:'Midwest'},
+  // Organized by S16 + E8 day — what actually matters for survivor decisions
+  // NOT by R64 day (Thu/Fri) — that's irrelevant to the key scheduling conflict
+
+  var groups = [
+    {
+      label: 'WEST + SOUTH REGIONS',
+      sublabel: 'S16 = THU 3/26 (D5)  ·  E8 = SAT 3/28 (D7)',
+      color: 'var(--or)',
+      bg: 'rgba(249,115,22,0.06)',
+      teams: [
+        {key:'Arizona',   name:'Arizona',     seed:1, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'Purdue',    name:'Purdue',      seed:2, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'Gonzaga',   name:'Gonzaga',     seed:3, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'Arkansas',  name:'Arkansas',    seed:4, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'Wisconsin', name:'Wisconsin',   seed:5, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'BYU',       name:'BYU',         seed:6, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'MiamiFL',   name:'Miami FL',    seed:7, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        {key:'Villanova', name:'Villanova',   seed:8, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'West'},
+        // South
+        {key:'Florida',   name:'Florida',     seed:1, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'Houston',   name:'Houston',     seed:2, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'Illinois',  name:'Illinois',    seed:3, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'Nebraska',  name:'Nebraska',    seed:4, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'Vanderbilt',name:'Vanderbilt',  seed:5, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'NCarolina', name:'N Carolina',  seed:6, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'StMarys',   name:'St. Marys',   seed:7, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'Clemson',   name:'Clemson',     seed:8, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'VCU',       name:'VCU',         seed:11,r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+        {key:'McNeese',   name:'McNeese',     seed:12,r64:'Thu 3/19', r32:'Sat 3/21', s16:'Thu 3/26', e8:'SAT 3/28', region:'South'},
+      ]
+    },
+    {
+      label: 'EAST + MIDWEST REGIONS',
+      sublabel: 'S16 = FRI 3/27 (D6)  ·  E8 = SUN 3/29 (D8)',
+      color: 'var(--bl)',
+      bg: 'rgba(59,130,246,0.06)',
+      teams: [
+        {key:'Duke',      name:'Duke',        seed:1, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'UConn',     name:'UConn',       seed:2, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'MichSt',    name:'Mich St',     seed:3, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'Kansas',    name:'Kansas',      seed:4, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'StJohns',   name:'St. Johns',   seed:5, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'Louisville',name:'Louisville',  seed:6, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'UCLA',      name:'UCLA',        seed:7, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        {key:'NorthIowa', name:'N Iowa',      seed:12,r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'East'},
+        // Midwest
+        {key:'Michigan',  name:'Michigan',    seed:1, r64:'Thu 3/19', r32:'Sat 3/21', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'IowasSt',   name:'Iowa St',     seed:2, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'Virginia',  name:'Virginia',    seed:3, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'Alabama',   name:'Alabama',     seed:4, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'TexasTech', name:'Tex Tech',    seed:5, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'Tennessee', name:'Tennessee',   seed:6, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'Kentucky',  name:'Kentucky',    seed:7, r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'SantaClra', name:'Santa Clara', seed:10,r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+        {key:'Akron',     name:'Akron',       seed:12,r64:'Fri 3/20', r32:'Sun 3/22', s16:'Fri 3/27', e8:'SUN 3/29', region:'Midwest'},
+      ]
+    }
   ];
 
   var html = '<table style="width:100%;border-collapse:collapse;font-family:JetBrains Mono,monospace;font-size:9px">';
 
   // Header
   html += '<thead><tr>'
-    + '<th style="padding:7px 10px;text-align:left;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:2px">TEAM</th>'
-    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">SEED</th>'
-    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">TRACK</th>';
-  rounds.forEach(function(r) {
-    html += '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:1px solid var(--b1);color:var(--t3);font-size:7px;letter-spacing:1px">'
-      + r.label + '<br><span style="color:var(--t4);font-size:6px">' + r.days + '</span></th>';
-  });
-  html += '</tr></thead><tbody>';
+    + '<th style="padding:7px 10px;text-align:left;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px;letter-spacing:1.5px">TEAM</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">SEED</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">REGION</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">R64</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">R32</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--or);font-size:8px;font-weight:700">S16 ← KEY</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--or);font-size:8px;font-weight:700">E8 ← KEY</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">F4</th>'
+    + '<th style="padding:7px 10px;text-align:center;background:var(--s2);border-bottom:2px solid var(--b2);color:var(--t3);font-size:7px">CHAMP</th>'
+    + '</tr></thead><tbody>';
 
-  var thuTrack = ['D1','D3','D5','D7','D9','D10'];
-  var friTrack = ['D2','D4','D6','D8','D9','D10'];
+  groups.forEach(function(g) {
+    // Group header row
+    html += '<tr><td colspan="9" style="padding:8px 10px;background:' + g.bg + ';border-top:2px solid ' + g.color + ';border-bottom:1px solid ' + g.color + '">'
+      + '<span style="color:' + g.color + ';font-family:Bebas Neue,sans-serif;font-size:13px;letter-spacing:2px">' + g.label + '</span>'
+      + '<span style="color:' + g.color + ';font-size:8px;margin-left:12px;opacity:0.8">' + g.sublabel + '</span>'
+      + '</td></tr>';
 
-  var prevWasSpacer = false;
-  keyTeams.forEach(function(t, idx) {
-    if (!t) {
-      html += '<tr><td colspan="9" style="padding:4px;background:var(--s3);border-top:1px solid var(--b2);border-bottom:1px solid var(--b2)">'
-        + '<div style="font-family:Bebas Neue,sans-serif;font-size:9px;letter-spacing:2px;color:var(--bl);padding:0 10px">FRIDAY TRACK TEAMS</div></td></tr>';
-      return;
-    }
-    var sched = TEAM_SCHEDULE[t.key];
-    if (!sched) return;
-    var isThu = (sched.r64 === 'D1');
-    var trackColor = isThu ? 'var(--or)' : 'var(--bl)';
-    var trackLabel = isThu ? 'THU' : 'FRI';
+    g.teams.forEach(function(t) {
+      var isOurs = ['Duke','MichSt','Illinois','Gonzaga','Michigan','Nebraska','Arkansas',
+        'Wisconsin','VCU','Houston','StMarys','Florida','Arizona','Purdue','IowasSt',
+        'UConn','Virginia','SantaClra','Akron','Kentucky','TexasTech','UCLA'].indexOf(t.key) >= 0;
+      var rowBg = isOurs ? 'rgba(34,197,94,0.04)' : 'transparent';
+      var nameColor = isOurs ? 'var(--gn)' : 'var(--t2)';
 
-    html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4)">';
-    html += '<td style="padding:6px 10px;color:var(--t1)">' + t.name + '</td>';
-    html += '<td style="padding:6px 10px;text-align:center;color:var(--t3)">S' + t.seed + '</td>';
-    html += '<td style="padding:6px 10px;text-align:center"><span style="color:' + trackColor + ';font-weight:600">' + trackLabel + '</span></td>';
-
-    var track = isThu ? thuTrack : friTrack;
-    rounds.forEach(function(r, ri) {
-      var day = sched[r.key];
-      var dayName = DAY_NAMES_SCHED[day] || '—';
-      var isPickDay = true; // every round needs a pick
-      html += '<td style="padding:6px 10px;text-align:center;color:' + trackColor + '">' + dayName + '</td>';
+      html += '<tr style="border-bottom:1px solid rgba(37,45,58,0.4);background:' + rowBg + '">'
+        + '<td style="padding:6px 10px;color:' + nameColor + ';font-weight:' + (isOurs?'600':'400') + '">' + t.name + (isOurs?' ★':'') + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t3)">S' + t.seed + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t4);font-size:8px">' + t.region + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t4)">' + t.r64 + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t4)">' + t.r32 + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:' + g.color + ';font-weight:600;background:rgba(249,115,22,0.06)">' + t.s16 + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:' + g.color + ';font-weight:700;background:rgba(249,115,22,0.10)">' + t.e8 + '</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t3)">Sat 4/4</td>'
+        + '<td style="padding:6px 10px;text-align:center;color:var(--t3)">Mon 4/6</td>'
+        + '</tr>';
     });
-    html += '</tr>';
   });
 
   html += '</tbody></table>';
